@@ -1,9 +1,9 @@
 // collide_particles.inc.c
 
-static s16 sTinyTriMovementParams[] = { 0xD000, 0,      0x3000, 0,      0xDE67, 0x2199,
+s16 sTinyTriMovementParams[] = { 0xD000, 0,      0x3000, 0,      0xDE67, 0x2199,
                                         0x2199, 0x2199, 0xDE67, 0xDE67, 0x2199, 0xDE67 };
 
-static s16 sTinyStarMovementParams[] = { 0xE000, 0,      0,      0,      0x2000, 0,      0xE99A,
+s16 sTinyStarMovementParams[] = { 0xE000, 0,      0,      0,      0x2000, 0,      0xE99A,
                                          0x1666, 0x1666, 0x1666, 0xE99A, 0xE99A, 0x1666, 0xE99A };
 
 void bhv_punch_tiny_triangle_loop(void) {

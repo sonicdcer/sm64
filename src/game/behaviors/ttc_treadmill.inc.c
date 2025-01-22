@@ -9,12 +9,12 @@
 /**
  * Collision models for the different sized treadmills.
  */
-static Collision const *sTTCTreadmillCollisionModels[] = {
+Collision const *sTTCTreadmillCollisionModels[] = {
     ttc_seg7_collision_070152B4,
     ttc_seg7_collision_070153E0,
 };
 
-static s16 sTTCTreadmillSpeeds[] = {
+s16 sTTCTreadmillSpeeds[] = {
     /* TTC_SPEED_SLOW    */ 50,
     /* TTC_SPEED_FAST    */ 100,
     /* TTC_SPEED_RANDOM  */ 0,

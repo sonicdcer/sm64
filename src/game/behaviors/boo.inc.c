@@ -724,7 +724,7 @@ void bhv_boo_with_cage_init(void) {
     }
 }
 
-static void (*sBooWithCageActions[])(void) = {
+void (*sBooWithCageActions[])(void) = {
     boo_with_cage_act_0,
     boo_with_cage_act_1,
     boo_with_cage_act_2,

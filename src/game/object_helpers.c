@@ -27,11 +27,11 @@
 #include "spawn_object.h"
 #include "spawn_sound.h"
 
-static s8 sBBHStairJiggleOffsets[] = { -8, 8, -4, 4 };
-static s16 sPowersOfTwo[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
-static s8 sLevelsWithRooms[] = { LEVEL_BBH, LEVEL_CASTLE, LEVEL_HMC, -1 };
+s8 sBBHStairJiggleOffsets[] = { -8, 8, -4, 4 };
+s16 sPowersOfTwo[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
+s8 sLevelsWithRooms[] = { LEVEL_BBH, LEVEL_CASTLE, LEVEL_HMC, -1 };
 
-static s32 clear_move_flag(u32 *, s32);
+s32 clear_move_flag(u32 *, s32);
 
 #define o gCurrentObject
 
@@ -1379,7 +1379,7 @@ void cur_obj_move_y(f32 gravity, f32 bounciness, f32 buoyancy) {
 UNUSED static void stub_obj_helpers_1(void) {
 }
 
-static s32 clear_move_flag(u32 *bitSet, s32 flag) {
+s32 clear_move_flag(u32 *bitSet, s32 flag) {
     if (*bitSet & flag) {
         *bitSet &= flag ^ 0xFFFFFFFF;
         return TRUE;

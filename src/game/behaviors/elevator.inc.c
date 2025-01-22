@@ -1,6 +1,6 @@
 // elevator.inc.c
 
-static s16 sElevatorHeights[] = {
+s16 sElevatorHeights[] = {
       -51,    0, 0,
      -461,    0, 0,
      -512,    0, 0,

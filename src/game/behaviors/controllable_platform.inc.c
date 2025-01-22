@@ -1,6 +1,6 @@
 // controllable_platform.inc.c
 
-static s8 D_80331694 = 0;
+s8 D_80331694 = 0;
 
 void controllable_platform_act_1(void) {
     o->oParentRelativePosY -= 4.0f;

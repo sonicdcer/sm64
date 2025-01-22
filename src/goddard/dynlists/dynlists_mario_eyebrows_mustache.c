@@ -5,7 +5,7 @@
 #include "dynlists.h"
 #include "../dynlist_proc.h"
 
-static s16 verts_mario_eyebrow_right[][3] = {
+s16 verts_mario_eyebrow_right[][3] = {
     { 105, 391, 363 }, { 62, 370, 378 },  { 86, 366, 370 },  { 171, 380, 339 }, { 139, 377, 353 },
     { 193, 353, 331 }, { 204, 314, 297 }, { 175, 342, 305 }, { 209, 361, 291 }, { 124, 360, 323 },
     { 161, 393, 306 }, { 230, 323, 286 }, { 233, 276, 289 }, { 123, 402, 319 }, { 85, 399, 334 },
@@ -14,9 +14,10 @@ static s16 verts_mario_eyebrow_right[][3] = {
     { 41, 345, 382 },
 };
 
-static struct GdVtxData vtx_mario_eyebrow_right = { ARRAY_COUNT(verts_mario_eyebrow_right), 0x1, verts_mario_eyebrow_right };
+struct GdVtxData vtx_mario_eyebrow_right = { ARRAY_COUNT(verts_mario_eyebrow_right), 0x1,
+                                             verts_mario_eyebrow_right };
 
-static u16 facedata_mario_eyebrow_right[][4] = {
+u16 facedata_mario_eyebrow_right[][4] = {
     { 0, 0, 1, 2 },    { 0, 3, 4, 5 },    { 0, 20, 23, 19 }, { 0, 1, 25, 22 }, { 0, 0, 21, 13 },
     { 0, 2, 15, 9 },   { 0, 7, 6, 20 },   { 0, 3, 19, 8 },   { 0, 25, 1, 24 }, { 0, 19, 5, 20 },
     { 0, 19, 3, 5 },   { 0, 3, 21, 4 },   { 0, 21, 0, 4 },   { 0, 0, 2, 4 },   { 0, 1, 22, 2 },
@@ -27,33 +28,35 @@ static u16 facedata_mario_eyebrow_right[][4] = {
     { 0, 9, 7, 5 },
 };
 
-static struct GdFaceData faces_mario_eyebrow_right = { ARRAY_COUNT(facedata_mario_eyebrow_right), 0x1, facedata_mario_eyebrow_right };
+struct GdFaceData faces_mario_eyebrow_right = { ARRAY_COUNT(facedata_mario_eyebrow_right), 0x1,
+                                                facedata_mario_eyebrow_right };
 
 struct DynList dynlist_mario_eyebrow_right_shape[] = {
     BeginList(),
 
     MakeDynObj(D_DATA_GRP, DYNOBJ_MARIO_RIGHT_EYEBROW_VTX_GROUP),
-        LinkWithPtr(&vtx_mario_eyebrow_right),
+    LinkWithPtr(&vtx_mario_eyebrow_right),
 
     MakeDynObj(D_DATA_GRP, DYNOBJ_MARIO_RIGHT_EYEBROW_TRI_GROUP),
-        LinkWithPtr(&faces_mario_eyebrow_right),
+    LinkWithPtr(&faces_mario_eyebrow_right),
 
     StartGroup(DYNOBJ_MARIO_RIGHT_EYEBROW_MTL_GROUP),
-        MakeDynObj(D_MATERIAL, 0),
-            SetId(0),
-            SetAmbient(0.0, 0.005, 0.0),  // Why is green 0.005 on the right eyebrow, but 0.0 on the left eyebrow?
-            SetDiffuse(0.0, 0.0, 0.0),
+    MakeDynObj(D_MATERIAL, 0),
+    SetId(0),
+    SetAmbient(0.0, 0.005,
+               0.0), // Why is green 0.005 on the right eyebrow, but 0.0 on the left eyebrow?
+    SetDiffuse(0.0, 0.0, 0.0),
     EndGroup(DYNOBJ_MARIO_RIGHT_EYEBROW_MTL_GROUP),
 
     MakeDynObj(D_SHAPE, DYNOBJ_MARIO_RIGHT_EYEBROW_SHAPE),
-        SetNodeGroup(DYNOBJ_MARIO_RIGHT_EYEBROW_VTX_GROUP),
-        SetPlaneGroup(DYNOBJ_MARIO_RIGHT_EYEBROW_TRI_GROUP),
-        SetMaterialGroup(DYNOBJ_MARIO_RIGHT_EYEBROW_MTL_GROUP),
+    SetNodeGroup(DYNOBJ_MARIO_RIGHT_EYEBROW_VTX_GROUP),
+    SetPlaneGroup(DYNOBJ_MARIO_RIGHT_EYEBROW_TRI_GROUP),
+    SetMaterialGroup(DYNOBJ_MARIO_RIGHT_EYEBROW_MTL_GROUP),
 
     EndList(),
 };
 
-static s16 verts_mario_eyebrow_left[][3] = {
+s16 verts_mario_eyebrow_left[][3] = {
     { -57, 339, 377 },  { -17, 294, 356 },  { -45, 341, 383 },  { -45, 330, 354 },  { -73, 355, 342 },
     { -52, 377, 349 },  { -139, 394, 353 }, { -123, 402, 319 }, { -161, 393, 306 }, { -233, 276, 289 },
     { -204, 314, 297 }, { -214, 324, 318 }, { -29, 335, 363 },  { -231, 330, 311 }, { -230, 323, 286 },
@@ -62,9 +65,10 @@ static s16 verts_mario_eyebrow_left[][3] = {
     { -212, 358, 323 },
 };
 
-static struct GdVtxData vtx_mario_eyebrow_left = { ARRAY_COUNT(verts_mario_eyebrow_left), 0x1, verts_mario_eyebrow_left };
+struct GdVtxData vtx_mario_eyebrow_left = { ARRAY_COUNT(verts_mario_eyebrow_left), 0x1,
+                                            verts_mario_eyebrow_left };
 
-static u16 facedata_mario_eyebrow_left[][4] = {
+u16 facedata_mario_eyebrow_left[][4] = {
     { 0, 0, 1, 2 },    { 0, 8, 22, 6 },   { 0, 6, 7, 8 },    { 0, 9, 10, 11 },  { 0, 1, 12, 2 },
     { 0, 9, 13, 14 },  { 0, 4, 0, 15 },   { 0, 16, 17, 18 }, { 0, 19, 5, 20 },  { 0, 21, 14, 13 },
     { 0, 2, 12, 5 },   { 0, 22, 8, 21 },  { 0, 3, 1, 0 },    { 0, 23, 18, 11 }, { 0, 16, 15, 17 },
@@ -75,33 +79,34 @@ static u16 facedata_mario_eyebrow_left[][4] = {
     { 0, 25, 13, 11 },
 };
 
-static struct GdFaceData faces_mario_eyebrow_left = { ARRAY_COUNT(facedata_mario_eyebrow_left), 0x1, facedata_mario_eyebrow_left };
+struct GdFaceData faces_mario_eyebrow_left = { ARRAY_COUNT(facedata_mario_eyebrow_left), 0x1,
+                                               facedata_mario_eyebrow_left };
 
 struct DynList dynlist_mario_eyebrow_left_shape[] = {
     BeginList(),
 
     MakeDynObj(D_DATA_GRP, DYNOBJ_MARIO_LEFT_EYEBROW_VTX_GROUP),
-        LinkWithPtr(&vtx_mario_eyebrow_left),
+    LinkWithPtr(&vtx_mario_eyebrow_left),
 
     MakeDynObj(D_DATA_GRP, DYNOBJ_MARIO_LEFT_EYEBROW_TRI_GROUP),
-        LinkWithPtr(&faces_mario_eyebrow_left),
+    LinkWithPtr(&faces_mario_eyebrow_left),
 
     StartGroup(DYNOBJ_MARIO_LEFT_EYEBROW_MTL_GROUP),
-        MakeDynObj(D_MATERIAL, 0),
-            SetId(0),
-            SetAmbient(0.0, 0.0, 0.0),
-            SetDiffuse(0.0, 0.0, 0.0),
+    MakeDynObj(D_MATERIAL, 0),
+    SetId(0),
+    SetAmbient(0.0, 0.0, 0.0),
+    SetDiffuse(0.0, 0.0, 0.0),
     EndGroup(DYNOBJ_MARIO_LEFT_EYEBROW_MTL_GROUP),
 
     MakeDynObj(D_SHAPE, DYNOBJ_MARIO_LEFT_EYEBROW_SHAPE),
-        SetNodeGroup(DYNOBJ_MARIO_LEFT_EYEBROW_VTX_GROUP),
-        SetPlaneGroup(DYNOBJ_MARIO_LEFT_EYEBROW_TRI_GROUP),
-        SetMaterialGroup(DYNOBJ_MARIO_LEFT_EYEBROW_MTL_GROUP),
+    SetNodeGroup(DYNOBJ_MARIO_LEFT_EYEBROW_VTX_GROUP),
+    SetPlaneGroup(DYNOBJ_MARIO_LEFT_EYEBROW_TRI_GROUP),
+    SetMaterialGroup(DYNOBJ_MARIO_LEFT_EYEBROW_MTL_GROUP),
 
     EndList(),
 };
 
-static s16 verts_mario_mustache[][3] = {
+s16 verts_mario_mustache[][3] = {
     { -202, 15, 400 },   { -295, -13, 358 },  { -287, -45, 362 },  { 229, -89, 385 },
     { 214, -126, 385 },  { 221, -131, 360 },  { -266, 73, 363 },   { -202, 15, 375 },
     { -154, -160, 372 }, { -154, -148, 397 }, { -191, -150, 387 }, { 276, -74, 345 },
@@ -118,9 +123,9 @@ static s16 verts_mario_mustache[][3] = {
     { -121, -188, 384 }, { 75, -191, 396 },   { 304, 20, 332 },    { -304, 20, 332 },
 };
 
-static struct GdVtxData vtx_mario_mustache = { ARRAY_COUNT(verts_mario_mustache), 0x1, verts_mario_mustache };
+struct GdVtxData vtx_mario_mustache = { ARRAY_COUNT(verts_mario_mustache), 0x1, verts_mario_mustache };
 
-static u16 facedata_mario_mustache[][4] = {
+u16 facedata_mario_mustache[][4] = {
     { 0, 0, 1, 2 },    { 0, 3, 4, 5 },    { 0, 3, 5, 46 },   { 0, 6, 0, 7 },    { 0, 6, 7, 33 },
     { 0, 8, 9, 10 },   { 0, 8, 10, 44 },  { 0, 11, 47, 12 }, { 0, 11, 12, 13 }, { 0, 14, 15, 16 },
     { 0, 14, 16, 35 }, { 0, 2, 1, 48 },   { 0, 2, 48, 17 },  { 0, 18, 19, 20 }, { 0, 18, 20, 54 },
@@ -143,28 +148,29 @@ static u16 facedata_mario_mustache[][4] = {
     { 0, 17, 48, 55 }, { 0, 35, 49, 7 },  { 0, 54, 11, 23 }, { 0, 46, 5, 45 },  { 0, 5, 36, 45 },
 };
 
-static struct GdFaceData faces_mario_mustache = { ARRAY_COUNT(facedata_mario_mustache), 0x1, facedata_mario_mustache };
+struct GdFaceData faces_mario_mustache = { ARRAY_COUNT(facedata_mario_mustache), 0x1,
+                                           facedata_mario_mustache };
 
 struct DynList dynlist_mario_mustache_shape[] = {
     BeginList(),
 
     MakeDynObj(D_DATA_GRP, DYNOBJ_MARIO_MUSTACHE_VTX_GROUP),
-        LinkWithPtr(&vtx_mario_mustache),
+    LinkWithPtr(&vtx_mario_mustache),
 
     MakeDynObj(D_DATA_GRP, DYNOBJ_MARIO_MUSTACHE_TRI_GROUP),
-        LinkWithPtr(&faces_mario_mustache),
+    LinkWithPtr(&faces_mario_mustache),
 
     StartGroup(DYNOBJ_MARIO_MUSTACHE_MTL_GROUP),
-        MakeDynObj(D_MATERIAL, 0),
-            SetId(0),
-            SetAmbient(0.0, 0.0, 0.0),
-            SetDiffuse(0.0, 0.0, 0.0),
+    MakeDynObj(D_MATERIAL, 0),
+    SetId(0),
+    SetAmbient(0.0, 0.0, 0.0),
+    SetDiffuse(0.0, 0.0, 0.0),
     EndGroup(DYNOBJ_MARIO_MUSTACHE_MTL_GROUP),
 
     MakeDynObj(D_SHAPE, DYNOBJ_MARIO_MUSTACHE_SHAPE),
-        SetNodeGroup(DYNOBJ_MARIO_MUSTACHE_VTX_GROUP),
-        SetPlaneGroup(DYNOBJ_MARIO_MUSTACHE_TRI_GROUP),
-        SetMaterialGroup(DYNOBJ_MARIO_MUSTACHE_MTL_GROUP),
+    SetNodeGroup(DYNOBJ_MARIO_MUSTACHE_VTX_GROUP),
+    SetPlaneGroup(DYNOBJ_MARIO_MUSTACHE_TRI_GROUP),
+    SetMaterialGroup(DYNOBJ_MARIO_MUSTACHE_MTL_GROUP),
 
     EndList(),
 };

@@ -1,6 +1,6 @@
 // bubba.inc.c
 
-static struct ObjectHitbox sBubbaHitbox = {
+struct ObjectHitbox sBubbaHitbox = {
     /* interactType:      */ INTERACT_CLAM_OR_BUBBA,
     /* downOffset:        */ 0,
     /* damageOrCoinValue: */ 1,

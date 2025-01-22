@@ -394,7 +394,7 @@ struct SoundCharacteristics sSoundBanks[SOUND_BANK_COUNT][40];
 
 u8 sSoundMovingSpeed[SOUND_BANK_COUNT];
 u8 sBackgroundMusicTargetVolume;
-static u8 sLowerBackgroundMusicVolume;
+u8 sLowerBackgroundMusicVolume;
 struct SequenceQueueItem sBackgroundMusicQueue[MAX_BACKGROUND_MUSIC_QUEUE_SIZE];
 
 #if defined(VERSION_EU) || defined(VERSION_SH) || defined(VERSION_CN)

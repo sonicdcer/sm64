@@ -27,19 +27,19 @@ struct Connection {
 };
 
 // data
-UNUSED static void *sUnused801A81D0 = NULL;
-static s32 D_801A81D4[25] = {
+UNUSED void *sUnused801A81D0 = NULL;
+s32 D_801A81D4[25] = {
     /*  ID?    X    Y    Z */
     9,  3,  12,  -14, 25, 5,  16,  -25, 42, 4,  15, -39, 55,
     -6, 20, -23, 70,  -2, 20, -23, 135, 0,  16, 0,  0 /* Terminator */
 };
-static s32 D_801A8238[5] = {
+s32 D_801A8238[5] = {
     /*  ID? X   Y  Z */
     15, 0, 22, 0, 0 /* Terminator */
 };
 
 // static bss
-static struct ObjFace *D_801B9EF0;
+struct ObjFace *D_801B9EF0;
 
 // fn declarations
 struct Connection *make_connection(struct ObjVertex *, struct ObjVertex *);

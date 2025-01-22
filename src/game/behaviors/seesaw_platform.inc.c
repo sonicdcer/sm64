@@ -6,7 +6,7 @@
 /**
  * Collision models for the different seesaw platforms.
  */
-static Collision const *sSeesawPlatformCollisionModels[] = {
+Collision const *sSeesawPlatformCollisionModels[] = {
     bitdw_seg7_collision_0700F70C,
     bits_seg7_collision_0701ADD8,
     bits_seg7_collision_0701AE5C,

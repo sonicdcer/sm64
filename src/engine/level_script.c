@@ -39,23 +39,23 @@ struct LevelCommand {
 
 enum ScriptStatus { SCRIPT_RUNNING = 1, SCRIPT_PAUSED = 0, SCRIPT_PAUSED2 = -1 };
 
-static uintptr_t sStack[32];
+uintptr_t sStack[32];
 
-static struct AllocOnlyPool *sLevelPool = NULL;
+struct AllocOnlyPool *sLevelPool = NULL;
 
-static u16 sDelayFrames = 0;
-static u16 sDelayFrames2 = 0;
+u16 sDelayFrames = 0;
+u16 sDelayFrames2 = 0;
 
-static s16 sCurrAreaIndex = -1;
+s16 sCurrAreaIndex = -1;
 
-static uintptr_t *sStackTop = sStack;
-static uintptr_t *sStackBase = NULL;
+uintptr_t *sStackTop = sStack;
+uintptr_t *sStackBase = NULL;
 
-static s16 sScriptStatus;
-static s32 sRegister;
-static struct LevelCommand *sCurrentCmd;
+s16 sScriptStatus;
+s32 sRegister;
+struct LevelCommand *sCurrentCmd;
 
-static s32 eval_script_op(s8 op, s32 arg) {
+s32 eval_script_op(s8 op, s32 arg) {
     s32 result = 0;
 
     switch (op) {

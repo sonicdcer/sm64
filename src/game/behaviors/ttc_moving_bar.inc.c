@@ -7,7 +7,7 @@
  * The delay before each cycle on each setting. On random setting, this is
  * overwritten with one of the below delays after the first cycle.
  */
-static s16 sTTCMovingBarDelays[] = {
+s16 sTTCMovingBarDelays[] = {
     /* TTC_SPEED_SLOW    */ 55,
     /* TTC_SPEED_FAST    */ 30,
     /* TTC_SPEED_RANDOM  */ 55,
@@ -17,7 +17,7 @@ static s16 sTTCMovingBarDelays[] = {
 /**
  * The possible delays before each cycle while on random setting.
  */
-static s8 sTTCMovingBarRandomDelays[] = { 1, 12, 55, 100 };
+s8 sTTCMovingBarRandomDelays[] = { 1, 12, 55, 100 };
 
 /**
  * Init function for bhvTTCMovingBar.

@@ -7,7 +7,7 @@
 /**
  * Initial angle acceleration.
  */
-static f32 sTTCPendulumInitialAccels[] = {
+f32 sTTCPendulumInitialAccels[] = {
     /* TTC_SPEED_SLOW    */ 13.0f,
     /* TTC_SPEED_FAST    */ 22.0f,
     /* TTC_SPEED_RANDOM  */ 13.0f,

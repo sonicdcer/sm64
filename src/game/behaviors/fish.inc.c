@@ -229,7 +229,7 @@ static void fish_act_init(void) {
     o->oAction = FISH_ACT_ROAM;
 }
 
-static void (*sFishActions[])(void) = {
+void (*sFishActions[])(void) = {
     fish_act_init,
     fish_act_roam,
     fish_act_flee,

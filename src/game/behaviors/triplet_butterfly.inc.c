@@ -1,6 +1,6 @@
 // triplet_butterfly.inc.c
 
-static struct ObjectHitbox sTripletButterflyExplodeHitbox = {
+struct ObjectHitbox sTripletButterflyExplodeHitbox = {
     /* interactType:      */ INTERACT_MR_BLIZZARD,
     /* downOffset:        */ 50,
     /* damageOrCoinValue: */ 2,
@@ -18,7 +18,7 @@ struct TripletButterflyActivationData {
     f32 scale;
 };
 
-static struct TripletButterflyActivationData sTripletButterflyActivationData[] = {
+struct TripletButterflyActivationData sTripletButterflyActivationData[] = {
     /* TRIPLET_BUTTERFLY_TYPE_EXPLODES  */ { MODEL_BOWLING_BALL, NULL,          0.5f },
     /* TRIPLET_BUTTERFLY_TYPE_SPAWN_1UP */ { MODEL_1UP,          bhv1UpWalking, 1.0f },
 };

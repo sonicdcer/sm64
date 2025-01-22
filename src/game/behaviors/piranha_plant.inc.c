@@ -234,7 +234,7 @@ void piranha_plant_act_respawn(void) {
  * The frames of the Piranha Plant's biting animation on which to play a bite
  * sound.
  */
-static s8 sPiranhaPlantBiteSoundFrames[] = { 12, 28, 50, 64, -1 };
+s8 sPiranhaPlantBiteSoundFrames[] = { 12, 28, 50, 64, -1 };
 
 /**
  * Make the Piranha Plant bite in the direction of the player. If the player

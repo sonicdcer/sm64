@@ -20,25 +20,25 @@
 #include "skin_movement.h"
 
 // data
-static s32 D_801A82D0 = 0;
-static struct ObjBone *gGdTempBone = NULL; // @ 801A82D4
+s32 D_801A82D0 = 0;
+struct ObjBone *gGdTempBone = NULL; // @ 801A82D4
 
 // bss
 s32 sResetWeightVtxNum; // WTF? why is this not in skin_movement.c?
 
-static Mat4f *D_801BA964;
-static struct GdVec3f D_801BA968;
-static s32 sJointCount;                   // @ 801BA974
-static s32 sJointNotF1Count;              // @ 801BA978
-static s32 sBoneCount;                    // @ 801BA97C
-static s32 sJointArrLen;                  // @ 801BA980
-static struct ObjJoint *sJointArr[10];    // @ 801BA988
-static struct GdVec3f sJointArrVecs[10];  // @ 801BA9B0
-static s32 sJointArr2Len;                 // @ 801BAA28
-static struct ObjJoint *sJointArr2[10];   // @ 801BAA30
-static struct GdVec3f sJointArr2Vecs[10]; // @ 801BAA58
-static struct GdVec3f D_801BAAD0;
-static struct GdVec3f D_801BAAE0;
+Mat4f *D_801BA964;
+struct GdVec3f D_801BA968;
+s32 sJointCount;                   // @ 801BA974
+s32 sJointNotF1Count;              // @ 801BA978
+s32 sBoneCount;                    // @ 801BA97C
+s32 sJointArrLen;                  // @ 801BA980
+struct ObjJoint *sJointArr[10];    // @ 801BA988
+struct GdVec3f sJointArrVecs[10];  // @ 801BA9B0
+s32 sJointArr2Len;                 // @ 801BAA28
+struct ObjJoint *sJointArr2[10];   // @ 801BAA30
+struct GdVec3f sJointArr2Vecs[10]; // @ 801BAA58
+struct GdVec3f D_801BAAD0;
+struct GdVec3f D_801BAAE0;
 
 // forward declarations
 void set_joint_vecs(struct ObjJoint *, f32, f32, f32);

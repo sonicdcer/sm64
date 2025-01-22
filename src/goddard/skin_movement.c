@@ -15,8 +15,8 @@
 
 /* bss */
 struct ObjWeight *sResetCurWeight;
-static Mat4f D_801B9EA8; // TODO: rename to sHead2Mtx?
-static struct ObjJoint *D_801B9EE8;  // set but not used
+Mat4f D_801B9EA8;            // TODO: rename to sHead2Mtx?
+struct ObjJoint *D_801B9EE8; // set but not used
 
 /* @ 22FDB0 for 0x180 */
 void func_801815E0(Mat4f *mtx) {
@@ -115,7 +115,7 @@ void reset_weight_vtx(struct ObjVertex *vtx) {
     struct GdVec3f localVec;
     UNUSED u8 filler[16];
 
-    if (sResetWeightVtxNum++ == sResetCurWeight->vtxId) {  // found matching vertex
+    if (sResetWeightVtxNum++ == sResetCurWeight->vtxId) { // found matching vertex
         sResetCurWeight->vtx = vtx;
         localVec.x = vtx->pos.x;
         localVec.y = vtx->pos.y;
@@ -138,7 +138,8 @@ void reset_weight(struct ObjWeight *weight) {
     sResetCurWeight = weight;
     sResetWeightVtxNum = 0;
     if ((skinGroup = gGdSkinNet->skinGrp) != NULL) {
-        // Go through every vertex in the skin group, and reset the weight if the vertex is managed by the weight
+        // Go through every vertex in the skin group, and reset the weight if the vertex is managed by
+        // the weight
         vtxCount =
             apply_to_obj_types_in_group(OBJ_TYPE_VERTICES, (applyproc_t) reset_weight_vtx, skinGroup);
     } else {

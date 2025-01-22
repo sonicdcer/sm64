@@ -7,7 +7,7 @@
 /**
  * Collision model for hexagon and triangle, respectively.
  */
-static Collision const *sTTCCogCollisionModels[] = {
+Collision const *sTTCCogCollisionModels[] = {
     ttc_seg7_collision_07015584,
     ttc_seg7_collision_07015650,
 };
@@ -15,12 +15,12 @@ static Collision const *sTTCCogCollisionModels[] = {
 /**
  * The direction that the cog moves on non-random settings.
  */
-static s8 sTTCCogDirections[] = { 1, -1 };
+s8 sTTCCogDirections[] = { 1, -1 };
 
 /**
  * The speed that the cog moves on the slow and fast settings, respectively.
  */
-static s16 sTTCCogNormalSpeeds[] = { 200, 400 };
+s16 sTTCCogNormalSpeeds[] = { 200, 400 };
 
 /**
  * Init function for bhvTTCCog.

@@ -50,21 +50,21 @@ struct BetaVtx {
 };
 
 // data
-static struct GdColour sClrWhite = { 1.0, 1.0, 1.0 };            // @ 801A8070
-static struct GdColour sClrRed = { 1.0, 0.0, 0.0 };              // @ 801A807C
-static struct GdColour sClrGreen = { 0.0, 1.0, 0.0 };            // @ 801A8088
-static struct GdColour sClrBlue = { 0.0, 0.0, 1.0 };             // @ 801A8094
-static struct GdColour sClrErrDarkBlue = { 0.0, 0.0, 6.0 };      // @ 801A80A0
-static struct GdColour sClrPink = { 1.0, 0.0, 1.0 };             // @ 801A80AC
-static struct GdColour sClrBlack = { 0.0, 0.0, 0.0 };            // @ 801A80B8
-static struct GdColour sClrGrey = { 0.6, 0.6, 0.6 };             // @ 801A80C4
-static struct GdColour sClrDarkGrey = { 0.4, 0.4, 0.4 };         // @ 801A80D0
-static struct GdColour sClrYellow = { 1.0, 1.0, 0.0 };           // @ 801A80DC
-static struct GdColour sLightColours[1] = { { 1.0, 1.0, 0.0 } }; // @ 801A80E8
-static struct GdColour *sSelectedColour = &sClrRed;              // @ 801A80F4
+struct GdColour sClrWhite = { 1.0, 1.0, 1.0 };            // @ 801A8070
+struct GdColour sClrRed = { 1.0, 0.0, 0.0 };              // @ 801A807C
+struct GdColour sClrGreen = { 0.0, 1.0, 0.0 };            // @ 801A8088
+struct GdColour sClrBlue = { 0.0, 0.0, 1.0 };             // @ 801A8094
+struct GdColour sClrErrDarkBlue = { 0.0, 0.0, 6.0 };      // @ 801A80A0
+struct GdColour sClrPink = { 1.0, 0.0, 1.0 };             // @ 801A80AC
+struct GdColour sClrBlack = { 0.0, 0.0, 0.0 };            // @ 801A80B8
+struct GdColour sClrGrey = { 0.6, 0.6, 0.6 };             // @ 801A80C4
+struct GdColour sClrDarkGrey = { 0.4, 0.4, 0.4 };         // @ 801A80D0
+struct GdColour sClrYellow = { 1.0, 1.0, 0.0 };           // @ 801A80DC
+struct GdColour sLightColours[1] = { { 1.0, 1.0, 0.0 } }; // @ 801A80E8
+struct GdColour *sSelectedColour = &sClrRed;              // @ 801A80F4
 struct ObjCamera *gViewUpdateCamera = NULL;                      // @ 801A80F8
-UNUSED static void *sUnref801A80FC = NULL;
-static s32 sUnreadShapeFlag = 0;       // @ 801A8100
+void *sUnref801A80FC = NULL;
+s32 sUnreadShapeFlag = 0;       // @ 801A8100
 struct GdColour *sColourPalette[5] = { // @ 801A8104
     &sClrWhite, &sClrYellow, &sClrRed, &sClrBlack, &sClrBlack
 };
@@ -73,28 +73,28 @@ struct GdColour *sWhiteBlack[2] = {
     &sClrWhite,
     &sClrBlack,
 };
-UNUSED static Mat4f sUnref801A8120 = {
+Mat4f sUnref801A8120 = {
     { 1.0, 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0, 1.0 }
 };
-UNUSED static Mat4f sUnrefIden801A8160 = {
+Mat4f sUnrefIden801A8160 = {
     { 1.0, 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0, 1.0 }
 };
-static s32 sLightDlCounter = 1; // @ 801A81A0
-UNUSED static s32 sUnref801A81A4[4] = { 0 };
+s32 sLightDlCounter = 1; // @ 801A81A0
+s32 sUnref801A81A4[4] = { 0 };
 
 // bss
 u8 gUnref_801B9B30[0x88];
 struct ObjGroup *gGdLightGroup; // @ 801B9BB8; is this the main light group? only light group?
 
-UNUSED static u8 sUnref_801B9BBC[0x40];
-static enum SceneType sSceneProcessType; // @ 801B9C00
-static s32 sUseSelectedColor;            // @ 801B9C04
-static s16 sPickBuffer[100];             ///< buffer of objects near click
-static s32 sPickDataTemp;                ///< now, only data is the object number of a selected joint
-static f32 sPickObjDistance;             ///< distance between object position and cursor click location
-static struct GdObj *sPickedObject;      ///< object selected with cursor
+u8 sUnref_801B9BBC[0x40];
+enum SceneType sSceneProcessType; // @ 801B9C00
+s32 sUseSelectedColor;            // @ 801B9C04
+s16 sPickBuffer[100];             ///< buffer of objects near click
+s32 sPickDataTemp;                ///< now, only data is the object number of a selected joint
+f32 sPickObjDistance;             ///< distance between object position and cursor click location
+struct GdObj *sPickedObject;      ///< object selected with cursor
 /// Various counters and pointers set in update_view() and used in various `draw_XXX` functions
-static struct {
+struct {
     u8 filler1[4];        // @ 801B9CE0
     struct ObjView *view; // @ 801B9CE4
     s32 unreadCounter;    // @ 801B9CE8
@@ -102,13 +102,13 @@ static struct {
     s32 shapesDrawn;      // @ 801B9CF0
     s32 unused;           // @ 801B9CF4
 } sUpdateViewState;
-static struct ObjLight *sPhongLight;          // material light? phong light?
-static struct GdVec3f sPhongLightPosition;    //@ 801B9D00; guess; light source unit position for light
-                                              // flagged 0x20 (sPhongLight)
-static struct GdVec3f sLightPositionOffset;   // @ 801B9D10
-static struct GdVec3f sLightPositionCache[8]; // @ 801B9D20; unit positions
-static s32 sNumActiveLights;                  // @ 801B9D80; maybe?
-static struct GdVec3f sGrabCords;             ///< x, y grabbable point near cursor
+struct ObjLight *sPhongLight;          // material light? phong light?
+struct GdVec3f sPhongLightPosition;    //@ 801B9D00; guess; light source unit position for light
+                                       // flagged 0x20 (sPhongLight)
+struct GdVec3f sLightPositionOffset;   // @ 801B9D10
+struct GdVec3f sLightPositionCache[8]; // @ 801B9D20; unit positions
+s32 sNumActiveLights;                  // @ 801B9D80; maybe?
+struct GdVec3f sGrabCords;             ///< x, y grabbable point near cursor
 
 /**
  * Set the ambient light color and turn on G_CULL_BACK.

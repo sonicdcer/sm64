@@ -6,7 +6,7 @@ struct RacingPenguinData {
     f32 height;
 };
 
-static struct RacingPenguinData sRacingPenguinData[] = {
+struct RacingPenguinData sRacingPenguinData[] = {
     /* RACING_PENGUIN_BP_THIN */ { DIALOG_055, 200.0f, 200.0f },
     /* RACING_PENGUIN_BP_FAT  */ { DIALOG_164, 350.0f, 250.0f },
 };
@@ -19,7 +19,7 @@ void bhv_racing_penguin_init(void) {
     }
 }
 
-static void racing_penguin_act_wait_for_mario(void) {
+void racing_penguin_act_wait_for_mario(void) {
     if (o->oTimer > o->oRacingPenguinInitTextCooldown && o->oPosY - gMarioObject->oPosY <= 0.0f
         && cur_obj_can_mario_activate_textbox_2(400.0f, 400.0f)) {
         o->oAction = RACING_PENGUIN_ACT_SHOW_INIT_TEXT;

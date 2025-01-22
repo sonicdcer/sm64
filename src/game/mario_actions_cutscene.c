@@ -29,24 +29,24 @@
 #include "sound_init.h"
 #include "rumble_init.h"
 
-static struct Object *sIntroWarpPipeObj;
-static struct Object *sEndPeachObj;
-static struct Object *sEndRightToadObj;
-static struct Object *sEndLeftToadObj;
-static struct Object *sEndJumboStarObj;
-static UNUSED s32 sUnused;
-static s16 sEndPeachAnimation;
-static s16 sEndToadAnims[2];
+struct Object *sIntroWarpPipeObj;
+struct Object *sEndPeachObj;
+struct Object *sEndRightToadObj;
+struct Object *sEndLeftToadObj;
+struct Object *sEndJumboStarObj;
+UNUSED s32 sUnused;
+s16 sEndPeachAnimation;
+s16 sEndToadAnims[2];
 
-static Vp sEndCutsceneVp = { { { 640, 480, 511, 0 }, { 640, 480, 511, 0 } } };
-static struct CreditsEntry *sDispCreditsEntry = NULL;
+Vp sEndCutsceneVp = { { { 640, 480, 511, 0 }, { 640, 480, 511, 0 } } };
+struct CreditsEntry *sDispCreditsEntry = NULL;
 
 // related to peach gfx?
-static s8 D_8032CBE4 = 0;
-static s8 D_8032CBE8 = 0;
-static s8 D_8032CBEC[7] = { 2, 3, 2, 1, 2, 3, 2 };
+s8 D_8032CBE4 = 0;
+s8 D_8032CBE8 = 0;
+s8 D_8032CBEC[7] = { 2, 3, 2, 1, 2, 3, 2 };
 
-static u8 sStarsNeededForDialog[] = { 1, 3, 8, 30, 50, 70 };
+u8 sStarsNeededForDialog[] = { 1, 3, 8, 30, 50, 70 };
 
 /**
  * Data for the jumbo star cutscene. It specifies the flight path after triple
@@ -58,7 +58,7 @@ static u8 sStarsNeededForDialog[] = { 1, 3, 8, 30, 50, 70 };
  * The last three numbers of each entry are x, y and z coordinates of points
  * that define the curve.
  */
-static Vec4s sJumboStarKeyframes[27] = {
+Vec4s sJumboStarKeyframes[27] = {
     { 20, 0, 678, -2916 },      { 30, 0, 680, -3500 },      { 40, 1000, 700, -4000 },
     { 50, 2500, 750, -3500 },   { 50, 3500, 800, -2000 },   { 50, 4000, 850, 0 },
     { 50, 3500, 900, 2000 },    { 50, 2000, 950, 3500 },    { 50, 0, 1000, 4000 },
@@ -1653,13 +1653,13 @@ s32 act_feet_stuck_in_ground(struct MarioState *m) {
  * Resets action state and action timer, adds 1 to the action arg (responsible
  * for keeping track of what step of the cutscene Mario is in.)
  */
-static void advance_cutscene_step(struct MarioState *m) {
+void advance_cutscene_step(struct MarioState *m) {
     m->actionState = 0;
     m->actionTimer = 0;
     m->actionArg++;
 }
 
-static void intro_cutscene_hide_hud_and_mario(struct MarioState *m) {
+void intro_cutscene_hide_hud_and_mario(struct MarioState *m) {
     gHudDisplay.flags = HUD_DISPLAY_NONE;
     m->statusForCamera->cameraEvent = CAM_EVENT_START_INTRO;
     m->marioObj->header.gfx.node.flags &= ~GRAPH_RENDER_ACTIVE;

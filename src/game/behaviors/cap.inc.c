@@ -1,6 +1,6 @@
 // cap.inc.c
 
-static struct ObjectHitbox sCapHitbox = {
+struct ObjectHitbox sCapHitbox = {
     /* interactType:      */ INTERACT_CAP,
     /* downOffset:        */ 0,
     /* damageOrCoinValue: */ 0,

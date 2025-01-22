@@ -310,7 +310,7 @@ void ukiki_act_jump(void) {
 /**
  * Waypoints that lead from the top of the mountain to the cage.
  */
-static Trajectory sCageUkikiPath[] = {
+Trajectory sCageUkikiPath[] = {
     TRAJECTORY_POS(0, /*pos*/  1011, 2306,  -285),
     TRAJECTORY_POS(0, /*pos*/  1151, 2304,  -510),
     TRAJECTORY_POS(0, /*pos*/  1723, 1861,  -964),

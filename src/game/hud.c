@@ -29,9 +29,9 @@ struct PowerMeterHUD {
 
 // Stores health segmented value defined by numHealthWedges
 // When the HUD is rendered this value is 8, full health.
-static s16 sPowerMeterStoredHealth;
+s16 sPowerMeterStoredHealth;
 
-static struct PowerMeterHUD sPowerMeterHUD = {
+struct PowerMeterHUD sPowerMeterHUD = {
     POWER_METER_HIDDEN,
     140,
     166,
@@ -51,7 +51,7 @@ UNUSED static s16 sUnusedHUDValue2 = 10;
 UNUSED static s32 sUnusedHUDValue2 = 10;
 #endif
 
-static s16 sCameraHUDStatus = CAM_STATUS_NONE;
+s16 sCameraHUDStatus = CAM_STATUS_NONE;
 
 /**
  * Renders a rgba16 16x16 glyph texture from a table list.

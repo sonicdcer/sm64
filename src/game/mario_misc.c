@@ -56,7 +56,7 @@ enum UnlockDoorStarStates {
  * The eye texture on succesive frames of Mario's blink animation.
  * He intentionally blinks twice each time.
  */
-static s8 gMarioBlinkAnimation[7] = { 1, 2, 1, 0, 1, 2, 1 };
+s8 gMarioBlinkAnimation[7] = { 1, 2, 1, 0, 1, 2, 1 };
 
 /**
  * The scale values per frame for Mario's foot/hand for his attack animation
@@ -66,7 +66,7 @@ static s8 gMarioBlinkAnimation[7] = { 1, 2, 1, 0, 1, 2, 1 };
  * All combined, this means e.g. the first animation scales Mario's fist by {2.4, 1.6, 1.2, 1.0} on
  * successive frames.
  */
-static s8 gMarioAttackScaleAnimation[3 * 6] = {
+s8 gMarioAttackScaleAnimation[3 * 6] = {
     10, 12, 16, 24, 10, 10, 10, 14, 20, 30, 10, 10, 10, 16, 20, 26, 26, 20,
 };
 

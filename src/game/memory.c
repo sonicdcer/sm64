@@ -63,7 +63,7 @@ FORCE_BSS u8 *sPoolEnd;
 FORCE_BSS struct MainPoolBlock *sPoolListHeadL;
 FORCE_BSS struct MainPoolBlock *sPoolListHeadR;
 
-static struct MainPoolState *gMainPoolState = NULL;
+struct MainPoolState *gMainPoolState = NULL;
 
 uintptr_t set_segment_base_addr(s32 segment, void *addr) {
     sSegmentTable[segment] = (uintptr_t) addr & 0x1FFFFFFF;

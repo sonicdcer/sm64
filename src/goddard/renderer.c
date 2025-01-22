@@ -102,118 +102,118 @@ static struct ObjView *D_801BE994; // store if View flag 0x40 set
 
 u8 EUpad4[0x88];
 #endif
-static OSContStatus D_801BAE60[4];
-static OSContPad sGdContPads[4];    // @ 801BAE70
-static OSContPad sPrevFrameCont[4]; // @ 801BAE88
-static u8 D_801BAEA0;
-static struct ObjGadget *sTimerGadgets[GD_NUM_TIMERS]; // @ 801BAEA8
-static u32 D_801BAF28;                                 // RAM addr offset?
-static s16 sTriangleBuf[13][8];                          // [[s16; 8]; 13]? vert indices?
+OSContStatus D_801BAE60[4];
+OSContPad sGdContPads[4];    // @ 801BAE70
+OSContPad sPrevFrameCont[4]; // @ 801BAE88
+u8 D_801BAEA0;
+struct ObjGadget *sTimerGadgets[GD_NUM_TIMERS]; // @ 801BAEA8
+u32 D_801BAF28;                                 // RAM addr offset?
+s16 sTriangleBuf[13][8];                          // [[s16; 8]; 13]? vert indices?
 UNUSED static u32 unref_801bb000[3];
-static u8 *sMemBlockPoolBase; // @ 801BB00C
-static u32 sAllocMemory;      // @ 801BB010; malloc-ed bytes
+u8 *sMemBlockPoolBase; // @ 801BB00C
+u32 sAllocMemory;      // @ 801BB010; malloc-ed bytes
 UNUSED static u32 unref_801bb014;
-static s32 D_801BB018;
-static s32 D_801BB01C;
+s32 D_801BB018;
+s32 D_801BB01C;
 void *sLoadedTextures[0x10];          // texture pointers
-static s32 sTextureDisplayLists[0x10];            // gd_dl indices
-static s16 sVtxCvrtTCBuf[2];            // @ 801BB0A0
-static s32 sCarGdDlNum;                 // @ 801BB0A4
-static struct ObjGroup *sYoshiSceneGrp; // @ 801BB0A8
-static s32 unusedDl801BB0AC;                  // unused DL number
-static struct ObjGroup *sMarioSceneGrp; // @ 801BB0B0
-static s32 D_801BB0B4;                  // second offset into sTriangleBuf
-static struct ObjGroup *sCarSceneGrp;   // @ 801BB0B8
-static s32 sVertexBufCount; // vtx's to load into RPD? Vtx len in GD Dl and in the lower bank (AF30)
-static struct ObjView *sYoshiSceneView; // @ 801BB0C0
-static s32 sTriangleBufCount;                  // number of triangles in sTriangleBuf
-static struct ObjView *sMSceneView;     // @ 801BB0C8; Mario scene view
-static s32 sVertexBufStartIndex;                  // Vtx start in GD Dl
-static struct ObjView *sCarSceneView;   // @ 801BB0D0
-static s32 sUpdateYoshiScene;           // @ 801BB0D4; update dl Vtx from ObjVertex?
-static s32 sUpdateMarioScene;           // @ 801BB0D8; update dl Vtx from ObjVertex?
+s32 sTextureDisplayLists[0x10];            // gd_dl indices
+s16 sVtxCvrtTCBuf[2];            // @ 801BB0A0
+s32 sCarGdDlNum;                 // @ 801BB0A4
+struct ObjGroup *sYoshiSceneGrp; // @ 801BB0A8
+s32 unusedDl801BB0AC;                  // unused DL number
+struct ObjGroup *sMarioSceneGrp; // @ 801BB0B0
+s32 D_801BB0B4;                  // second offset into sTriangleBuf
+struct ObjGroup *sCarSceneGrp;   // @ 801BB0B8
+s32 sVertexBufCount; // vtx's to load into RPD? Vtx len in GD Dl and in the lower bank (AF30)
+struct ObjView *sYoshiSceneView; // @ 801BB0C0
+s32 sTriangleBufCount;                  // number of triangles in sTriangleBuf
+struct ObjView *sMSceneView;     // @ 801BB0C8; Mario scene view
+s32 sVertexBufStartIndex;                  // Vtx start in GD Dl
+struct ObjView *sCarSceneView;   // @ 801BB0D0
+s32 sUpdateYoshiScene;           // @ 801BB0D4; update dl Vtx from ObjVertex?
+s32 sUpdateMarioScene;           // @ 801BB0D8; update dl Vtx from ObjVertex?
 UNUSED static u32 unref_801bb0dc;
-static s32 sUpdateCarScene; // @ 801BB0E0; guess, not really used
+s32 sUpdateCarScene; // @ 801BB0E0; guess, not really used
 UNUSED static u32 unref_801bb0e4;
-static struct GdVec3f sTextDrawPos;  // position to draw text? only set in one function, never used
+struct GdVec3f sTextDrawPos;  // position to draw text? only set in one function, never used
 UNUSED static u32 unref_801bb0f8[2];
-static Mtx sIdnMtx;           // @ 801BB100
-static Mat4f sInitIdnMat4;    // @ 801BB140
-static s8 sVtxCvrtNormBuf[3]; // @ 801BB180
-static s16 sAlpha;
-static s32 sNumLights;
-static struct GdColour sAmbScaleColour;       // @ 801BB190
-static struct GdColour sLightScaleColours[2]; // @ 801BB1A0
-static struct LightDirVec sLightDirections[2];
-static s32 sLightId;
-static Hilite sHilites[600];
-static struct GdVec3f D_801BD758;
-static struct GdVec3f D_801BD768; // had to migrate earlier
-static u32 D_801BD774;
-static struct GdObj *sMenuGadgets[9]; // @ 801BD778; d_obj ptr storage? menu?
-static struct ObjView *sDebugViews[2];  // Seems to be a list of ObjViews for displaying debug info
-static struct GdDisplayList *sStaticDl;     // @ 801BD7A8
-static struct GdDisplayList *sDynamicMainDls[2]; // @ 801BD7B0
-static struct GdDisplayList *sGdDlStash;    // @ 801BD7B8
-static struct GdDisplayList *sMHeadMainDls[2]; // @ 801BD7C0; two DLs, double buffered one per frame - seem to be basic dls that branch to actual lists?
-static struct GdDisplayList *sViewDls[3][2];       // I guess? 801BD7C8 -> 801BD7E0?
-static struct GdDisplayList *sGdDLArray[MAX_GD_DLS]; // @ 801BD7E0; indexed by dl number (gddl+0x44)
-static s32 sPickBufLen;                              // @ 801BE780
-static s32 sPickBufPosition;                         // @ 801BE784
-static s16 *sPickBuf;                                // @ 801BE788
-static LookAt D_801BE790[2];
-static LookAt D_801BE7D0[3];
+Mtx sIdnMtx;           // @ 801BB100
+Mat4f sInitIdnMat4;    // @ 801BB140
+s8 sVtxCvrtNormBuf[3]; // @ 801BB180
+s16 sAlpha;
+s32 sNumLights;
+struct GdColour sAmbScaleColour;       // @ 801BB190
+struct GdColour sLightScaleColours[2]; // @ 801BB1A0
+struct LightDirVec sLightDirections[2];
+s32 sLightId;
+Hilite sHilites[600];
+struct GdVec3f D_801BD758;
+struct GdVec3f D_801BD768; // had to migrate earlier
+u32 D_801BD774;
+struct GdObj *sMenuGadgets[9]; // @ 801BD778; d_obj ptr storage? menu?
+struct ObjView *sDebugViews[2];  // Seems to be a list of ObjViews for displaying debug info
+struct GdDisplayList *sStaticDl;     // @ 801BD7A8
+struct GdDisplayList *sDynamicMainDls[2]; // @ 801BD7B0
+struct GdDisplayList *sGdDlStash;    // @ 801BD7B8
+struct GdDisplayList *sMHeadMainDls[2]; // @ 801BD7C0; two DLs, double buffered one per frame - seem to be basic dls that branch to actual lists?
+struct GdDisplayList *sViewDls[3][2];       // I guess? 801BD7C8 -> 801BD7E0?
+struct GdDisplayList *sGdDLArray[MAX_GD_DLS]; // @ 801BD7E0; indexed by dl number (gddl+0x44)
+s32 sPickBufLen;                              // @ 801BE780
+s32 sPickBufPosition;                         // @ 801BE784
+s16 *sPickBuf;                                // @ 801BE788
+LookAt D_801BE790[2];
+LookAt D_801BE7D0[3];
 #if defined(VERSION_JP) || defined(VERSION_US)
-static OSMesgQueue D_801BE830; // controller msg queue
-static OSMesg D_801BE848[10];
+OSMesgQueue D_801BE830; // controller msg queue
+OSMesg D_801BE848[10];
 UNUSED static u32 unref_801be870[16];
-static OSMesgQueue D_801BE8B0;
-static OSMesgQueue sGdDMAQueue; // @ 801BE8C8
+OSMesgQueue D_801BE8B0;
+OSMesgQueue sGdDMAQueue; // @ 801BE8C8
 UNUSED static u32 unref_801be8e0[25];
-static OSMesg sGdMesgBuf[1]; // @ 801BE944
+OSMesg sGdMesgBuf[1]; // @ 801BE944
 UNUSED static u32 unref_801be948[13];
-static OSMesg sGdDMACompleteMsg; // msg buf for D_801BE8B0 queue
-static OSIoMesg sGdDMAReqMesg;
-static struct ObjView *D_801BE994; // store if View flag 0x40 set
+OSMesg sGdDMACompleteMsg; // msg buf for D_801BE8B0 queue
+OSIoMesg sGdDMAReqMesg;
+struct ObjView *D_801BE994; // store if View flag 0x40 set
 #endif
 
 // data
 UNUSED static u32 unref_801a8670 = 0;
-static s32 D_801A8674 = 0;
+s32 D_801A8674 = 0;
 UNUSED static u32 unref_801a8678 = 0;
-static s32 D_801A867C = 0;
-static s32 D_801A8680 = 0;
-static f32 sTracked1FrameTime = 0.0f; // @ 801A8684
-static f32 sDynamicsTime = 0.0f;      // @ 801A8688
-static f32 sDLGenTime = 0.0f;         // @ 801A868C
-static f32 sRCPTime = 0.0f;           // @ 801A8690
-static f32 sTimeScaleFactor = 1.0f;   // @ D_801A8694
-static u32 sMemBlockPoolSize = 1;     // @ 801A8698
-static s32 sMemBlockPoolUsed = 0;     // @ 801A869C
-static s32 sTextureCount = 0;  // maybe?
-static struct GdTimer *D_801A86A4 = NULL; // timer for dlgen, dynamics, or rcp
-static struct GdTimer *D_801A86A8 = NULL; // timer for dlgen, dynamics, or rcp
-static struct GdTimer *D_801A86AC = NULL; // timer for dlgen, dynamics, or rcp
+s32 D_801A867C = 0;
+s32 D_801A8680 = 0;
+f32 sTracked1FrameTime = 0.0f; // @ 801A8684
+f32 sDynamicsTime = 0.0f;      // @ 801A8688
+f32 sDLGenTime = 0.0f;         // @ 801A868C
+f32 sRCPTime = 0.0f;           // @ 801A8690
+f32 sTimeScaleFactor = 1.0f;   // @ D_801A8694
+u32 sMemBlockPoolSize = 1;     // @ 801A8698
+s32 sMemBlockPoolUsed = 0;     // @ 801A869C
+s32 sTextureCount = 0;  // maybe?
+struct GdTimer *D_801A86A4 = NULL; // timer for dlgen, dynamics, or rcp
+struct GdTimer *D_801A86A8 = NULL; // timer for dlgen, dynamics, or rcp
+struct GdTimer *D_801A86AC = NULL; // timer for dlgen, dynamics, or rcp
 s32 gGdFrameBufNum = 0;                      // @ 801A86B0
 UNUSED static u32 unref_801a86B4 = 0;
-static struct ObjShape *sHandShape = NULL; // @ 801A86B8
-static s32 D_801A86BC = 1;
-static s32 D_801A86C0 = 0; // gd_dl id for something?
+struct ObjShape *sHandShape = NULL; // @ 801A86B8
+s32 D_801A86BC = 1;
+s32 D_801A86C0 = 0; // gd_dl id for something?
 UNUSED static u32 unref_801a86C4 = 10;
-static s32 sMtxParamType = G_MTX_PROJECTION;
-static struct GdVec3f D_801A86CC = { 1.0f, 1.0f, 1.0f };
-static struct ObjView *sActiveView = NULL;  // @ 801A86D8 current view? used when drawing dl
-static struct ObjView *sScreenView = NULL; // @ 801A86DC
-static struct ObjView *D_801A86E0 = NULL;
-static struct ObjView *sHandView = NULL; // @ 801A86E4
-static struct ObjView *sMenuView = NULL; // @ 801A86E8
-static u32 sItemsInMenu = 0;             // @ 801A86EC
-static s32 sDebugViewsCount = 0;               // number of elements in the sDebugViews array
-static s32 sCurrDebugViewIndex = 0;             // @ 801A86F4; timing activate cool down counter?
+s32 sMtxParamType = G_MTX_PROJECTION;
+struct GdVec3f D_801A86CC = { 1.0f, 1.0f, 1.0f };
+struct ObjView *sActiveView = NULL;  // @ 801A86D8 current view? used when drawing dl
+struct ObjView *sScreenView = NULL; // @ 801A86DC
+struct ObjView *D_801A86E0 = NULL;
+struct ObjView *sHandView = NULL; // @ 801A86E4
+struct ObjView *sMenuView = NULL; // @ 801A86E8
+u32 sItemsInMenu = 0;             // @ 801A86EC
+s32 sDebugViewsCount = 0;               // number of elements in the sDebugViews array
+s32 sCurrDebugViewIndex = 0;             // @ 801A86F4; timing activate cool down counter?
 UNUSED static u32 unref_801a86F8 = 0;
-static struct GdDisplayList *sCurrentGdDl = NULL; // @ 801A86FC
-static u32 sGdDlCount = 0;                        // @ 801A8700
-static struct DynListBankInfo sDynLists[] = {     // @ 801A8704
+struct GdDisplayList *sCurrentGdDl = NULL; // @ 801A86FC
+u32 sGdDlCount = 0;                        // @ 801A8700
+struct DynListBankInfo sDynLists[] = {     // @ 801A8704
     { STD_LIST_BANK, dynlist_test_cube },
     { STD_LIST_BANK, dynlist_spot_shape },
     { STD_LIST_BANK, dynlist_mario_master },
@@ -221,87 +221,87 @@ static struct DynListBankInfo sDynLists[] = {     // @ 801A8704
 };
 
 // textures and display list data
-UNUSED static Gfx gd_texture1_dummy_aligner1[] = { // @ 801A8728
+UNUSED Gfx gd_texture1_dummy_aligner1[] = { // @ 801A8728
     gsSPEndDisplayList(),
 };
 
-ALIGNED8 static Texture gd_texture_hand_open[] = {
+ALIGNED8 Texture gd_texture_hand_open[] = {
 #include "textures/intro_raw/hand_open.rgba16.inc.c"
 };
 
-UNUSED static Gfx gd_texture2_dummy_aligner1[] = {
+UNUSED Gfx gd_texture2_dummy_aligner1[] = {
     gsSPEndDisplayList()
 };
 
-ALIGNED8 static Texture gd_texture_hand_closed[] = {
+ALIGNED8  Texture gd_texture_hand_closed[] = {
 #include "textures/intro_raw/hand_closed.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_red_star_0[] = {
+ALIGNED8  Texture gd_texture_red_star_0[] = {
 #include "textures/intro_raw/red_star_0.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_red_star_1[] = {
+ALIGNED8  Texture gd_texture_red_star_1[] = {
 #include "textures/intro_raw/red_star_1.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_red_star_2[] = {
+ALIGNED8  Texture gd_texture_red_star_2[] = {
 #include "textures/intro_raw/red_star_2.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_red_star_3[] = {
+ALIGNED8  Texture gd_texture_red_star_3[] = {
 #include "textures/intro_raw/red_star_3.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_red_star_4[] = {
+ALIGNED8  Texture gd_texture_red_star_4[] = {
 #include "textures/intro_raw/red_star_4.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_red_star_5[] = {
+ALIGNED8  Texture gd_texture_red_star_5[] = {
 #include "textures/intro_raw/red_star_5.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_red_star_6[] = {
+ALIGNED8  Texture gd_texture_red_star_6[] = {
 #include "textures/intro_raw/red_star_6.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_red_star_7[] = {
+ALIGNED8  Texture gd_texture_red_star_7[] = {
 #include "textures/intro_raw/red_star_7.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_white_star_0[] = {
+ALIGNED8  Texture gd_texture_white_star_0[] = {
 #include "textures/intro_raw/white_star_0.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_white_star_1[] = {
+ALIGNED8  Texture gd_texture_white_star_1[] = {
 #include "textures/intro_raw/white_star_1.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_white_star_2[] = {
+ALIGNED8  Texture gd_texture_white_star_2[] = {
 #include "textures/intro_raw/white_star_2.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_white_star_3[] = {
+ALIGNED8  Texture gd_texture_white_star_3[] = {
 #include "textures/intro_raw/white_star_3.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_white_star_4[] = {
+ALIGNED8  Texture gd_texture_white_star_4[] = {
 #include "textures/intro_raw/white_star_4.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_white_star_5[] = {
+ALIGNED8  Texture gd_texture_white_star_5[] = {
 #include "textures/intro_raw/white_star_5.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_white_star_6[] = {
+ALIGNED8  Texture gd_texture_white_star_6[] = {
 #include "textures/intro_raw/white_star_6.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_white_star_7[] = {
+ALIGNED8  Texture gd_texture_white_star_7[] = {
 #include "textures/intro_raw/white_star_7.rgba16.inc.c"
 };
 
-static Vtx_t gd_vertex_star[] = {
+ Vtx_t gd_vertex_star[] = {
     {{-64,   0, 0}, 0, {  0, 992}, {0x00, 0x00, 0x7F}},
     {{ 64,   0, 0}, 0, {992, 992}, {0x00, 0x00, 0x7F}},
     {{ 64, 128, 0}, 0, {992,   0}, {0x00, 0x00, 0x7F}},
@@ -309,14 +309,14 @@ static Vtx_t gd_vertex_star[] = {
 };
 
 //! no references to these vertices
-UNUSED static Vtx_t gd_unused_vertex[] = {
+UNUSED Vtx_t gd_unused_vertex[] = {
     {{16384, 0,     0}, 0, {0, 16384}, {0x00, 0x00, 0x00}},
     {{    0, 0, 16384}, 0, {0,     0}, {0x00, 0x00, 0x40}},
     {{    0, 0,     0}, 0, {0,     0}, {0x00, 0x00, 0x00}},
     {{    0, 0,     0}, 0, {0,     0}, {0x00, 0x00, 0x00}},
 };
 
-static Gfx gd_dl_star_common[] = {
+ Gfx gd_dl_star_common[] = {
     gsDPSetCombineMode(G_CC_DECALRGBA, G_CC_DECALRGBA),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsDPSetRenderMode(G_RM_AA_ZB_TEX_EDGE, G_RM_NOOP2),
@@ -334,103 +334,103 @@ static Gfx gd_dl_star_common[] = {
     gsSPEndDisplayList(),
 };
 
-static Gfx gd_dl_red_star_0[] = {
+ Gfx gd_dl_red_star_0[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_red_star_0),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_red_star_1[] = {
+Gfx gd_dl_red_star_1[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_red_star_1),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_red_star_2[] = {
+Gfx gd_dl_red_star_2[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_red_star_2),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_red_star_3[] = {
+Gfx gd_dl_red_star_3[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_red_star_3),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_red_star_4[] = {
+Gfx gd_dl_red_star_4[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_red_star_4),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_red_star_5[] = {
+Gfx gd_dl_red_star_5[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_red_star_5),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_red_star_6[] = {
+Gfx gd_dl_red_star_6[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_red_star_6),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_red_star_7[] = {
+Gfx gd_dl_red_star_7[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_red_star_7),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_silver_star_0[] = {
+Gfx gd_dl_silver_star_0[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_white_star_0),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_silver_star_1[] = {
+Gfx gd_dl_silver_star_1[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_white_star_1),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_silver_star_2[] = {
+Gfx gd_dl_silver_star_2[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_white_star_2),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_silver_star_3[] = {
+Gfx gd_dl_silver_star_3[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_white_star_3),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_silver_star_4[] = {
+Gfx gd_dl_silver_star_4[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_white_star_4),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_silver_star_5[] = {
+Gfx gd_dl_silver_star_5[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_white_star_5),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_silver_star_6[] = {
+Gfx gd_dl_silver_star_6[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_white_star_6),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx gd_dl_silver_star_7[] = {
+Gfx gd_dl_silver_star_7[] = {
     gsDPPipeSync(),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_white_star_7),
     gsSPBranchList(gd_dl_star_common),
 };
 
-static Gfx *gd_red_star_dl_array[] = {
+Gfx *gd_red_star_dl_array[] = {
     gd_dl_red_star_0,
     gd_dl_red_star_0,
     gd_dl_red_star_1,
@@ -449,7 +449,7 @@ static Gfx *gd_red_star_dl_array[] = {
     gd_dl_red_star_7,
 };
 
-static Gfx *gd_silver_star_dl_array[] = {
+Gfx *gd_silver_star_dl_array[] = {
     gd_dl_silver_star_0,
     gd_dl_silver_star_0,
     gd_dl_silver_star_1,
@@ -468,40 +468,40 @@ static Gfx *gd_silver_star_dl_array[] = {
     gd_dl_silver_star_7,
 };
 
-ALIGNED8 static Texture gd_texture_sparkle_0[] = {
+ALIGNED8 Texture gd_texture_sparkle_0[] = {
 #include "textures/intro_raw/sparkle_0.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_sparkle_1[] = {
+ALIGNED8 Texture gd_texture_sparkle_1[] = {
 #include "textures/intro_raw/sparkle_1.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_sparkle_2[] = {
+ALIGNED8 Texture gd_texture_sparkle_2[] = {
 #include "textures/intro_raw/sparkle_2.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_sparkle_3[] = {
+ALIGNED8 Texture gd_texture_sparkle_3[] = {
 #include "textures/intro_raw/sparkle_3.rgba16.inc.c"
 };
 
-ALIGNED8 static Texture gd_texture_sparkle_4[] = {
+ALIGNED8 Texture gd_texture_sparkle_4[] = {
 #include "textures/intro_raw/sparkle_4.rgba16.inc.c"
 };
 
 //! No reference to this texture. Two DL's uses the same previous texture
 //  instead of using this texture.
-UNUSED ALIGNED8 static Texture gd_texture_sparkle_5[] = {
+UNUSED ALIGNED8 Texture gd_texture_sparkle_5[] = {
 #include "textures/intro_raw/sparkle_5.rgba16.inc.c"
 };
 
-static Vtx_t gd_vertex_sparkle[] = {
+Vtx_t gd_vertex_sparkle[] = {
     {{   -32,      0,      0}, 0, {      0,   1984}, {  0x00, 0x00, 0x7F, 0x00}},
     {{    32,      0,      0}, 0, {   1984,   1984}, {  0x00, 0x00, 0x7F, 0x00}},
     {{    32,     64,      0}, 0, {   1984,      0}, {  0x00, 0x00, 0x7F, 0x00}},
     {{   -32,     64,      0}, 0, {      0,      0}, {  0x00, 0x00, 0x7F, 0x00}},
 };
 
-static Gfx gd_dl_sparkle[] = {
+Gfx gd_dl_sparkle[] = {
     gsDPSetCombineMode(G_CC_MODULATERGBA_PRIM, G_CC_MODULATERGBA_PRIM),
     gsSPClearGeometryMode(G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
     gsDPSetRenderMode(G_RM_AA_ZB_TEX_EDGE, G_RM_NOOP2),
@@ -521,101 +521,101 @@ static Gfx gd_dl_sparkle[] = {
     gsSPEndDisplayList(),
 };
 
-static Gfx gd_dl_sparkle_red_color[] = {
+Gfx gd_dl_sparkle_red_color[] = {
     gsDPSetPrimColor(0, 0, 255, 0, 0, 255),
     gsSPEndDisplayList(),
 };
 
-static Gfx gd_dl_sparkle_white_color[] = {
+Gfx gd_dl_sparkle_white_color[] = {
     gsDPSetPrimColor(0, 0, 255, 255, 255, 255),
     gsSPEndDisplayList(),
 };
 
-static Gfx gd_dl_red_sparkle_0[] = {
+Gfx gd_dl_red_sparkle_0[] = {
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_red_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_0),
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx gd_dl_red_sparkle_1[] = {
+Gfx gd_dl_red_sparkle_1[] = {
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_red_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_1),
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx gd_dl_red_sparkle_2[] = {
+Gfx gd_dl_red_sparkle_2[] = {
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_red_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_2),
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx gd_dl_red_sparkle_3[] = {
+Gfx gd_dl_red_sparkle_3[] = {
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_red_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_3),
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx gd_dl_red_sparkle_4[] = {
+Gfx gd_dl_red_sparkle_4[] = {
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_red_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_4),
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx gd_dl_red_sparkle_4_dup[] ={
+Gfx gd_dl_red_sparkle_4_dup[] ={
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_red_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_4), // 4 again, correct texture would be 5
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx gd_dl_silver_sparkle_0[] = {
+Gfx gd_dl_silver_sparkle_0[] = {
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_white_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_0),
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx gd_dl_silver_sparkle_1[] = {
+Gfx gd_dl_silver_sparkle_1[] = {
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_white_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_1),
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx gd_dl_silver_sparkle_2[] = {
+Gfx gd_dl_silver_sparkle_2[] = {
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_white_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_2),
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx gd_dl_silver_sparkle_3[] = {
+Gfx gd_dl_silver_sparkle_3[] = {
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_white_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_3),
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx gd_dl_silver_sparkle_4[] = {
+Gfx gd_dl_silver_sparkle_4[] = {
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_white_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_4),
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx gd_dl_silver_sparkle_4_dup[] = {
+Gfx gd_dl_silver_sparkle_4_dup[] = {
     gsDPPipeSync(),
     gsSPDisplayList(gd_dl_sparkle_white_color),
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, gd_texture_sparkle_4), // 4 again, correct texture would be 5
     gsSPBranchList(gd_dl_sparkle),
 };
 
-static Gfx *gd_red_sparkle_dl_array[] = {
+Gfx *gd_red_sparkle_dl_array[] = {
     gd_dl_red_sparkle_4,
     gd_dl_red_sparkle_4,
     gd_dl_red_sparkle_3,
@@ -630,7 +630,7 @@ static Gfx *gd_red_sparkle_dl_array[] = {
     gd_dl_red_sparkle_4_dup,
 };
 
-static Gfx *gd_silver_sparkle_dl_array[] = {
+Gfx *gd_silver_sparkle_dl_array[] = {
     gd_dl_silver_sparkle_4,
     gd_dl_silver_sparkle_4,
     gd_dl_silver_sparkle_3,
@@ -645,15 +645,15 @@ static Gfx *gd_silver_sparkle_dl_array[] = {
     gd_dl_silver_sparkle_4_dup,
 };
 
-UNUSED static Gfx gd_texture3_dummy_aligner1[] = {
+UNUSED Gfx gd_texture3_dummy_aligner1[] = {
     gsSPEndDisplayList(),
 };
 
-ALIGNED8 static Texture gd_texture_mario_face_shine[] = {
+ALIGNED8 Texture gd_texture_mario_face_shine[] = {
 #include "textures/intro_raw/mario_face_shine.ia8.inc.c"
 };
 
-static Gfx gd_dl_mario_face_shine[] = {
+Gfx gd_dl_mario_face_shine[] = {
     gsSPSetGeometryMode(G_TEXTURE_GEN),
     gsSPTexture(0x07C0, 0x07C0, 0, G_TX_RENDERTILE, G_ON),
     gsDPSetTexturePersp(G_TP_PERSP),
@@ -665,13 +665,13 @@ static Gfx gd_dl_mario_face_shine[] = {
     gsSPEndDisplayList(),
 };
 
-static Gfx gd_dl_rsp_init[] = {
+Gfx gd_dl_rsp_init[] = {
     gsSPClearGeometryMode(0xFFFFFFFF),
     gsSPSetGeometryMode(G_SHADING_SMOOTH | G_SHADE),
     gsSPEndDisplayList(),
 };
 
-static Gfx gd_dl_rdp_init[] = {
+Gfx gd_dl_rdp_init[] = {
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsDPSetCycleType(G_CYC_1CYCLE),
@@ -696,24 +696,24 @@ float sGdPerspTimer = 1.0;
 
 UNUSED static u32 gd_unused_pad2 = 0;
 
-UNUSED static Gfx gd_texture4_dummy_aligner1[] = {
+UNUSED Gfx gd_texture4_dummy_aligner1[] = {
     gsDPPipeSync(),
     gsSPEndDisplayList(),
 };
 
-static Vtx_t gd_unused_mesh_vertex_group1[] = {
+Vtx_t gd_unused_mesh_vertex_group1[] = {
     {{-8,  8,  0}, 0, {  0,  0}, {  0x00, 0x00, 0x00, 0xFF}},
     {{ 8, -2,  0}, 0, {  0,  0}, {  0x00, 0x00, 0x00, 0xFF}},
     {{ 2, -8,  0}, 0, {  0,  0}, {  0x00, 0x00, 0x00, 0xFF}},
 };
 
-static Vtx_t gd_unused_mesh_vertex_group2[] = {
+Vtx_t gd_unused_mesh_vertex_group2[] = {
     {{-6,  6,  0}, 0, {  0,  0}, {  0xFF, 0xFF, 0xFF, 0xFF}},
     {{ 7, -3,  0}, 0, {  0,  0}, {  0xFF, 0x00, 0x00, 0xFF}},
     {{ 3, -7,  0}, 0, {  0,  0}, {  0xFF, 0x00, 0x00, 0xFF}},
 };
 
-UNUSED static Gfx gd_dl_unused_mesh[] = {
+UNUSED Gfx gd_dl_unused_mesh[] = {
     gsDPPipeSync(),
     gsDPSetRenderMode(G_RM_OPA_SURF, G_RM_OPA_SURF2),
     gsSPClearGeometryMode(0xFFFFFFFF),
@@ -726,7 +726,7 @@ UNUSED static Gfx gd_dl_unused_mesh[] = {
     gsSPEndDisplayList(),
 };
 
-static Gfx gd_dl_sprite_start_tex_block[] = {
+Gfx gd_dl_sprite_start_tex_block[] = {
     gsDPPipeSync(),
     gsDPSetCycleType(G_CYC_1CYCLE),
     gsSPTexture(0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON),
@@ -783,7 +783,7 @@ void dump_disp_list(void) {
 /**
  * Increments the current display list's Gfx index list and returns a pointer to the next Gfx element
  */
-static Gfx *next_gfx(void) {
+Gfx *next_gfx(void) {
     if (sCurrentGdDl->curGfxIdx >= sCurrentGdDl->totalGfx) {
         dump_disp_list();
         fatal_printf("Gfx list overflow");

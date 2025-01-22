@@ -19,8 +19,8 @@
 // bss
 struct ObjNet *gGdSkinNet; // @ 801BAAF0
 
-static s32 D_801BAAF4;
-static s32 sNetCount; // @ 801BAAF8
+ s32 D_801BAAF4;
+ s32 sNetCount; // @ 801BAAF8
 
 /* 2406E0 -> 240894 */
 void compute_net_bounding_box(struct ObjNet *net) {
@@ -399,7 +399,7 @@ void convert_net_verts(struct ObjNet *net) {
 }
 
 /* 241CA0 -> 241D6C */
-static void move_joints_in_net(struct ObjNet *net) {
+ void move_joints_in_net(struct ObjNet *net) {
     struct ObjGroup *grp;        // 2c
     register struct ListNode *link; // s0
     struct GdObj *obj;           // 24

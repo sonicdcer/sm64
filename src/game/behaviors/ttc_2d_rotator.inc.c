@@ -8,7 +8,7 @@
 /**
  * Speeds for the hand and the 2D cog, respectively. Negative because clockwise.
  */
-static s16 sTTC2DRotatorSpeeds[] = {
+s16 sTTC2DRotatorSpeeds[] = {
     -0x444,
     -0xCCC,
 };
@@ -18,7 +18,7 @@ static s16 sTTC2DRotatorSpeeds[] = {
  * only used for the first turn, after which it is chosen randomly.
  * These values are for the hand and the 2D cog, respectively.
  */
-static s16 sTTC2DRotatorTimeBetweenTurns[][4] = {
+s16 sTTC2DRotatorTimeBetweenTurns[][4] = {
     {
         /* TTC_SPEED_SLOW    */ 40,
         /* TTC_SPEED_FAST    */ 10,

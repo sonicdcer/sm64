@@ -20,15 +20,15 @@
 #define MIN_SWIM_STRENGTH 160
 #define MIN_SWIM_SPEED 16.0f
 
-static s16 sWasAtSurface = FALSE;
-static s16 sSwimStrength = MIN_SWIM_STRENGTH;
-static s16 sWaterCurrentSpeeds[] = { 28, 12, 8, 4 };
+s16 sWasAtSurface = FALSE;
+s16 sSwimStrength = MIN_SWIM_STRENGTH;
+s16 sWaterCurrentSpeeds[] = { 28, 12, 8, 4 };
 
-static s16 sBobTimer;
-static s16 sBobIncrement;
-static f32 sBobHeight;
+s16 sBobTimer;
+s16 sBobIncrement;
+f32 sBobHeight;
 
-static void set_swimming_at_surface_particles(struct MarioState *m, u32 particleFlag) {
+void set_swimming_at_surface_particles(struct MarioState *m, u32 particleFlag) {
     s16 atSurface = m->pos[1] >= m->waterLevel - 130;
 
     if (atSurface) {

@@ -5,7 +5,7 @@
 #include "dynlists.h"
 #include "../dynlist_proc.h"
 
-static s16 mario_Face_VtxData[][3] = {
+ s16 mario_Face_VtxData[][3] = {
     { 434, 326, -209 },   { 283, 371, -268 },   { 344, 531, -97 },    { 360, 187, -363 },
     { 162, -260, 265 },   { 172, -251, 175 },   { 218, -191, 287 },   { 173, 279, 296 },
     { 192, 226, 279 },    { 233, 346, 216 },    { 135, -283, 182 },   { 165, -299, 114 },
@@ -118,9 +118,9 @@ static s16 mario_Face_VtxData[][3] = {
     { -67, -114, 567 },   { 66, -114, 567 },    { 76, 126, 434 },     { -157, 46, 567 },
 };
 
-static struct GdVtxData mario_Face_VtxInfo = { ARRAY_COUNT(mario_Face_VtxData), 0x1, mario_Face_VtxData };
+ struct GdVtxData mario_Face_VtxInfo = { ARRAY_COUNT(mario_Face_VtxData), 0x1, mario_Face_VtxData };
 
-static u16 mario_Face_FaceData[][4] = {
+ u16 mario_Face_FaceData[][4] = {
     { 0, 43, 102, 112 },  { 0, 102, 42, 188 },  { 0, 354, 356, 188 }, { 0, 188, 198, 354 },
     { 0, 198, 188, 42 },  { 0, 43, 42, 102 },   { 1, 4, 5, 6 },       { 1, 7, 8, 9 },
     { 1, 10, 11, 5 },     { 1, 15, 16, 17 },    { 1, 18, 19, 20 },    { 1, 21, 22, 15 },
@@ -343,7 +343,7 @@ static u16 mario_Face_FaceData[][4] = {
     { 7, 156, 424, 427 },
 };
 
-static struct GdFaceData mario_Face_FaceInfo = { ARRAY_COUNT(mario_Face_FaceData), 0x1, mario_Face_FaceData };
+ struct GdFaceData mario_Face_FaceInfo = { ARRAY_COUNT(mario_Face_FaceData), 0x1, mario_Face_FaceData };
 
 struct DynList dynlist_mario_face_shape[] = {
     BeginList(),

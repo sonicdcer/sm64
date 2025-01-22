@@ -15,9 +15,9 @@
  */
 
 /* bss */
-static struct GMemBlock *sFreeBlockListHead;
-static struct GMemBlock *sUsedBlockListHead;
-static struct GMemBlock *sEmptyBlockListHead;
+struct GMemBlock *sFreeBlockListHead;
+struct GMemBlock *sUsedBlockListHead;
+struct GMemBlock *sEmptyBlockListHead;
 
 /* Forward Declarations */
 void empty_mem_block(struct GMemBlock *);

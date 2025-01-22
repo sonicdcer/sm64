@@ -21,10 +21,10 @@
  */
 
 // bss
-static char sDefSettingsMenuStr[0x100];
-static struct GdVec3f sStaticVec;
-UNUSED static struct GdVec3f unusedVec;
-static struct ObjGadget *sCurGadgetPtr;
+char sDefSettingsMenuStr[0x100];
+struct GdVec3f sStaticVec;
+struct GdVec3f unusedVec;
+struct ObjGadget *sCurGadgetPtr;
 
 // forward declarations
 static void reset_gadget_default(struct ObjGadget *);

@@ -28,12 +28,12 @@ struct GraphNodeMore {
 
 // intro geo bss
 #if defined(VERSION_SH) || defined(VERSION_CN)
-static u16 *sFramebuffers[3];
+u16 *sFramebuffers[3];
 #endif
-static s32 sGameOverFrameCounter;
-static s32 sGameOverTableIndex;
-static s16 sIntroFrameCounter;
-static s32 sTmCopyrightAlpha;
+s32 sGameOverFrameCounter;
+s32 sGameOverTableIndex;
+s16 sIntroFrameCounter;
+s32 sTmCopyrightAlpha;
 
 /**
  * Geo callback to render the "Super Mario 64" logo on the title screen
@@ -177,7 +177,7 @@ static Gfx *intro_backdrop_one_image(s32 index, s8 *backgroundTable) {
     return displayList;
 }
 
-static s8 introBackgroundIndexTable[] = {
+s8 introBackgroundIndexTable[] = {
     INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO,
     INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO,
     INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO, INTRO_BACKGROUND_SUPER_MARIO,
@@ -185,7 +185,7 @@ static s8 introBackgroundIndexTable[] = {
 };
 
 // only one table of indexes listed
-static s8 *introBackgroundTables[] = { introBackgroundIndexTable };
+s8 *introBackgroundTables[] = { introBackgroundIndexTable };
 
 /**
  * Geo callback to render the intro background tiles
@@ -213,7 +213,7 @@ Gfx *geo_intro_regular_backdrop(s32 state, struct GraphNode *node, UNUSED void *
     return dl;
 }
 
-static s8 gameOverBackgroundTable[] = {
+s8 gameOverBackgroundTable[] = {
     INTRO_BACKGROUND_GAME_OVER, INTRO_BACKGROUND_GAME_OVER, INTRO_BACKGROUND_GAME_OVER,
     INTRO_BACKGROUND_GAME_OVER, INTRO_BACKGROUND_GAME_OVER, INTRO_BACKGROUND_GAME_OVER,
     INTRO_BACKGROUND_GAME_OVER, INTRO_BACKGROUND_GAME_OVER, INTRO_BACKGROUND_GAME_OVER,

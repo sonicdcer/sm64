@@ -7,7 +7,7 @@
 /**
  * The collision models for cube and triangular prism, respectively.
  */
-static Collision const *sTTCRotatingSolidCollisionModels[] = {
+Collision const *sTTCRotatingSolidCollisionModels[] = {
     ttc_seg7_collision_07014F70,
     ttc_seg7_collision_07015008,
 };
@@ -15,7 +15,7 @@ static Collision const *sTTCRotatingSolidCollisionModels[] = {
 /**
  * The number of frames to wait before rotating for the first time.
  */
-static u8 sTTCRotatingSolidInitialDelays[] = {
+u8 sTTCRotatingSolidInitialDelays[] = {
     /* TTC_SPEED_SLOW    */ 120,
     /* TTC_SPEED_FAST    */ 40,
     /* TTC_SPEED_RANDOM  */ 0,

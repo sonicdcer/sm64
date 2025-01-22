@@ -8,7 +8,7 @@
 /**
  * Red coin's hitbox details.
  */
-static struct ObjectHitbox sRedCoinHitbox = {
+struct ObjectHitbox sRedCoinHitbox = {
     /* interactType:      */ INTERACT_COIN,
     /* downOffset:        */ 0,
     /* damageOrCoinValue: */ 2,

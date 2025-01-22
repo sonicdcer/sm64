@@ -6,7 +6,7 @@
 /**
  * Spinner speeds on each setting.
  */
-static s16 sTTCSpinnerSpeeds[] = {
+s16 sTTCSpinnerSpeeds[] = {
     /* TTC_SPEED_SLOW    */ 200,
     /* TTC_SPEED_FAST    */ 600,
     /* TTC_SPEED_RANDOM  */ 200,

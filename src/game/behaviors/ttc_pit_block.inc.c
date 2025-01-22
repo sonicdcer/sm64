@@ -7,7 +7,7 @@
 /**
  * Collision models. The second one is unused.
  */
-static Collision const *sTTCPitBlockCollisionModels[] = {
+Collision const *sTTCPitBlockCollisionModels[] = {
     ttc_seg7_collision_07015754,
     ttc_seg7_collision_070157D8,
 };
@@ -26,7 +26,7 @@ struct TTCPitBlockProperties {
  * Properties for the pit block on each speed setting when moving up and down,
  * respectively.
  */
-static struct TTCPitBlockProperties sTTCPitBlockProperties[][2] = {
+struct TTCPitBlockProperties sTTCPitBlockProperties[][2] = {
     /* TTC_SPEED_SLOW    */ { { 11, 20 }, { -9, 30 } },
     /* TTC_SPEED_FAST    */ { { 18, 15 }, { -11, 15 } },
     /* TTC_SPEED_RANDOM  */ { { 11, 20 }, { -9, -1 } },
