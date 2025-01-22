@@ -99,4 +99,5 @@ glabel bzero
 .L803236D4:
     jr    $ra
 #endif
+.size bzero, . - bzero
 

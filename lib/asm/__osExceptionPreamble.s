@@ -25,6 +25,7 @@ glabel __osExceptionPreamble
     la    $k0, __osException
     jr    $k0
      nop
+.size __osExceptionPreamble, . - __osExceptionPreamble
 
 glabel __osException
     la    $k0, __osThreadSave

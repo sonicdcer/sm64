@@ -32,4 +32,5 @@ glabel osMapTLBRdb
 
     nop
     nop
+.size osMapTLBRdb, . - osMapTLBRdb
 

@@ -51,5 +51,6 @@ glabel guScale
     sw    $zero, 0x38($a0)
     jr    $ra
      sw    $zero, 0x3c($a0)
+.size guScale, . - guScale
 
 #endif

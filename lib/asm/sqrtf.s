@@ -8,3 +8,5 @@
 glabel sqrtf
     jr $ra
      sqrt.s $f0, $f12
+.size sqrtf, . - sqrtf
+

@@ -526,7 +526,7 @@ struct Camera {
      * @warning This is NOT the camera's xz-rotation in world space. This is the angle calculated from the
      *          camera's focus TO the camera's position, instead of the other way around like it should
      *          be. It's effectively the opposite of the camera's actual yaw. Use
-     *          vec3f_get_dist_and_angle() if you need the camera's yaw.
+     *          vec3fGetDistAng() if you need the camera's yaw.
      */
     /*0x02*/ s16 yaw;
     /*0x04*/ Vec3f focus;

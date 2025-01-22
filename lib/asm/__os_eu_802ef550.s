@@ -19,3 +19,4 @@ glabel __os_eu_802ef550
     nop
     nop
     nop
+.size __os_eu_802ef550, . - __os_eu_802ef550

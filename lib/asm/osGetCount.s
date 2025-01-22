@@ -70,6 +70,7 @@ glabel osGetCount
     ld    $fp, 0x28($sp)
     jr    $ra
      addiu $sp, $sp, 0x38
+.size osGetCount, . - osGetCount
 
 #else
 
@@ -79,5 +80,6 @@ glabel osGetCount
      nop
 
     nop
+.size osGetCount, . - osGetCount
 
 #endif

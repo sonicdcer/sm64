@@ -432,3 +432,4 @@ glabel bcopy
     nop
     nop
 #endif
+.size bcopy, . - bcopy

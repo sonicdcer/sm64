@@ -59,4 +59,5 @@ glabel osMapTLB
     nop
     nop
     nop
+.size osMapTLB, . - osMapTLB
 

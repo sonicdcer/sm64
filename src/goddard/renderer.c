@@ -115,7 +115,7 @@ static u32 sAllocMemory;      // @ 801BB010; malloc-ed bytes
 UNUSED static u32 unref_801bb014;
 static s32 D_801BB018;
 static s32 D_801BB01C;
-static void *sLoadedTextures[0x10];          // texture pointers
+void *sLoadedTextures[0x10];          // texture pointers
 static s32 sTextureDisplayLists[0x10];            // gd_dl indices
 static s16 sVtxCvrtTCBuf[2];            // @ 801BB0A0
 static s32 sCarGdDlNum;                 // @ 801BB0A4
@@ -749,7 +749,7 @@ void gd_setup_cursor(struct ObjGroup *);
 void parse_p1_controller(void);
 void update_cursor(void);
 void update_view_and_dl(struct ObjView *);
-static void update_render_mode(void);
+void update_render_mode(void);
 void gddl_is_loading_shine_dl(s32);
 void func_801A3370(f32, f32, f32);
 void gd_put_sprite(u16 *, s32, s32, s32, s32);
@@ -1398,7 +1398,7 @@ void gdm_getpos(s32 id, struct GdVec3f *dst) {
 /**
  * Clamps the coordinates so that they are within the active view
  */
-static void clamp_coords_to_active_view(f32 *x, f32 *y) {
+void clamp_coords_to_active_view(f32 *x, f32 *y) {
     struct ObjView *view = sActiveView;
 
     if (*x < 0.0f) {
@@ -2003,7 +2003,7 @@ void gd_dl_flush_vertices(void) {
 /**
  * Unused - called by func_801A520C
  */
-static void func_801A01EC(void) {
+void func_801A01EC(void) {
     if (D_801BE8B0.validCount >= D_801BE8B0.msgCount) {
         osRecvMesg(&D_801BE8B0, &sGdDMACompleteMsg, OS_MESG_BLOCK);
     }
@@ -2013,7 +2013,7 @@ static void func_801A01EC(void) {
 /**
  * Unused - called by func_801A520C
  */
-static void func_801A025C(void) {
+void func_801A025C(void) {
     gGdFrameBufNum ^= 1;
     osViSwapBuffer(sScreenView->parent->colourBufs[gGdFrameBufNum]);
 }
@@ -2251,7 +2251,7 @@ void set_gd_mtx_parameters(s32 params) {
 /**
  * Adds a viewport to the current display list based on the current active view
  */
-static void gd_dl_viewport(void) {
+void gd_dl_viewport(void) {
     Vp *vp;
 
     vp = &DL_CURRENT_VP(sCurrentGdDl);
@@ -2271,7 +2271,7 @@ static void gd_dl_viewport(void) {
 }
 
 /* 2501D0 -> 250300 */
-static void update_render_mode(void) {
+void update_render_mode(void) {
     if ((sActiveView->flags & VIEW_ALLOC_ZBUF) != 0) {
         if (sAlpha != 0xff) {
             gDPSetRenderMode(next_gfx(), G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
@@ -3726,7 +3726,7 @@ void stub_renderer_19(UNUSED u32 a0) {
 /**
  * Copies `size` bytes of data from ROM address `romAddr` to RAM address `vAddr`.
  */
-static void gd_block_dma(u32 romAddr, void *vAddr, s32 size) {
+void gd_block_dma(u32 romAddr, void *vAddr, s32 size) {
     s32 blockSize;
 
     do {

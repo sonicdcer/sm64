@@ -11,4 +11,4 @@ glabel __osGetSR
      nop
 
     nop
-
+.size __osGetSR, . - __osGetSR

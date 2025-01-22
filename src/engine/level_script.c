@@ -88,7 +88,7 @@ static s32 eval_script_op(s8 op, s32 arg) {
     return result;
 }
 
-static void level_cmd_load_and_execute(void) {
+void level_cmd_load_and_execute(void) {
     main_pool_push_state();
     load_segment(CMD_GET(s16, 2), CMD_GET(void *, 4), CMD_GET(void *, 8), MEMORY_POOL_LEFT);
 
@@ -99,7 +99,7 @@ static void level_cmd_load_and_execute(void) {
     sCurrentCmd = segmented_to_virtual(CMD_GET(void *, 12));
 }
 
-static void level_cmd_exit_and_execute(void) {
+void level_cmd_exit_and_execute(void) {
     void *targetAddr = CMD_GET(void *, 12);
 
     main_pool_pop_state();
@@ -112,7 +112,7 @@ static void level_cmd_exit_and_execute(void) {
     sCurrentCmd = segmented_to_virtual(targetAddr);
 }
 
-static void level_cmd_exit(void) {
+void level_cmd_exit(void) {
     main_pool_pop_state();
 
     sStackTop = sStackBase;
@@ -120,7 +120,7 @@ static void level_cmd_exit(void) {
     sCurrentCmd = (struct LevelCommand *) *(--sStackTop);
 }
 
-static void level_cmd_sleep(void) {
+void level_cmd_sleep(void) {
     sScriptStatus = SCRIPT_PAUSED;
 
     if (sDelayFrames == 0) {
@@ -131,7 +131,7 @@ static void level_cmd_sleep(void) {
     }
 }
 
-static void level_cmd_sleep2(void) {
+void level_cmd_sleep2(void) {
     sScriptStatus = SCRIPT_PAUSED2;
 
     if (sDelayFrames2 == 0) {
@@ -142,26 +142,26 @@ static void level_cmd_sleep2(void) {
     }
 }
 
-static void level_cmd_jump(void) {
+void level_cmd_jump(void) {
     sCurrentCmd = segmented_to_virtual(CMD_GET(void *, 4));
 }
 
-static void level_cmd_jump_and_link(void) {
+void level_cmd_jump_and_link(void) {
     *sStackTop++ = (uintptr_t) NEXT_CMD;
     sCurrentCmd = segmented_to_virtual(CMD_GET(void *, 4));
 }
 
-static void level_cmd_return(void) {
+void level_cmd_return(void) {
     sCurrentCmd = (struct LevelCommand *) *(--sStackTop);
 }
 
-static void level_cmd_jump_and_link_push_arg(void) {
+void level_cmd_jump_and_link_push_arg(void) {
     *sStackTop++ = (uintptr_t) NEXT_CMD;
     *sStackTop++ = CMD_GET(s16, 2);
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_jump_repeat(void) {
+void level_cmd_jump_repeat(void) {
     s32 val = *(sStackTop - 1);
 
     if (val == 0) {
@@ -175,13 +175,13 @@ static void level_cmd_jump_repeat(void) {
     }
 }
 
-static void level_cmd_loop_begin(void) {
+void level_cmd_loop_begin(void) {
     *sStackTop++ = (uintptr_t) NEXT_CMD;
     *sStackTop++ = 0;
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_loop_until(void) {
+void level_cmd_loop_until(void) {
     if (eval_script_op(CMD_GET(u8, 2), CMD_GET(s32, 4)) != 0) {
         sCurrentCmd = CMD_NEXT;
         sStackTop -= 2;
@@ -190,7 +190,7 @@ static void level_cmd_loop_until(void) {
     }
 }
 
-static void level_cmd_jump_if(void) {
+void level_cmd_jump_if(void) {
     if (eval_script_op(CMD_GET(u8, 2), CMD_GET(s32, 4)) != 0) {
         sCurrentCmd = segmented_to_virtual(CMD_GET(void *, 8));
     } else {
@@ -198,7 +198,7 @@ static void level_cmd_jump_if(void) {
     }
 }
 
-static void level_cmd_jump_and_link_if(void) {
+void level_cmd_jump_and_link_if(void) {
     if (eval_script_op(CMD_GET(u8, 2), CMD_GET(s32, 4)) != 0) {
         *sStackTop++ = (uintptr_t) NEXT_CMD;
         sCurrentCmd = segmented_to_virtual(CMD_GET(void *, 8));
@@ -207,7 +207,7 @@ static void level_cmd_jump_and_link_if(void) {
     }
 }
 
-static void level_cmd_skip_if(void) {
+void level_cmd_skip_if(void) {
     if (eval_script_op(CMD_GET(u8, 2), CMD_GET(s32, 4)) == 0) {
         do {
             sCurrentCmd = CMD_NEXT;
@@ -217,7 +217,7 @@ static void level_cmd_skip_if(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_skip(void) {
+void level_cmd_skip(void) {
     do {
         sCurrentCmd = CMD_NEXT;
     } while (sCurrentCmd->type == 0x10);
@@ -225,18 +225,18 @@ static void level_cmd_skip(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_skippable_nop(void) {
+void level_cmd_skippable_nop(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_call(void) {
+void level_cmd_call(void) {
     typedef s32 (*Func)(s16, s32);
     Func func = CMD_GET(Func, 4);
     sRegister = func(CMD_GET(s16, 2), sRegister);
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_call_loop(void) {
+void level_cmd_call_loop(void) {
     typedef s32 (*Func)(s16, s32);
     Func func = CMD_GET(Func, 4);
     sRegister = func(CMD_GET(s16, 2), sRegister);
@@ -249,38 +249,38 @@ static void level_cmd_call_loop(void) {
     }
 }
 
-static void level_cmd_set_register(void) {
+void level_cmd_set_register(void) {
     sRegister = CMD_GET(s16, 2);
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_push_pool_state(void) {
+void level_cmd_push_pool_state(void) {
     main_pool_push_state();
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_pop_pool_state(void) {
+void level_cmd_pop_pool_state(void) {
     main_pool_pop_state();
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_load_to_fixed_address(void) {
+void level_cmd_load_to_fixed_address(void) {
     load_to_fixed_pool_addr(CMD_GET(void *, 4), CMD_GET(void *, 8), CMD_GET(void *, 12));
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_load_raw(void) {
+void level_cmd_load_raw(void) {
     load_segment(CMD_GET(s16, 2), CMD_GET(void *, 4), CMD_GET(void *, 8),
             MEMORY_POOL_LEFT);
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_load_mio0(void) {
+void level_cmd_load_mio0(void) {
     load_segment_decompress(CMD_GET(s16, 2), CMD_GET(void *, 4), CMD_GET(void *, 8));
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_load_mario_head(void) {
+void level_cmd_load_mario_head(void) {
     // TODO: Fix these hardcoded sizes
     void *addr = main_pool_alloc(DOUBLE_SIZE_ON_64_BIT(0xE1000), MEMORY_POOL_LEFT);
     if (addr != NULL) {
@@ -296,12 +296,12 @@ static void level_cmd_load_mario_head(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_load_mio0_texture(void) {
+void level_cmd_load_mio0_texture(void) {
     load_segment_decompress_heap(CMD_GET(s16, 2), CMD_GET(void *, 4), CMD_GET(void *, 8));
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_init_level(void) {
+void level_cmd_init_level(void) {
     init_graph_node_start(NULL, (struct GraphNodeStart *) &gObjParentGraphNode);
     clear_objects();
     clear_areas();
@@ -310,7 +310,7 @@ static void level_cmd_init_level(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_clear_level(void) {
+void level_cmd_clear_level(void) {
     clear_objects();
     clear_area_graph_nodes();
     clear_areas();
@@ -319,7 +319,7 @@ static void level_cmd_clear_level(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_alloc_level_pool(void) {
+void level_cmd_alloc_level_pool(void) {
     if (sLevelPool == NULL) {
         sLevelPool = alloc_only_pool_init(main_pool_available() - sizeof(struct AllocOnlyPool),
                                           MEMORY_POOL_LEFT);
@@ -328,7 +328,7 @@ static void level_cmd_alloc_level_pool(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_free_level_pool(void) {
+void level_cmd_free_level_pool(void) {
     s32 i;
 
     alloc_only_pool_resize(sLevelPool, sLevelPool->usedSpace);
@@ -344,7 +344,7 @@ static void level_cmd_free_level_pool(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_begin_area(void) {
+void level_cmd_begin_area(void) {
     u8 areaIndex = CMD_GET(u8, 2);
     void *geoLayoutAddr = CMD_GET(void *, 4);
 
@@ -367,12 +367,12 @@ static void level_cmd_begin_area(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_end_area(void) {
+void level_cmd_end_area(void) {
     sCurrAreaIndex = -1;
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_load_model_from_dl(void) {
+void level_cmd_load_model_from_dl(void) {
     s16 val1 = CMD_GET(s16, 2) & 0x0FFF;
     s16 val2 = ((u16)CMD_GET(s16, 2)) >> 12;
     void *val3 = CMD_GET(void *, 4);
@@ -385,7 +385,7 @@ static void level_cmd_load_model_from_dl(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_load_model_from_geo(void) {
+void level_cmd_load_model_from_geo(void) {
     s16 arg0 = CMD_GET(s16, 2);
     void *arg1 = CMD_GET(void *, 4);
 
@@ -396,7 +396,7 @@ static void level_cmd_load_model_from_geo(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_23(void) {
+void level_cmd_23(void) {
     union {
         s32 i;
         f32 f;
@@ -418,7 +418,7 @@ static void level_cmd_23(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_init_mario(void) {
+void level_cmd_init_mario(void) {
     vec3s_set(gMarioSpawnInfo->startPos, 0, 0, 0);
     vec3s_set(gMarioSpawnInfo->startAngle, 0, 0, 0);
 
@@ -432,7 +432,7 @@ static void level_cmd_init_mario(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_place_object(void) {
+void level_cmd_place_object(void) {
     u8 val7 = 1 << (gCurrActNum - 1);
     u16 model;
     struct SpawnInfo *spawnInfo;
@@ -463,7 +463,7 @@ static void level_cmd_place_object(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_create_warp_node(void) {
+void level_cmd_create_warp_node(void) {
     if (sCurrAreaIndex != -1) {
         struct ObjectWarpNode *warpNode =
             alloc_only_pool_alloc(sLevelPool, sizeof(struct ObjectWarpNode));
@@ -482,7 +482,7 @@ static void level_cmd_create_warp_node(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_create_instant_warp(void) {
+void level_cmd_create_instant_warp(void) {
     s32 i;
     struct InstantWarp *warp;
 
@@ -509,7 +509,7 @@ static void level_cmd_create_instant_warp(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_set_terrain_type(void) {
+void level_cmd_set_terrain_type(void) {
     if (sCurrAreaIndex != -1) {
         gAreas[sCurrAreaIndex].terrainType |= CMD_GET(s16, 2);
     }
@@ -517,7 +517,7 @@ static void level_cmd_set_terrain_type(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_create_painting_warp_node(void) {
+void level_cmd_create_painting_warp_node(void) {
     s32 i;
     struct WarpNode *node;
 
@@ -542,7 +542,7 @@ static void level_cmd_create_painting_warp_node(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_3A(void) {
+void level_cmd_3A(void) {
     struct UnusedArea28 *val4;
 
     if (sCurrAreaIndex != -1) {
@@ -561,7 +561,7 @@ static void level_cmd_3A(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_create_whirlpool(void) {
+void level_cmd_create_whirlpool(void) {
     struct Whirlpool *whirlpool;
     s32 index = CMD_GET(u8, 2);
     s32 beatBowser2 =
@@ -583,17 +583,17 @@ static void level_cmd_create_whirlpool(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_set_blackout(void) {
+void level_cmd_set_blackout(void) {
     osViBlack(CMD_GET(u8, 2));
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_set_gamma(void) {
+void level_cmd_set_gamma(void) {
     osViSetSpecialFeatures(CMD_GET(u8, 2) == 0 ? OS_VI_GAMMA_OFF : OS_VI_GAMMA_ON);
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_set_terrain_data(void) {
+void level_cmd_set_terrain_data(void) {
     if (sCurrAreaIndex != -1) {
 #ifndef NO_SEGMENTED_MEMORY
         gAreas[sCurrAreaIndex].terrainData = segmented_to_virtual(CMD_GET(void *, 4));
@@ -611,14 +611,14 @@ static void level_cmd_set_terrain_data(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_set_rooms(void) {
+void level_cmd_set_rooms(void) {
     if (sCurrAreaIndex != -1) {
         gAreas[sCurrAreaIndex].surfaceRooms = segmented_to_virtual(CMD_GET(void *, 4));
     }
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_set_macro_objects(void) {
+void level_cmd_set_macro_objects(void) {
     if (sCurrAreaIndex != -1) {
 #ifndef NO_SEGMENTED_MEMORY
         gAreas[sCurrAreaIndex].macroObjects = segmented_to_virtual(CMD_GET(void *, 4));
@@ -637,7 +637,7 @@ static void level_cmd_set_macro_objects(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_load_area(void) {
+void level_cmd_load_area(void) {
     s16 areaIndex = CMD_GET(u8, 2);
     UNUSED void *unused = (u8 *) sCurrentCmd + 4;
 
@@ -647,12 +647,12 @@ static void level_cmd_load_area(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_unload_area(void) {
+void level_cmd_unload_area(void) {
     unload_area();
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_set_mario_start_pos(void) {
+void level_cmd_set_mario_start_pos(void) {
     gMarioSpawnInfo->areaIndex = CMD_GET(u8, 2);
 
 #if IS_64_BIT
@@ -665,29 +665,29 @@ static void level_cmd_set_mario_start_pos(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_2C(void) {
+void level_cmd_2C(void) {
     unload_mario_area();
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_2D(void) {
+void level_cmd_2D(void) {
     area_update_objects();
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_set_transition(void) {
+void level_cmd_set_transition(void) {
     if (gCurrentArea != NULL) {
         play_transition(CMD_GET(u8, 2), CMD_GET(u8, 3), CMD_GET(u8, 4), CMD_GET(u8, 5), CMD_GET(u8, 6));
     }
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_nop(void) {
+void level_cmd_nop(void) {
     CN_DEBUG_PRINTF(("BAD: seqBlankColor\n"));
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_show_dialog(void) {
+void level_cmd_show_dialog(void) {
     if (sCurrAreaIndex != -1) {
         if (CMD_GET(u8, 2) < 2) {
             gAreas[sCurrAreaIndex].dialog[CMD_GET(u8, 2)] = CMD_GET(u8, 3);
@@ -696,7 +696,7 @@ static void level_cmd_show_dialog(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_set_music(void) {
+void level_cmd_set_music(void) {
     if (sCurrAreaIndex != -1) {
         gAreas[sCurrAreaIndex].musicParam = CMD_GET(s16, 2);
         gAreas[sCurrAreaIndex].musicParam2 = CMD_GET(s16, 4);
@@ -704,17 +704,17 @@ static void level_cmd_set_music(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_set_menu_music(void) {
+void level_cmd_set_menu_music(void) {
     set_background_music(0, CMD_GET(s16, 2), 0);
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_38(void) {
+void level_cmd_38(void) {
     fadeout_music(CMD_GET(s16, 2));
     sCurrentCmd = CMD_NEXT;
 }
 
-static void level_cmd_get_or_set_var(void) {
+void level_cmd_get_or_set_var(void) {
     if (CMD_GET(u8, 2) == 0) {
         switch (CMD_GET(u8, 3)) {
             case 0:
@@ -756,7 +756,7 @@ static void level_cmd_get_or_set_var(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
-static void (*LevelScriptJumpTable[])(void) = {
+void (*LevelScriptJumpTable[])(void) = {
     /*00*/ level_cmd_load_and_execute,
     /*01*/ level_cmd_exit_and_execute,
     /*02*/ level_cmd_exit,

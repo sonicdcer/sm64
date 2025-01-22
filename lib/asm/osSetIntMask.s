@@ -68,7 +68,7 @@ glabel osSetIntMask
     nop
     jr    $ra
      nop
-
+.size osSetIntMask, . - osSetIntMask
 
 .section .rodata
 

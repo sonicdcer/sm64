@@ -102,3 +102,4 @@ glabel decompress
     jr    $ra
      nop
 #endif
+.size decompress, . - decompress

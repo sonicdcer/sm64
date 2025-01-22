@@ -21,3 +21,4 @@ glabel osWritebackDCacheAll
 
     nop
     nop
+.size osWritebackDCacheAll, . - osWritebackDCacheAll

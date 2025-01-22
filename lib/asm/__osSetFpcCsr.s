@@ -10,4 +10,5 @@ glabel __osSetFpcCsr
     ctc1  $a0, $31
     jr    $ra
      nop
+.size __osSetFpcCsr, . - __osSetFpcCsr
 

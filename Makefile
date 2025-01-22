@@ -926,8 +926,8 @@ else
 endif
 
 $(BUILD_DIR)/$(TARGET).objdump: $(ELF)
-	$(OBJDUMP) -D $< > $@
-
+	$(OBJDUMP) -O binary $< > $@
+#	$(OBJDUMP) -D $< > $@
 
 
 .PHONY: all clean distclean default diff test load libultra

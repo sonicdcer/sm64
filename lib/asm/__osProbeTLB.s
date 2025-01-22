@@ -57,3 +57,4 @@ glabel __osProbeTLB
     mtc0  $t0, $10
     jr    $ra
      nop
+.size __osProbeTLB, . - __osProbeTLB

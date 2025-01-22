@@ -61,5 +61,6 @@ glabel guTranslate
     ori   $t0, (0x00000001 & 0xFFFF) # ori $t0, $t0, 1
     jr    $ra
      sw    $t0, 8($a0)
+.size guTranslate, . - guTranslate
 
 #endif

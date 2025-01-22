@@ -10,4 +10,5 @@ glabel __osSetSR
     nop
     jr    $ra
      nop
+.size __osSetSR, . - __osSetSR
 

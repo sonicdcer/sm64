@@ -7,7 +7,7 @@
 
 .section .text, "ax"
 
-glabel entry_point
+glabel entrypoint
 .if VERSION_CN == 1
     lui   $t0, %lo(_mainSegmentNoloadStartHi)
     ori   $t0, %lo(_mainSegmentNoloadStartLo)
@@ -40,7 +40,8 @@ glabel entry_point
     lui   $t2, %hi(main_func) // $t2, 0x8024
     lui   $sp, %hi(gIdleThreadStack) // $sp, 0x8020
     addiu $t2, %lo(main_func) // addiu $t2, $t2, 0x6dc4
-    jr    $t2
+    jr    $t2 
+    // jr   main_func
      addiu $sp, %lo(gIdleThreadStack) // addiu $sp, $sp, 0xa00
 .endif
     nop
@@ -49,3 +50,4 @@ glabel entry_point
     nop
     nop
     nop
+.size entrypoint, . - entrypoint

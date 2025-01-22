@@ -63,3 +63,4 @@ glabel osInvalDCache
      addiu $t0, $t0, 0x10
     jr    $ra
      nop
+.size osInvalDCache, . - osInvalDCache

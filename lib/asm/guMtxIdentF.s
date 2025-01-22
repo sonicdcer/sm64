@@ -28,5 +28,6 @@ glabel guMtxIdentF
     sw    $zero, 0x38($a0)
     jr    $ra
      sw    $t0, 0x3c($a0)
+.size guMtxIdentF, . - guMtxIdentF
 
 #endif

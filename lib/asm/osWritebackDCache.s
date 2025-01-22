@@ -41,3 +41,4 @@ glabel osWritebackDCache
      addiu $t0, 0x10 // addiu $t0, $t0, 0x10
     jr    $ra
      nop
+.size osWritebackDCache, . - osWritebackDCache

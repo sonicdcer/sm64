@@ -54,6 +54,7 @@ glabel __osSetCompare
     ld    $fp, 0x28($sp)
     jr    $ra
      addiu $sp, $sp, 0x38
+.size __osSetCompare, . - __osSetCompare
 
 #else
 
@@ -61,5 +62,6 @@ glabel __osSetCompare
     mtc0  $a0, C0_COMPARE
     jr    $ra
      nop
+.size __osSetCompare, . - __osSetCompare
 
 #endif

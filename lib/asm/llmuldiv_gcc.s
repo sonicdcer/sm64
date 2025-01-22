@@ -36,6 +36,7 @@ glabel __umoddi3
     dsra32 $v1, $v1, 0
     jr    $ra
      dsra32 $v0, $v0, 0
+.size __umoddi3, . - __umoddi3
 
 glabel __udivdi3
     sw    $a0, ($sp)
@@ -54,6 +55,7 @@ glabel __udivdi3
     dsra32 $v1, $v1, 0
     jr    $ra
      dsra32 $v0, $v0, 0
+.size __udivdi3, . - __udivdi3
 
 glabel __moddi3
     sw    $a0, ($sp)
@@ -72,6 +74,7 @@ glabel __moddi3
     dsra32 $v1, $v1, 0
     jr    $ra
      dsra32 $v0, $v0, 0
+.size __moddi3, . - __moddi3
 
 glabel __divdi3
     sw    $a0, ($sp)
@@ -99,5 +102,6 @@ glabel __divdi3
     dsra32 $v1, $v1, 0
     jr    $ra
      dsra32 $v0, $v0, 0
+.size __divdi3, . - __divdi3
 
 #endif

@@ -42,5 +42,6 @@ glabel guMtxF2L
     nop
     nop
     nop
+.size guMtxF2L, . - guMtxF2L
 
 #endif

@@ -10,4 +10,5 @@ glabel __osSetWatchLo
     nop
     jr    $ra
      nop
+.size __osSetWatchLo, . - __osSetWatchLo
 

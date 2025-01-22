@@ -14,3 +14,4 @@ glabel __osRestoreInt
     nop
     jr    $ra
      nop
+.size __osRestoreInt, . - __osRestoreInt

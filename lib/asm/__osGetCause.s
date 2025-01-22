@@ -11,4 +11,4 @@ glabel __osGetCause
      nop
 
     nop
-
+.size __osGetCause, . - __osGetCause

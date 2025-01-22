@@ -29,5 +29,6 @@ glabel guNormalize
     swc1  $f18, ($a1)
     jr    $ra
      swc1  $f4, ($a2)
+.size guNormalize, . - guNormalize
 
 #endif

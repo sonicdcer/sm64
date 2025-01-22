@@ -37,4 +37,4 @@ glabel __osDisableInt
 .Lret:
     jr    $ra
      nop
-
+.size __osDisableInt, . - __osDisableInt

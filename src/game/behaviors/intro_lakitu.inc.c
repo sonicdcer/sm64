@@ -15,9 +15,9 @@ void intro_lakitu_set_offset_from_camera(struct Object *obj, Vec3f offset) {
     s16 offsetPitch, offsetYaw;
 
     vec3f_add(offset, gCamera->pos);
-    vec3f_get_dist_and_angle(gCamera->pos, gCamera->focus,
+    vec3fGetDistAng(gCamera->pos, gCamera->focus,
                              &dist, &focusAngles[0], &focusAngles[1]);
-    vec3f_get_dist_and_angle(gCamera->pos, offset, &dist, &offsetPitch, &offsetYaw);
+    vec3fGetDistAng(gCamera->pos, offset, &dist, &offsetPitch, &offsetYaw);
     vec3f_set_dist_and_angle(gCamera->pos, offset, dist,
                              focusAngles[0] + offsetPitch, focusAngles[1] + offsetYaw);
     vec3f_to_object_pos(obj, offset);
@@ -32,7 +32,7 @@ void intro_lakitu_set_focus(struct Object *obj, Vec3f newFocus) {
 
     // newFocus is an offset from lakitu's origin, not a point in the world.
     vec3f_set(origin, 0.0f, 0.0f, 0.0f);
-    vec3f_get_dist_and_angle(origin, newFocus, &dist, &pitch, &yaw);
+    vec3fGetDistAng(origin, newFocus, &dist, &pitch, &yaw);
 
     obj->oFaceAnglePitch = pitch;
     obj->oFaceAngleYaw = yaw;
