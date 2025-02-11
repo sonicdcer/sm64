@@ -15,21 +15,14 @@ struct UnkBufThing {
 
 // data
 s32 sNumRoutinesInStack = 0; // @ 801A8280
-s32 sTimerGadgetColours[7] = {
-    COLOUR_RED,
-    COLOUR_WHITE,
-    COLOUR_GREEN,
-    COLOUR_BLUE,
-    COLOUR_GRAY,
-    COLOUR_YELLOW,
-    COLOUR_PINK
-};
+s32 sTimerGadgetColours[7] = { COLOUR_RED,  COLOUR_WHITE,  COLOUR_GREEN, COLOUR_BLUE,
+                               COLOUR_GRAY, COLOUR_YELLOW, COLOUR_PINK };
 s32 sNumActiveMemTrackers = 0;   // @ 801A82A0
 u32 sPrimarySeed = 0x12345678;   // @ 801A82A4
 u32 sSecondarySeed = 0x58374895; // @ 801A82A8
 
 // bss
-u8 *gGdStreamBuffer;                                        // @ 801BA190
+u8 *gGdStreamBuffer;                                 // @ 801BA190
 const char *sRoutineNames[64];                       // @ 801BA198
 s32 sTimingActive;                                   // @ 801BA298
 struct GdTimer sTimers[GD_NUM_TIMERS];               // @ 801BA2A0
@@ -173,7 +166,7 @@ void print_all_memtrackers(void) {
 
     for (i = 0; i < ARRAY_COUNT(sMemTrackers); i++) {
         if (sMemTrackers[i].name != NULL) {
-            gd_printf("'%s' = %dk\n", sMemTrackers[i].name, (s32)(sMemTrackers[i].total / 1024.0f));
+            gd_printf("'%s' = %dk\n", sMemTrackers[i].name, (s32) (sMemTrackers[i].total / 1024.0f));
         }
     }
 }
@@ -232,7 +225,7 @@ void remove_all_timers(void) {
 /**
  * Creates a new timer with the specified name
  */
-static struct GdTimer *new_timer(const char *name) {
+struct GdTimer *new_timer(const char *name) {
     s32 i;
     struct GdTimer *timer = NULL;
 
@@ -268,7 +261,7 @@ struct GdTimer *get_timer(const char *timerName) {
  * Returns the timer with the specified name, or aborts the program if it does
  * not exist.
  */
-static struct GdTimer *get_timer_checked(const char *timerName) {
+struct GdTimer *get_timer_checked(const char *timerName) {
     struct GdTimer *timer;
 
     timer = get_timer(timerName);
@@ -284,7 +277,8 @@ static struct GdTimer *get_timer_checked(const char *timerName) {
  */
 struct GdTimer *get_timernum(s32 index) {
     if (index >= ARRAY_COUNT(sTimers)) {
-        fatal_printf("get_timernum(): Timer number %d out of range (MAX %d)", index, ARRAY_COUNT(sTimers));
+        fatal_printf("get_timernum(): Timer number %d out of range (MAX %d)", index,
+                     ARRAY_COUNT(sTimers));
     }
 
     return &sTimers[index];
@@ -441,11 +435,9 @@ f32 get_timer_total(const char *name) {
     return (f32) timer->total;
 }
 
-
 /*
  * Miscellaneous debug functions
  */
-
 
 /**
  * Prints the given string, prints the stack trace, and exits the program
@@ -489,7 +481,7 @@ void fatal_printf(const char *fmt, ...) {
                         break;
                     case 'c':
 #ifdef AVOID_UB
-                        gd_printf("%c", (char)va_arg(vl, int));
+                        gd_printf("%c", (char) va_arg(vl, int));
 #else
                         gd_printf("%c", va_arg(vl, char));
 #endif
@@ -525,7 +517,7 @@ void fatal_printf(const char *fmt, ...) {
  */
 void imin(const char *routine) {
     sRoutineNames[sNumRoutinesInStack++] = routine;
-    sRoutineNames[sNumRoutinesInStack] = NULL;  //! array bounds is checked after writing this.
+    sRoutineNames[sNumRoutinesInStack] = NULL; //! array bounds is checked after writing this.
 
     if (sNumRoutinesInStack >= ARRAY_COUNT(sRoutineNames)) {
         fatal_printf("You're in too many routines");
@@ -627,7 +619,7 @@ f64 gd_lazy_atof(const char *str, UNUSED u32 *unk) {
     return gd_atoi(str);
 }
 
-char sHexNumerals[] = {"0123456789ABCDEF"};
+char sHexNumerals[] = { "0123456789ABCDEF" };
 
 /* 23C018 -> 23C078; orig name: func_8018D848 */
 char *format_number_hex(char *str, s32 val) {
@@ -688,7 +680,7 @@ char *format_number_decimal(char *str, s32 val, s32 padnum) {
 }
 
 /* 23C174 -> 23C1C8; orig name: func_8018D9A4 */
-static s32 int_sci_notation(s32 base, s32 significand) {
+s32 int_sci_notation(s32 base, s32 significand) {
     s32 i;
 
     for (i = 1; i < significand; i++) {
@@ -705,7 +697,7 @@ char *sprint_val_withspecifiers(char *str, union PrintVal val, char *specifiers)
     s32 intPrec;  // sp34
     s32 fracPrec; // sp30
     UNUSED u8 filler[4];
-    char cur; // sp2B
+    char cur;     // sp2B
 
     fracPrec = 6;
     intPrec = 6;
@@ -719,7 +711,7 @@ char *sprint_val_withspecifiers(char *str, union PrintVal val, char *specifiers)
             str = format_number_hex(str, val.i);
         } else if (cur == 'f') {
             intPart = (s32) val.f;
-            fracPart = (s32)((val.f - (f32) intPart) * (f32) int_sci_notation(10, fracPrec));
+            fracPart = (s32) ((val.f - (f32) intPart) * (f32) int_sci_notation(10, fracPrec));
             sPadNumPrint = FALSE;
             str = format_number_decimal(str, intPart, int_sci_notation(10, intPrec));
             *str++ = '.';
@@ -837,9 +829,9 @@ void gd_set_feof(struct GdFile *f) {
 
 /* 23C7FC -> 23CA0C */
 struct GdFile *gd_fopen(const char *filename, const char *mode) {
-    struct GdFile *f; // sp74
-    char *loadedname; // sp70
-    u32 i;            // sp6C
+    struct GdFile *f;       // sp74
+    char *loadedname;       // sp70
+    u32 i;                  // sp6C
     UNUSED u8 filler[4];
     struct UnkBufThing buf; // sp24
     u8 *bufbytes;           // sp20

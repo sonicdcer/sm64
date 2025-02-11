@@ -80,8 +80,8 @@ s32 envfx_init_snow(s32 mode) {
             break;
     }
 
-    gEnvFxBuffer = mem_pool_alloc(gEffectsMemoryPool,
-                                  gSnowParticleMaxCount * sizeof(struct EnvFxParticle));
+    gEnvFxBuffer =
+        mem_pool_alloc(gEffectsMemoryPool, gSnowParticleMaxCount * sizeof(struct EnvFxParticle));
     if (gEnvFxBuffer == NULL) {
         return FALSE;
     }
@@ -115,7 +115,7 @@ void envfx_update_snowflake_count(s32 mode, Vec3s marioPos) {
             waterLevel = find_water_level(marioPos[0], marioPos[2]);
 
             gSnowParticleCount =
-                (((s32)((waterLevel - 400.0f - (f32) marioPos[1]) * 0.001) << 0x10) >> 0x10) * 5;
+                (((s32) ((waterLevel - 400.0f - (f32) marioPos[1]) * 0.001) << 0x10) >> 0x10) * 5;
 
             if (gSnowParticleCount < 0) {
                 gSnowParticleCount = 0;
@@ -215,15 +215,15 @@ void envfx_update_snow_normal(s32 snowCylinderX, s32 snowCylinderY, s32 snowCyli
             envfx_is_snowflake_alive(i, snowCylinderX, snowCylinderY, snowCylinderZ);
         if (!(gEnvFxBuffer + i)->isAlive) {
             (gEnvFxBuffer + i)->xPos =
-                400.0f * random_float() - 200.0f + snowCylinderX + (s16)(deltaX * 2);
+                400.0f * random_float() - 200.0f + snowCylinderX + (s16) (deltaX * 2);
             (gEnvFxBuffer + i)->zPos =
-                400.0f * random_float() - 200.0f + snowCylinderZ + (s16)(deltaZ * 2);
+                400.0f * random_float() - 200.0f + snowCylinderZ + (s16) (deltaZ * 2);
             (gEnvFxBuffer + i)->yPos = 200.0f * random_float() + snowCylinderY;
             (gEnvFxBuffer + i)->isAlive = TRUE;
         } else {
-            (gEnvFxBuffer + i)->xPos += random_float() * 2 - 1.0f + (s16)(deltaX / 1.2);
-            (gEnvFxBuffer + i)->yPos -= 2 -(s16)(deltaY * 0.8);
-            (gEnvFxBuffer + i)->zPos += random_float() * 2 - 1.0f + (s16)(deltaZ / 1.2);
+            (gEnvFxBuffer + i)->xPos += random_float() * 2 - 1.0f + (s16) (deltaX / 1.2);
+            (gEnvFxBuffer + i)->yPos -= 2 - (s16) (deltaY * 0.8);
+            (gEnvFxBuffer + i)->zPos += random_float() * 2 - 1.0f + (s16) (deltaZ / 1.2);
         }
     }
 
@@ -249,15 +249,15 @@ void envfx_update_snow_blizzard(s32 snowCylinderX, s32 snowCylinderY, s32 snowCy
             envfx_is_snowflake_alive(i, snowCylinderX, snowCylinderY, snowCylinderZ);
         if (!(gEnvFxBuffer + i)->isAlive) {
             (gEnvFxBuffer + i)->xPos =
-                400.0f * random_float() - 200.0f + snowCylinderX + (s16)(deltaX * 2);
+                400.0f * random_float() - 200.0f + snowCylinderX + (s16) (deltaX * 2);
             (gEnvFxBuffer + i)->zPos =
-                400.0f * random_float() - 200.0f + snowCylinderZ + (s16)(deltaZ * 2);
+                400.0f * random_float() - 200.0f + snowCylinderZ + (s16) (deltaZ * 2);
             (gEnvFxBuffer + i)->yPos = 400.0f * random_float() - 200.0f + snowCylinderY;
             (gEnvFxBuffer + i)->isAlive = TRUE;
         } else {
-            (gEnvFxBuffer + i)->xPos += random_float() * 2 - 1.0f + (s16)(deltaX / 1.2) + 20.0f;
-            (gEnvFxBuffer + i)->yPos -= 5 -(s16)(deltaY * 0.8);
-            (gEnvFxBuffer + i)->zPos += random_float() * 2 - 1.0f + (s16)(deltaZ / 1.2);
+            (gEnvFxBuffer + i)->xPos += random_float() * 2 - 1.0f + (s16) (deltaX / 1.2) + 20.0f;
+            (gEnvFxBuffer + i)->yPos -= 5 - (s16) (deltaY * 0.8);
+            (gEnvFxBuffer + i)->zPos += random_float() * 2 - 1.0f + (s16) (deltaZ / 1.2);
         }
     }
 
@@ -275,7 +275,7 @@ void envfx_update_snow_blizzard(s32 snowCylinderX, s32 snowCylinderY, s32 snowCy
  *  find it. The radius of 3000 units is quite large for that though, covering
  *  more than half of the mirror room.
  */
-UNUSED static s32 is_in_mystery_snow_area(s32 x, UNUSED s32 y, s32 z) {
+UNUSED s32 is_in_mystery_snow_area(s32 x, UNUSED s32 y, s32 z) {
     if (sqr(x - 3380) + sqr(z + 520) < sqr(3000)) {
         return TRUE;
     }

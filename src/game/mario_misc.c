@@ -100,7 +100,7 @@ Gfx *geo_draw_mario_head_goddard(s32 callContext, struct GraphNode *node, Mat4 *
     return gfx;
 }
 
-static void toad_message_faded(void) {
+ void toad_message_faded(void) {
     if (gCurrentObject->oDistanceToMario > 700.0f) {
         gCurrentObject->oToadMessageRecentlyTalked = FALSE;
     }
@@ -109,7 +109,7 @@ static void toad_message_faded(void) {
     }
 }
 
-static void toad_message_opaque(void) {
+ void toad_message_opaque(void) {
     if (gCurrentObject->oDistanceToMario > 700.0f) {
         gCurrentObject->oToadMessageState = TOAD_MESSAGE_FADING;
     } else if (!gCurrentObject->oToadMessageRecentlyTalked) {
@@ -122,7 +122,7 @@ static void toad_message_opaque(void) {
     }
 }
 
-static void toad_message_talking(void) {
+ void toad_message_talking(void) {
     if (cur_obj_update_dialog_with_cutscene(MARIO_DIALOG_LOOK_DOWN,
         DIALOG_FLAG_TURN_TO_MARIO, CUTSCENE_DIALOG, gCurrentObject->oToadMessageDialogID)) {
         gCurrentObject->oToadMessageRecentlyTalked = TRUE;
@@ -144,13 +144,13 @@ static void toad_message_talking(void) {
     }
 }
 
-static void toad_message_opacifying(void) {
+ void toad_message_opacifying(void) {
     if ((gCurrentObject->oOpacity += 6) == 255) {
         gCurrentObject->oToadMessageState = TOAD_MESSAGE_OPAQUE;
     }
 }
 
-static void toad_message_fading(void) {
+ void toad_message_fading(void) {
     if ((gCurrentObject->oOpacity -= 6) == 81) {
         gCurrentObject->oToadMessageState = TOAD_MESSAGE_FADED;
     }
@@ -216,7 +216,7 @@ void bhv_toad_message_init(void) {
     }
 }
 
-static void star_door_unlock_spawn_particles(s16 angleOffset) {
+void star_door_unlock_spawn_particles(s16 angleOffset) {
     struct Object *sparkleParticle = spawn_object(gCurrentObject, 0, bhvSparkleSpawn);
 
     sparkleParticle->oPosX +=
@@ -299,7 +299,7 @@ void bhv_unlock_door_star_loop(void) {
 /**
  * Generate a display list that sets the correct blend mode and color for mirror Mario.
  */
-static Gfx *make_gfx_mario_alpha(struct GraphNodeGenerated *node, s16 alpha) {
+Gfx *make_gfx_mario_alpha(struct GraphNodeGenerated *node, s16 alpha) {
     Gfx *gfx;
     Gfx *gfxHead = NULL;
 

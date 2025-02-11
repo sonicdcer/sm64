@@ -13,7 +13,7 @@
  * If the object is a spawned bird, start flying; if it's a spawner bird,
  * spawn spawned birds if Mario comes within 2000 units of it.
  */
-static void bird_act_inactive(void) {
+void bird_act_inactive(void) {
     // Start flying if the object is a spawned bird or if it's a spawner bird
     // and Mario is within 2000 units.
     if (o->oBhvParams2ndByte == BIRD_BP_SPAWNED || o->oDistanceToMario < 2000.0f) {
@@ -38,7 +38,7 @@ static void bird_act_inactive(void) {
 
         // Start with a random yaw, and a random pitch from 1000 to 5000.
         // Positive pitch is downwards.
-        o->oMoveAnglePitch = 5000 - (s32)(4000.0f * random_float());
+        o->oMoveAnglePitch = 5000 - (s32) (4000.0f * random_float());
         o->oMoveAngleYaw = random_u16();
 
         o->oBirdSpeed = 40.0f;
@@ -52,7 +52,7 @@ static void bird_act_inactive(void) {
  * The bird flies laterally towards a target; (-20, -3990) if it's a spawner bird,
  * and the parent spawner bird if it's a spawned bird.
  */
-static void bird_act_fly(void) {
+void bird_act_fly(void) {
     UNUSED u8 filler[4];
     f32 distance;
 

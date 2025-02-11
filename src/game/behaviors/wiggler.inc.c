@@ -151,7 +151,8 @@ void wiggler_init_segments(void) {
     }
 
 #if defined(VERSION_EU) || defined(AVOID_UB)
-    o->oHealth = 4; // This fixes Wiggler reading UB on his first frame of his acceleration, as his health is not set.
+    o->oHealth = 4; // This fixes Wiggler reading UB on his first frame of his acceleration, as his
+                    // health is not set.
 #endif
 }
 
@@ -162,7 +163,7 @@ void wiggler_init_segments(void) {
  * for a body part to get stuck on geometry and separate from the rest of the
  * body.
  */
- void wiggler_update_segments(void) {
+void wiggler_update_segments(void) {
     struct ChainSegment *prevBodyPart;
     struct ChainSegment *bodyPart;
     f32 dx;
@@ -209,7 +210,7 @@ void wiggler_init_segments(void) {
  * otherwise wander in random directions.
  * If attacked by mario, enter either the jumped on or knockback action.
  */
-static void wiggler_act_walk(void) {
+void wiggler_act_walk(void) {
     s16 yawTurnSpeed;
 
     o->oWigglerWalkAnimSpeed = 0.06f * o->oForwardVel;
@@ -223,8 +224,9 @@ static void wiggler_act_walk(void) {
 
         // If Mario is positioned below the wiggler, assume he entered through the
         // lower cave entrance, so don't display text.
-        if (gMarioObject->oPosY < o->oPosY || cur_obj_update_dialog_with_cutscene(
-            MARIO_DIALOG_LOOK_UP, DIALOG_FLAG_NONE, CUTSCENE_DIALOG, DIALOG_150)) {
+        if (gMarioObject->oPosY < o->oPosY
+            || cur_obj_update_dialog_with_cutscene(MARIO_DIALOG_LOOK_UP, DIALOG_FLAG_NONE,
+                                                   CUTSCENE_DIALOG, DIALOG_150)) {
             o->oWigglerTextStatus = WIGGLER_TEXT_STATUS_COMPLETED_DIALOG;
         }
     } else {
@@ -261,7 +263,7 @@ static void wiggler_act_walk(void) {
 
         // If moving at high speeds, could overflow. But can't reach such speeds
         // in practice
-        yawTurnSpeed = (s16)(30.0f * o->oForwardVel);
+        yawTurnSpeed = (s16) (30.0f * o->oForwardVel);
         cur_obj_rotate_yaw_toward(o->oWigglerTargetYaw, yawTurnSpeed);
         obj_face_yaw_approach(o->oMoveAngleYaw, 2 * yawTurnSpeed);
 
@@ -284,7 +286,7 @@ static void wiggler_act_walk(void) {
  * Squish and unsquish, then show text and enter either the walking or shrinking
  * action.
  */
-static void wiggler_act_jumped_on(void) {
+void wiggler_act_jumped_on(void) {
     // Text to show on first, second, and third attack.
     s32 attackText[3] = { DIALOG_152, DIALOG_168, DIALOG_151 };
 
@@ -300,8 +302,8 @@ static void wiggler_act_jumped_on(void) {
     // defeated) or go back to walking
     if (o->header.gfx.scale[1] >= 4.0f) {
         if (o->oTimer > 30) {
-            if (cur_obj_update_dialog_with_cutscene(MARIO_DIALOG_LOOK_UP,
-                DIALOG_FLAG_NONE, CUTSCENE_DIALOG, attackText[o->oHealth - 2])) {
+            if (cur_obj_update_dialog_with_cutscene(MARIO_DIALOG_LOOK_UP, DIALOG_FLAG_NONE,
+                                                    CUTSCENE_DIALOG, attackText[o->oHealth - 2])) {
                 // Because we don't want the wiggler to disappear after being
                 // defeated, we leave its health at 1
                 if (--o->oHealth == 1) {
@@ -329,7 +331,7 @@ static void wiggler_act_jumped_on(void) {
 /**
  * Decelerate to a stop and then enter the walk action.
  */
-static void wiggler_act_knockback(void) {
+void wiggler_act_knockback(void) {
     if (o->oVelY > 0.0f) {
         o->oFaceAnglePitch -= o->oVelY * 30.0f;
     } else {
@@ -347,7 +349,7 @@ static void wiggler_act_knockback(void) {
 /**
  * Shrink, then spawn the star and enter the fall through floor action.
  */
-static void wiggler_act_shrink(void) {
+void wiggler_act_shrink(void) {
     if (o->oTimer >= 20) {
         if (o->oTimer == 20) {
             cur_obj_play_sound_2(SOUND_OBJ_ENEMY_DEFEAT_SHRINK);
@@ -366,7 +368,7 @@ static void wiggler_act_shrink(void) {
 /**
  * Fall through floors until y < 1700, then enter the walking action.
  */
-static void wiggler_act_fall_through_floor(void) {
+void wiggler_act_fall_through_floor(void) {
     if (o->oTimer == 60) {
         stop_background_music(SEQUENCE_ARGS(4, SEQ_EVENT_BOSS));
         o->oWigglerFallThroughFloorsHeight = 1700.0f;
@@ -410,7 +412,8 @@ void bhv_wiggler_update(void) {
             cur_obj_init_animation_with_accel_and_sound(0, o->oWigglerWalkAnimSpeed);
             if (o->oWigglerWalkAnimSpeed != 0.0f) {
                 cur_obj_play_sound_at_anim_range(0, 13,
-                              o->oHealth >= 4 ? SOUND_OBJ_WIGGLER_LOW_PITCH : SOUND_OBJ_WIGGLER_HIGH_PITCH);
+                                                 o->oHealth >= 4 ? SOUND_OBJ_WIGGLER_LOW_PITCH
+                                                                 : SOUND_OBJ_WIGGLER_HIGH_PITCH);
             } else {
                 cur_obj_reverse_animation();
             }

@@ -83,7 +83,7 @@ void spawn_macro_abs_special(s32 model, const BehaviorScript *behavior, s16 x, s
 #define MACRO_OBJ_Z 3
 #define MACRO_OBJ_PARAMS 4
 
-UNUSED static void spawn_macro_coin_unknown(const BehaviorScript *behavior, s16 objInfo[]) {
+UNUSED  void spawn_macro_coin_unknown(const BehaviorScript *behavior, s16 objInfo[]) {
     struct Object *coin;
     s16 model = bhvYellowCoin == behavior ? MODEL_YELLOW_COIN : MODEL_NONE;
 

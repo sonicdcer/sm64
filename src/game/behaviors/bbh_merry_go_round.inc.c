@@ -10,7 +10,7 @@
  * merry-go-round's enclosure, and ends the music when he's neither
  * in the enclosure nor in the room around it.
  */
-static void handle_merry_go_round_music(void) {
+void handle_merry_go_round_music(void) {
     // If the music should play, play it and check whether it still should.
     // Otherwise, don't play it and check whether it should.
     if (o->oMerryGoRoundMusicShouldPlay == FALSE) {

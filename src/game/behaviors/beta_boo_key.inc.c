@@ -50,7 +50,7 @@ void bhv_alpha_boo_key_loop(void) {
 /**
  * Continue to make the key fall, and handle collection.
  */
-static void beta_boo_key_dropped_loop(void) {
+void beta_boo_key_dropped_loop(void) {
     // Apply standard physics to the key
     cur_obj_update_floor_and_walls();
     cur_obj_move_standard(78);
@@ -108,7 +108,7 @@ static void beta_boo_key_dropped_loop(void) {
  * Drop the key. This function is run once, the frame after the boo dies;
  * It immediately sets the action to BETA_BOO_KEY_ACT_DROPPED.
  */
-static void beta_boo_key_drop(void) {
+void beta_boo_key_drop(void) {
     s16 velocityDirection;
     f32 velocityMagnitude;
 
@@ -145,7 +145,7 @@ static void beta_boo_key_drop(void) {
 /**
  * Update the key to be inside its parent boo, and handle the boo dying.
  */
-static void beta_boo_key_inside_boo_loop(void) {
+void beta_boo_key_inside_boo_loop(void) {
     // Update the key to be inside the boo at all times
     struct Object *parent = o->parentObj;
     obj_copy_pos(o, parent);
@@ -164,7 +164,7 @@ static void beta_boo_key_inside_boo_loop(void) {
     o->oFaceAngleYaw += 0x200;
 }
 
-static void (*sBetaBooKeyActions[])(void) = {
+void (*sBetaBooKeyActions[])(void) = {
     beta_boo_key_inside_boo_loop,
     beta_boo_key_drop,
     beta_boo_key_dropped_loop,

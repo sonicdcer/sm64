@@ -30,7 +30,7 @@ struct ObjectHitbox sWaterBombHitbox = {
  */
 void bhv_water_bomb_spawner_update(void) {
     f32 latDistToMario;
-    f32 spawnerRadius = 50 * (u16)(o->oBhvParams >> 16) + 200.0f;
+    f32 spawnerRadius = 50 * (u16) (o->oBhvParams >> 16) + 200.0f;
 
     latDistToMario = lateral_dist_between_objects(o, gMarioObject);
 
@@ -92,7 +92,7 @@ void water_bomb_spawn_explode_particles(s8 offsetY, s8 forwardVelRange, s8 velYB
 /**
  * Enter the drop action with -40 y vel.
  */
-static void water_bomb_act_init(void) {
+void water_bomb_act_init(void) {
     cur_obj_play_sound_2(SOUND_OBJ_SOMETHING_LANDING);
 
     o->oAction = WATER_BOMB_ACT_DROP;
@@ -104,7 +104,7 @@ static void water_bomb_act_init(void) {
  * Explode on impact, and otherwise bounce a few times on the ground and then
  * explode.
  */
-static void water_bomb_act_drop(void) {
+void water_bomb_act_drop(void) {
     f32 stretch;
 
     obj_set_hitbox(o, &sWaterBombHitbox);
@@ -165,7 +165,7 @@ static void water_bomb_act_drop(void) {
  * Spawn particles, then despawn. This action informs the water bomb shadow to
  * despawn as well.
  */
-static void water_bomb_act_explode(void) {
+void water_bomb_act_explode(void) {
     water_bomb_spawn_explode_particles(25, 60, 10);
     o->parentObj->oWaterBombSpawnerBombActive = FALSE;
     obj_mark_for_deletion(o);
@@ -174,7 +174,7 @@ static void water_bomb_act_explode(void) {
 /**
  * Despawn after 100 frames.
  */
-static void water_bomb_act_shot_from_cannon(void) {
+void water_bomb_act_shot_from_cannon(void) {
     static struct SpawnParticlesInfo waterBombCannonParticle = {
         /* bhvParam:        */ 0,
         /* count:           */ 1,

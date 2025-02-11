@@ -301,7 +301,7 @@ s8 sBowserDebugActions[] = {
 /**
  * Debug function that allows to change Bowser's actions (most of them)
  */
-UNUSED static void bowser_debug_actions(void) {
+void bowser_debug_actions(void) {
     if (gDebugInfo[DEBUG_PAGE_ENEMYINFO][1] != 0) {
         o->oAction = sBowserDebugActions[gDebugInfo[DEBUG_PAGE_ENEMYINFO][2] & 0x0F];
         gDebugInfo[DEBUG_PAGE_ENEMYINFO][1] = 0;

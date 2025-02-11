@@ -16,8 +16,7 @@
  * Iterate through the list of walls until all walls are checked and
  * have given their wall push.
  */
-static s32 find_wall_collisions_from_list(struct SurfaceNode *surfaceNode,
-                                          struct WallCollisionData *data) {
+s32 find_wall_collisions_from_list(struct SurfaceNode *surfaceNode, struct WallCollisionData *data) {
     register struct Surface *surf;
     register f32 offset;
     register f32 radius = data->radius;
@@ -57,8 +56,12 @@ static s32 find_wall_collisions_from_list(struct SurfaceNode *surfaceNode,
         //  the fact they are floating point, certain floating point positions
         //  along the seam of two walls may collide with neither wall or both walls.
         if (surf->flags & SURFACE_FLAG_X_PROJECTION) {
-            w1 = -surf->vertex1[2];            w2 = -surf->vertex2[2];            w3 = -surf->vertex3[2];
-            y1 = surf->vertex1[1];            y2 = surf->vertex2[1];            y3 = surf->vertex3[1];
+            w1 = -surf->vertex1[2];
+            w2 = -surf->vertex2[2];
+            w3 = -surf->vertex3[2];
+            y1 = surf->vertex1[1];
+            y2 = surf->vertex2[1];
+            y3 = surf->vertex3[1];
 
             if (surf->normal.x > 0.0f) {
                 if ((y1 - y) * (w2 - w1) - (w1 - -pz) * (y2 - y1) > 0.0f) {
@@ -82,8 +85,12 @@ static s32 find_wall_collisions_from_list(struct SurfaceNode *surfaceNode,
                 }
             }
         } else {
-            w1 = surf->vertex1[0];            w2 = surf->vertex2[0];            w3 = surf->vertex3[0];
-            y1 = surf->vertex1[1];            y2 = surf->vertex2[1];            y3 = surf->vertex3[1];
+            w1 = surf->vertex1[0];
+            w2 = surf->vertex2[0];
+            w3 = surf->vertex3[0];
+            y1 = surf->vertex1[1];
+            y2 = surf->vertex2[1];
+            y3 = surf->vertex3[1];
 
             if (surf->normal.z > 0.0f) {
                 if ((y1 - y) * (w2 - w1) - (w1 - px) * (y2 - y1) > 0.0f) {
@@ -223,7 +230,8 @@ s32 find_wall_collisions(struct WallCollisionData *colData) {
 /**
  * Iterate through the list of ceilings and find the first ceiling over a given point.
  */
-static struct Surface *find_ceil_from_list(struct SurfaceNode *surfaceNode, s32 x, s32 y, s32 z, f32 *pheight) {
+struct Surface *find_ceil_from_list(struct SurfaceNode *surfaceNode, s32 x, s32 y, s32 z,
+                                    f32 *pheight) {
     register struct Surface *surf;
     register s32 x1, z1, x2, z2, x3, z3;
     struct Surface *ceil = NULL;
@@ -371,7 +379,7 @@ f32 unused_obj_find_floor_height(struct Object *obj) {
  */
 struct FloorGeometry sFloorGeo;
 
-UNUSED static u8 unused8038BE50[0x40];
+UNUSED u8 unused8038BE50[0x40];
 
 /**
  * Return the floor height underneath (xPos, yPos, zPos) and populate `floorGeo`
@@ -398,7 +406,8 @@ f32 find_floor_height_and_data(f32 xPos, f32 yPos, f32 zPos, struct FloorGeometr
 /**
  * Iterate through the list of floors and find the first floor under a given point.
  */
-static struct Surface *find_floor_from_list(struct SurfaceNode *surfaceNode, s32 x, s32 y, s32 z, f32 *pheight) {
+struct Surface *find_floor_from_list(struct SurfaceNode *surfaceNode, s32 x, s32 y, s32 z,
+                                     f32 *pheight) {
     register struct Surface *surf;
     register s32 x1, z1, x2, z2, x3, z3;
     f32 nx, ny, nz;
@@ -482,7 +491,7 @@ f32 find_floor_height(f32 x, f32 y, f32 z) {
 }
 
 /**
- * Find the highest dynamic floor under a given position. Perhaps originally static
+ * Find the highest dynamic floor under a given position. Perhaps originally
  * and dynamic floors were checked separately.
  */
 f32 unused_find_dynamic_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfloor) {
@@ -556,7 +565,7 @@ f32 find_floor(f32 xPos, f32 yPos, f32 zPos, struct Surface **pfloor) {
         //  (happens when there is no floor under the SURFACE_INTANGIBLE floor) but returns the height
         //  of the SURFACE_INTANGIBLE floor instead of the typical -11000 returned for a NULL floor.
         if (floor != NULL && floor->type == SURFACE_INTANGIBLE) {
-            floor = find_floor_from_list(surfaceList, x, (s32)(height - 200.0f), z, &height);
+            floor = find_floor_from_list(surfaceList, x, (s32) (height - 200.0f), z, &height);
         }
     } else {
         // To prevent accidentally leaving the floor tangible, stop checking for it.
@@ -667,7 +676,7 @@ f32 find_poison_gas_level(f32 x, f32 z) {
 /**
  * Finds the length of a surface list for debug purposes.
  */
-static s32 surface_list_length(struct SurfaceNode *list) {
+s32 surface_list_length(struct SurfaceNode *list) {
     s32 count = 0;
 
     while (list != NULL) {
@@ -691,22 +700,34 @@ void debug_surface_list_info(f32 xPos, f32 zPos) {
     s32 cellX = (xPos + LEVEL_BOUNDARY_MAX) / CELL_SIZE;
     s32 cellZ = (zPos + LEVEL_BOUNDARY_MAX) / CELL_SIZE;
 
-    list = gStaticSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX][SPATIAL_PARTITION_FLOORS].next;
+    list = gStaticSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX]
+                                  [SPATIAL_PARTITION_FLOORS]
+                                      .next;
     numFloors += surface_list_length(list);
 
-    list = gDynamicSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX][SPATIAL_PARTITION_FLOORS].next;
+    list = gDynamicSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX]
+                                   [SPATIAL_PARTITION_FLOORS]
+                                       .next;
     numFloors += surface_list_length(list);
 
-    list = gStaticSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX][SPATIAL_PARTITION_WALLS].next;
+    list = gStaticSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX]
+                                  [SPATIAL_PARTITION_WALLS]
+                                      .next;
     numWalls += surface_list_length(list);
 
-    list = gDynamicSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX][SPATIAL_PARTITION_WALLS].next;
+    list = gDynamicSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX]
+                                   [SPATIAL_PARTITION_WALLS]
+                                       .next;
     numWalls += surface_list_length(list);
 
-    list = gStaticSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX][SPATIAL_PARTITION_CEILS].next;
+    list = gStaticSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX]
+                                  [SPATIAL_PARTITION_CEILS]
+                                      .next;
     numCeils += surface_list_length(list);
 
-    list = gDynamicSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX][SPATIAL_PARTITION_CEILS].next;
+    list = gDynamicSurfacePartition[cellZ & NUM_CELLS_INDEX][cellX & NUM_CELLS_INDEX]
+                                   [SPATIAL_PARTITION_CEILS]
+                                       .next;
     numCeils += surface_list_length(list);
 
     print_debug_top_down_mapinfo("area   %x", cellZ * NUM_CELLS + cellX);

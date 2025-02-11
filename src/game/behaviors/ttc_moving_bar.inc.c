@@ -38,7 +38,7 @@ void bhv_ttc_moving_bar_init(void) {
 /**
  * Wait a delay if necessary, then begin pulling back.
  */
-static void ttc_moving_bar_act_wait(void) {
+void ttc_moving_bar_act_wait(void) {
     if (o->oTTCMovingBarDelay != 0 && o->oTimer > o->oTTCMovingBarDelay) {
         // This is zero except on the first cycle, and is used to desync the
         // bars from each other at the very beginning
@@ -65,7 +65,7 @@ static void ttc_moving_bar_act_wait(void) {
 /**
  * Pull back, possibly stop for a bit, then begin extending.
  */
-static void ttc_moving_bar_act_pull_back(void) {
+void ttc_moving_bar_act_pull_back(void) {
     // Started with -8 speed, accelerate back to > 0
     if ((o->oTTCMovingBarSpeed += 0.73f) > 0.0f) {
         // Possibly pause after pulling back
@@ -83,7 +83,7 @@ static void ttc_moving_bar_act_pull_back(void) {
 /**
  * Reset and enter the wait action.
  */
-static void ttc_moving_bar_reset(void) {
+void ttc_moving_bar_reset(void) {
     o->oTTCMovingBarOffset = o->oTTCMovingBarSpeed = 0.0f;
     o->oAction = TTC_MOVING_BAR_ACT_WAIT;
 }
@@ -93,7 +93,7 @@ static void ttc_moving_bar_reset(void) {
  * Otherwise, launch outward, oscillating and slowing down around 250, then
  * begin retracting.
  */
-static void ttc_moving_bar_act_extend(void) {
+void ttc_moving_bar_act_extend(void) {
     // If we passed the 250 threshold and we have decelerated enough
     if ((o->oTTCMovingBarOffset == 250.0f
          || (250.0f - o->oTTCMovingBarOffset) * (250.0f - o->oTTCMovingBarStartOffset) < 0.0f)
@@ -130,7 +130,7 @@ static void ttc_moving_bar_act_extend(void) {
 /**
  * Wait a second, then retract back into the wall.
  */
-static void ttc_moving_bar_act_retract(void) {
+void ttc_moving_bar_act_retract(void) {
     // Wait a second
     if (o->oTimer > 30) {
         // Retract

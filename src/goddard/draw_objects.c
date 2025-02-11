@@ -62,10 +62,10 @@ struct GdColour sClrDarkGrey = { 0.4, 0.4, 0.4 };         // @ 801A80D0
 struct GdColour sClrYellow = { 1.0, 1.0, 0.0 };           // @ 801A80DC
 struct GdColour sLightColours[1] = { { 1.0, 1.0, 0.0 } }; // @ 801A80E8
 struct GdColour *sSelectedColour = &sClrRed;              // @ 801A80F4
-struct ObjCamera *gViewUpdateCamera = NULL;                      // @ 801A80F8
+struct ObjCamera *gViewUpdateCamera = NULL;               // @ 801A80F8
 void *sUnref801A80FC = NULL;
-s32 sUnreadShapeFlag = 0;       // @ 801A8100
-struct GdColour *sColourPalette[5] = { // @ 801A8104
+s32 sUnreadShapeFlag = 0;                                 // @ 801A8100
+struct GdColour *sColourPalette[5] = {                    // @ 801A8104
     &sClrWhite, &sClrYellow, &sClrRed, &sClrBlack, &sClrBlack
 };
 struct GdColour *sWhiteBlack[2] = {
@@ -95,12 +95,12 @@ f32 sPickObjDistance;             ///< distance between object position and curs
 struct GdObj *sPickedObject;      ///< object selected with cursor
 /// Various counters and pointers set in update_view() and used in various `draw_XXX` functions
 struct {
-    u8 filler1[4];        // @ 801B9CE0
-    struct ObjView *view; // @ 801B9CE4
-    s32 unreadCounter;    // @ 801B9CE8
-    s32 mtlDlNum;         // @ 801B9CEC; name is a big guess
-    s32 shapesDrawn;      // @ 801B9CF0
-    s32 unused;           // @ 801B9CF4
+    u8 filler1[4];                     // @ 801B9CE0
+    struct ObjView *view;              // @ 801B9CE4
+    s32 unreadCounter;                 // @ 801B9CE8
+    s32 mtlDlNum;                      // @ 801B9CEC; name is a big guess
+    s32 shapesDrawn;                   // @ 801B9CF0
+    s32 unused;                        // @ 801B9CF4
 } sUpdateViewState;
 struct ObjLight *sPhongLight;          // material light? phong light?
 struct GdVec3f sPhongLightPosition;    //@ 801B9D00; guess; light source unit position for light
@@ -137,7 +137,7 @@ void Unknown801781DC(struct ObjZone *zone) {
     f32 sp2C;
     struct ObjLight *light;
     register struct ListNode *link = zone->unk30->firstMember; // s0 (24)
-    struct GdObj *obj;                                 // 20
+    struct GdObj *obj;                                         // 20
 
     while (link != NULL) {
         obj = link->obj;
@@ -317,7 +317,7 @@ void draw_material(struct ObjMaterial *mtl) {
         if (sPhongLight != NULL && sPhongLight->unk30 > 0.0f) {
             if (gViewUpdateCamera != NULL) {
                 gd_dl_hilite(mtl->gddlNumber, gViewUpdateCamera, &sPhongLight->position,
-                              &sLightPositionOffset, &sPhongLightPosition, &sPhongLight->colour);
+                             &sLightPositionOffset, &sPhongLightPosition, &sPhongLight->colour);
             } else {
                 fatal_printf("draw_material() no active camera for phong");
             }
@@ -359,7 +359,8 @@ void check_face_bad_vtx(struct ObjFace *face) {
             return;
         }
         if ((uintptr_t) vtx->gbiVerts == 0x3F800000) {
-            fatal_printf("bad2 %x,%d,%d,%d\n", (u32) (uintptr_t) vtx, vtx->scaleFactor, vtx->id, vtx->header.type);
+            fatal_printf("bad2 %x,%d,%d,%d\n", (u32) (uintptr_t) vtx, vtx->scaleFactor, vtx->id,
+                         vtx->header.type);
         }
     }
 }
@@ -429,7 +430,8 @@ void Unknown80178ECC(f32 v0X, f32 v0Y, f32 v0Z, f32 v1X, f32 v1Y, f32 v1Z) {
     f32 difX = v1X - v0X;
     f32 difZ = v1Z - v0Z;
 
-    gd_dl_make_triangle(v0X, v0Y, v0Z, v1X, v1Y, v1Z, v0X + difY * 0.1, v0Y + difX * 0.1, v0Z + difZ * 0.1);
+    gd_dl_make_triangle(v0X, v0Y, v0Z, v1X, v1Y, v1Z, v0X + difY * 0.1, v0Y + difX * 0.1,
+                        v0Z + difZ * 0.1);
 }
 
 /**
@@ -442,9 +444,9 @@ void draw_face(struct ObjFace *face) {
     f32 y;                 // 34
     f32 x;                 // 30
     UNUSED u8 filler[12];
-    s32 i;             // 20; also used to store mtl's gddl number
-    s32 hasTextCoords; // 1c
-    Vtx *gbiVtx;       // 18
+    s32 i;                 // 20; also used to store mtl's gddl number
+    s32 hasTextCoords;     // 1c
+    Vtx *gbiVtx;           // 18
 
     imin("draw_face");
     hasTextCoords = FALSE;
@@ -610,8 +612,8 @@ void draw_net(struct ObjNet *self) {
     }
 
     if (net->shapePtr != NULL) {
-        draw_shape(net->shapePtr, 0x10, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                   0.0f, 0.0f, 0.0f, 0.0f, 0.0f, netColor, &net->mat168);
+        draw_shape(net->shapePtr, 0x10, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                   0.0f, 0.0f, netColor, &net->mat168);
     }
 
     if (net->unk1C8 != NULL) {
@@ -629,18 +631,13 @@ void draw_gadget(struct ObjGadget *gdgt) {
         colour = gdgt->colourNum;
     }
 
-    draw_rect_fill(colour,
-        gdgt->worldPos.x,
-        gdgt->worldPos.y,
-        gdgt->worldPos.x + gdgt->sliderPos * gdgt->size.x,
-        gdgt->worldPos.y + gdgt->size.y);
+    draw_rect_fill(colour, gdgt->worldPos.x, gdgt->worldPos.y,
+                   gdgt->worldPos.x + gdgt->sliderPos * gdgt->size.x, gdgt->worldPos.y + gdgt->size.y);
 
     if (gdgt->header.drawFlags & OBJ_HIGHLIGHTED) {
-        draw_rect_stroke(COLOUR_YELLOW,
-            gdgt->worldPos.x,
-            gdgt->worldPos.y,
-            gdgt->worldPos.x + gdgt->sliderPos * gdgt->size.x,
-            gdgt->worldPos.y + gdgt->size.y);
+        draw_rect_stroke(COLOUR_YELLOW, gdgt->worldPos.x, gdgt->worldPos.y,
+                         gdgt->worldPos.x + gdgt->sliderPos * gdgt->size.x,
+                         gdgt->worldPos.y + gdgt->size.y);
     }
     gdgt->header.drawFlags &= ~OBJ_HIGHLIGHTED;
 }
@@ -675,7 +672,8 @@ void draw_camera(struct ObjCamera *cam) {
         gd_printf("Draw_Camera(): Zero view distance\n");
         return;
     }
-    gd_dl_lookat(cam, cam->worldPos.x, cam->worldPos.y, cam->worldPos.z, sp44.x, sp44.y, sp44.z, cam->unkA4);
+    gd_dl_lookat(cam, cam->worldPos.x, cam->worldPos.y, cam->worldPos.z, sp44.x, sp44.y, sp44.z,
+                 cam->unkA4);
 }
 
 /**
@@ -785,9 +783,10 @@ void drawscene(enum SceneType process, struct ObjGroup *interactables, struct Ob
     restart_timer("draw1");
     set_gd_mtx_parameters(G_MTX_PROJECTION | G_MTX_MUL | G_MTX_PUSH);
     if (sUpdateViewState.view->projectionType == 1) {
-        gd_create_perspective_matrix(sUpdateViewState.view->clipping.z,
-                      sUpdateViewState.view->lowerRight.x / sUpdateViewState.view->lowerRight.y,
-                      sUpdateViewState.view->clipping.x, sUpdateViewState.view->clipping.y);
+        gd_create_perspective_matrix(
+            sUpdateViewState.view->clipping.z,
+            sUpdateViewState.view->lowerRight.x / sUpdateViewState.view->lowerRight.y,
+            sUpdateViewState.view->clipping.x, sUpdateViewState.view->clipping.y);
     } else {
         gd_create_ortho_matrix(
             -sUpdateViewState.view->lowerRight.x / 2.0, sUpdateViewState.view->lowerRight.x / 2.0,
@@ -933,8 +932,8 @@ void draw_bone(struct GdObj *obj) {
 
     if (sSceneProcessType != FIND_PICKS) {
         draw_shape(bone->shapePtr, 0x1B, scale.x, scale.y, scale.z, bone->worldPos.x, bone->worldPos.y,
-                   bone->worldPos.z, 0.0f, 0.0f, 0.0f, bone->unk28.x, bone->unk28.y, bone->unk28.z, colour,
-                   &bone->mat70);
+                   bone->worldPos.z, 0.0f, 0.0f, 0.0f, bone->unk28.x, bone->unk28.y, bone->unk28.z,
+                   colour, &bone->mat70);
     }
 }
 
@@ -1226,7 +1225,7 @@ void map_face_materials(struct ObjGroup *faces, struct ObjGroup *mtls) {
  * @param facegrp `ObjGroup` of `ObjFace` structures that use @p vtx
  * @return void
  */
-static void calc_vtx_normal(struct ObjVertex *vtx, struct ObjGroup *facegrp) {
+void calc_vtx_normal(struct ObjVertex *vtx, struct ObjGroup *facegrp) {
     s32 i;
     s32 faceCount;
     register struct ListNode *node;
@@ -1267,7 +1266,7 @@ static void calc_vtx_normal(struct ObjVertex *vtx, struct ObjGroup *facegrp) {
  * @param vertexGrp  `ObjGroup` to index in for `ObjVertex` or `ObjPaticle` structures
  * @return void
  */
-static void find_thisface_verts(struct ObjFace *face, struct ObjGroup *vertexGrp) {
+void find_thisface_verts(struct ObjFace *face, struct ObjGroup *vertexGrp) {
     s32 i;
     u32 currIndex;
     struct ListNode *node;

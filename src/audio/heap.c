@@ -383,7 +383,7 @@ void temporary_pools_init(struct PoolSplit *a) {
 #undef SOUND_ALLOC_FUNC
 
 #if defined(VERSION_JP) || defined(VERSION_US)
-UNUSED static void unused_803163D4(void) {
+void unused_803163D4(void) {
 }
 #endif
 

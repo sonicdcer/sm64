@@ -36,7 +36,7 @@ u8 sSpinyWalkAttackHandlers[] = {
 /**
  * If the spiny was spawned by lakitu and mario is far away, despawn.
  */
-static s32 spiny_check_active(void) {
+s32 spiny_check_active(void) {
     if (o->parentObj != o) {
         if (o->oDistanceToMario > 2500.0f) {
             //! It's possible for the lakitu to despawn while the spiny still
@@ -58,7 +58,7 @@ static s32 spiny_check_active(void) {
 /**
  * Walk around randomly, and dick around with oFlags, oMoveFlags, and oInteractType.
  */
-static void spiny_act_walk(void) {
+void spiny_act_walk(void) {
     if (spiny_check_active()) {
         cur_obj_update_floor_and_walls();
 
@@ -122,7 +122,7 @@ static void spiny_act_walk(void) {
  * Wait for the lakitu to throw the spiny. The spiny is placed in this action
  * after being spawned by a lakitu.
  */
-static void spiny_act_held_by_lakitu(void) {
+void spiny_act_held_by_lakitu(void) {
     o->oGraphYOffset = 15.0f;
     cur_obj_init_animation_with_sound(0);
 
@@ -146,7 +146,7 @@ static void spiny_act_held_by_lakitu(void) {
 /**
  * Spin around. After landing, enter the walk action.
  */
-static void spiny_act_thrown_by_lakitu(void) {
+void spiny_act_thrown_by_lakitu(void) {
     if (spiny_check_active()) {
         cur_obj_update_floor_and_walls();
 

@@ -20,14 +20,14 @@ Vec3f sKleptoTargetPositions[] = {
 
 u8 sKleptoAttackHandlers[] = { 2, 2, 5, 5, 2, 2 };
 
-static void klepto_target_mario(void) {
+void klepto_target_mario(void) {
     o->oKleptoDistanceToTarget = lateral_dist_between_objects(gMarioObject, o);
     o->oKleptoUnk1B0 = obj_turn_pitch_toward_mario(250.0f, 0);
     o->oKleptoYawToTarget = o->oAngleToMario;
     o->oKleptoUnk1AE = -60;
 }
 
-static s32 klepto_set_and_check_if_anim_at_end(void) {
+s32 klepto_set_and_check_if_anim_at_end(void) {
     if (o->oSoundStateID == 6) {
         cur_obj_set_anim_if_at_end(5);
     } else if (o->oSoundStateID == 5) {
@@ -45,7 +45,7 @@ static s32 klepto_set_and_check_if_anim_at_end(void) {
     return FALSE;
 }
 
-static void klepto_anim_dive(void) {
+void klepto_anim_dive(void) {
     if (o->oKleptoUnk1AE > 0) {
         if (o->oKleptoUnk1B0 < -400) {
             o->oKleptoUnk1AE = 0;
@@ -91,7 +91,7 @@ void bhv_klepto_init(void) {
     }
 }
 
-static void klepto_change_target(void) {
+void klepto_change_target(void) {
     s32 newTarget = 0;
 
     if (o->oDistanceToMario > 2000.0f) {
@@ -125,7 +125,7 @@ static void klepto_change_target(void) {
     o->oKleptoUnkFC = cur_obj_lateral_dist_to_home() / 2;
 }
 
-static void klepto_circle_target(f32 radius, f32 targetSpeed) {
+void klepto_circle_target(f32 radius, f32 targetSpeed) {
     if (o->oAnimState != KLEPTO_ANIM_STATE_HOLDING_NOTHING
         && ((o->oTimer > 60 && o->oDistanceToMario > 2000.0f)
             || o->oTimer >= o->oKleptoTimeUntilTargetChange)) {
@@ -136,7 +136,7 @@ static void klepto_circle_target(f32 radius, f32 targetSpeed) {
         s16 turnAmount = 0x4000 - atan2s(radius, o->oKleptoDistanceToTarget - radius);
         f32 accel = 0.05f;
 
-        if ((s16)(o->oMoveAngleYaw - o->oKleptoYawToTarget) < 0) {
+        if ((s16) (o->oMoveAngleYaw - o->oKleptoYawToTarget) < 0) {
             turnAmount = -turnAmount;
         }
 
@@ -145,8 +145,8 @@ static void klepto_circle_target(f32 radius, f32 targetSpeed) {
 
         //! The multiplied value is sometimes out of range for an s16 during the s32 -> s16 cast,
         //  which might invert sign.
-        turnAmount = (s16)(s32)(abs_angle_diff(o->oKleptoYawToTarget, o->oMoveAngleYaw)
-                                * (0.03f * o->oKleptoSpeed));
+        turnAmount = (s16) (s32) (abs_angle_diff(o->oKleptoYawToTarget, o->oMoveAngleYaw)
+                                  * (0.03f * o->oKleptoSpeed));
         clamp_s16(&turnAmount, 400, 700);
         obj_rotate_yaw_and_bounce_off_walls(o->oKleptoYawToTarget, turnAmount);
 
@@ -158,7 +158,7 @@ static void klepto_circle_target(f32 radius, f32 targetSpeed) {
     }
 }
 
-static void klepto_approach_target(f32 targetSpeed) {
+void klepto_approach_target(f32 targetSpeed) {
     if (o->oKleptoDistanceToTarget < 1800.0f) {
         o->oAction = KLEPTO_ACT_CIRCLE_TARGET_HOLDING;
     } else {
@@ -174,7 +174,7 @@ static void klepto_approach_target(f32 targetSpeed) {
     }
 }
 
-static void klepto_act_wait_for_mario(void) {
+void klepto_act_wait_for_mario(void) {
     if (o->oKleptoDistanceToTarget < 1000.0f) {
         klepto_target_mario();
         if (o->oKleptoDistanceToTarget < 1000.0f) {
@@ -186,7 +186,7 @@ static void klepto_act_wait_for_mario(void) {
     klepto_circle_target(300.0f, 40.0f);
 }
 
-static void klepto_act_turn_toward_mario(void) {
+void klepto_act_turn_toward_mario(void) {
     klepto_target_mario();
 
     if (klepto_set_and_check_if_anim_at_end() && cur_obj_check_if_at_animation_end()
@@ -204,7 +204,7 @@ static void klepto_act_turn_toward_mario(void) {
     obj_face_yaw_approach(o->oAngleToMario, 1000);
 }
 
-static void klepto_act_dive_at_mario(void) {
+void klepto_act_dive_at_mario(void) {
     approach_f32_ptr(&o->oKleptoSpeed, 60.0f, 10.0f);
 
     if (o->oSoundStateID == 2) {
@@ -255,7 +255,7 @@ static void klepto_act_dive_at_mario(void) {
     obj_rotate_yaw_and_bounce_off_walls(o->oKleptoYawToTarget, 600);
 }
 
-static void klepto_act_struck_by_mario(void) {
+void klepto_act_struck_by_mario(void) {
     cur_obj_init_animation_with_sound(1);
 
     obj_face_pitch_approach(0, 800);
@@ -275,7 +275,7 @@ static void klepto_act_struck_by_mario(void) {
     }
 }
 
-static void klepto_act_retreat(void) {
+void klepto_act_retreat(void) {
     cur_obj_init_animation_with_sound(0);
     approach_f32_ptr(&o->oKleptoSpeed, 40.0f, 10.0f);
 
@@ -294,7 +294,7 @@ static void klepto_act_retreat(void) {
     }
 }
 
-static void klepto_act_reset_position(void) {
+void klepto_act_reset_position(void) {
     if (o->oTimer < 300) {
         klepto_circle_target(300.0f, 20.0f);
     } else if (o->oBhvParams2ndByte != 0) {

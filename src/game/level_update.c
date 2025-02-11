@@ -52,7 +52,8 @@ const char *credits05[] = { "1CAMERA PROGRAMMER", "TAKUMI KAWAGOE" };
 const char *credits06[] = { "1MARIO FACE PROGRAMMER", "GILES GODDARD" };
 const char *credits07[] = { "2COURSE DIRECTORS", "YOICHI YAMADA", "YASUHISA YAMAMURA" };
 const char *credits08[] = { "2COURSE DESIGNERS", "KENTA USUI", "NAOKI MORI" };
-const char *credits09[] = { "3COURSE DESIGNERS", "YOSHIKI HARUHANA", "MAKOTO MIYANAGA", "KATSUHIKO KANNO" };
+const char *credits09[] = { "3COURSE DESIGNERS", "YOSHIKI HARUHANA", "MAKOTO MIYANAGA",
+                            "KATSUHIKO KANNO" };
 const char *credits10[] = { "1SOUND COMPOSER", "KOJI KONDO" };
 
 #ifdef VERSION_JP
@@ -64,7 +65,8 @@ const char *credits15[] = { "3TECHNICAL SUPPORT", "TAKAO SAWANO", "HIROHITO YOSH
 const char *credits16[] = { "1TECHNICAL SUPPORT", "SGI. 64PROJECT STAFF" };
 const char *credits17[] = { "2PROGRESS MANAGEMENT", "KIMIYOSHI FUKUI", "KEIZO KATO" };
 #else // VERSION_SH || VERSION_CN
-// Shindou and iQue combine sound effects and sound programmer in order to make room for Mario voice and Peach voice
+// Shindou and iQue combine sound effects and sound programmer in order to make room for Mario voice and
+// Peach voice
 const char *credits11[] = { "4SOUND EFFECTS", "SOUND PROGRAMMER", "YOJI INAGAKI", "HIDEAKI SHIMIZU" };
 const char *credits12[] = { "23D ANIMATORS", "YOSHIAKI KOIZUMI", "SATORU TAKIZAWA" };
 const char *credits13[] = { "1CG DESIGNER", "MASANAO ARIMOTO" };
@@ -76,32 +78,42 @@ const char *credits16[] = { "2PROGRESS MANAGEMENT", "KIMIYOSHI FUKUI", "KEIZO KA
 #else // VERSION_US || VERSION_EU
 
 // US and EU combine camera programmer and Mario face programmer...
-const char *credits05[] = { "4CAMERA PROGRAMMER", "MARIO FACE PROGRAMMER", "TAKUMI KAWAGOE", "GILES GODDARD" };
+const char *credits05[] = { "4CAMERA PROGRAMMER", "MARIO FACE PROGRAMMER", "TAKUMI KAWAGOE",
+                            "GILES GODDARD" };
 const char *credits06[] = { "2COURSE DIRECTORS", "YOICHI YAMADA", "YASUHISA YAMAMURA" };
 const char *credits07[] = { "2COURSE DESIGNERS", "KENTA USUI", "NAOKI MORI" };
-const char *credits08[] = { "3COURSE DESIGNERS", "YOSHIKI HARUHANA", "MAKOTO MIYANAGA", "KATSUHIKO KANNO" };
+const char *credits08[] = { "3COURSE DESIGNERS", "YOSHIKI HARUHANA", "MAKOTO MIYANAGA",
+                            "KATSUHIKO KANNO" };
 
 #ifdef VERSION_US
 const char *credits09[] = { "1SOUND COMPOSER", "KOJI KONDO" };
-// ...as well as sound effects and sound programmer in order to make room for screen text writer, Mario voice, and Peach voice
+// ...as well as sound effects and sound programmer in order to make room for screen text writer, Mario
+// voice, and Peach voice
 const char *credits10[] = { "4SOUND EFFECTS", "SOUND PROGRAMMER", "YOJI INAGAKI", "HIDEAKI SHIMIZU" };
 const char *credits11[] = { "23-D ANIMATORS", "YOSHIAKI KOIZUMI", "SATORU TAKIZAWA" };
 const char *credits12[] = { "1ADDITIONAL GRAPHICS", "MASANAO ARIMOTO" };
 const char *credits13[] = { "3TECHNICAL SUPPORT", "TAKAO SAWANO", "HIROHITO YOSHIMOTO", "HIROTO YADA" };
 const char *credits14[] = { "1TECHNICAL SUPPORT", "SGI N64 PROJECT STAFF" };
 const char *credits15[] = { "2PROGRESS MANAGEMENT", "KIMIYOSHI FUKUI", "KEIZO KATO" };
-const char *credits16[] = { "5SCREEN TEXT WRITER", "TRANSLATION", "LESLIE SWAN", "MINA AKINO", "HIRO YAMADA" };
+const char *credits16[] = { "5SCREEN TEXT WRITER", "TRANSLATION", "LESLIE SWAN", "MINA AKINO",
+                            "HIRO YAMADA" };
 #else // VERSION_EU
 // ...as well as sound composer, sound effects, and sound programmer, and...
-const char *credits09[] = { "7SOUND COMPOSER", "SOUND EFFECTS", "SOUND PROGRAMMER", "KOJI KONDO", "YOJI INAGAKI", "HIDEAKI SHIMIZU" };
-// ...3D animators and additional graphics in order to make room for screen text writer(s), Mario voice, and Peach voice
-const char *credits10[] = { "63-D ANIMATORS", "ADDITIONAL GRAPHICS", "YOSHIAKI KOIZUMI", "SATORU TAKIZAWA", "MASANAO ARIMOTO" };
+const char *credits09[] = { "7SOUND COMPOSER", "SOUND EFFECTS", "SOUND PROGRAMMER",
+                            "KOJI KONDO",      "YOJI INAGAKI",  "HIDEAKI SHIMIZU" };
+// ...3D animators and additional graphics in order to make room for screen text writer(s), Mario voice,
+// and Peach voice
+const char *credits10[] = { "63-D ANIMATORS", "ADDITIONAL GRAPHICS", "YOSHIAKI KOIZUMI",
+                            "SATORU TAKIZAWA", "MASANAO ARIMOTO" };
 const char *credits11[] = { "3TECHNICAL SUPPORT", "TAKAO SAWANO", "HIROHITO YOSHIMOTO", "HIROTO YADA" };
 const char *credits12[] = { "1TECHNICAL SUPPORT", "SGI N64 PROJECT STAFF" };
 const char *credits13[] = { "2PROGRESS MANAGEMENT", "KIMIYOSHI FUKUI", "KEIZO KATO" };
-const char *credits14[] = { "5SCREEN TEXT WRITER", "ENGLISH TRANSLATION", "LESLIE SWAN", "MINA AKINO", "HIRO YAMADA" };
-const char *credits15[] = { "4SCREEN TEXT WRITER", "FRENCH TRANSLATION", "JULIEN BARDAKOFF", "KENJI HARAGUCHI" };
-const char *credits16[] = { "4SCREEN TEXT WRITER", "GERMAN TRANSLATION", "THOMAS GOERG", "THOMAS SPINDLER" };
+const char *credits14[] = { "5SCREEN TEXT WRITER", "ENGLISH TRANSLATION", "LESLIE SWAN", "MINA AKINO",
+                            "HIRO YAMADA" };
+const char *credits15[] = { "4SCREEN TEXT WRITER", "FRENCH TRANSLATION", "JULIEN BARDAKOFF",
+                            "KENJI HARAGUCHI" };
+const char *credits16[] = { "4SCREEN TEXT WRITER", "GERMAN TRANSLATION", "THOMAS GOERG",
+                            "THOMAS SPINDLER" };
 #endif
 
 #endif
@@ -112,11 +124,14 @@ const char *credits17[] = { "4MARIO VOICE", "PEACH VOICE", "CHARLES MARTINET", "
 
 #if defined(VERSION_JP) || defined(VERSION_SH) || defined(VERSION_CN)
 // iQue uses this despite Jyoho Kaihatubu being Japanese
-const char *credits18[] = { "3SPECIAL THANKS TO", "JYOHO KAIHATUBU", "ALL NINTENDO", "MARIO CLUB STAFF" };
+const char *credits18[] = { "3SPECIAL THANKS TO", "JYOHO KAIHATUBU", "ALL NINTENDO",
+                            "MARIO CLUB STAFF" };
 #elif defined(VERSION_US)
-const char *credits18[] = { "3SPECIAL THANKS TO", "EAD STAFF", "ALL NINTENDO PERSONNEL", "MARIO CLUB STAFF" };
+const char *credits18[] = { "3SPECIAL THANKS TO", "EAD STAFF", "ALL NINTENDO PERSONNEL",
+                            "MARIO CLUB STAFF" };
 #else // VERSION_EU
-const char *credits18[] = { "3SPECIAL THANKS TO", "EAD STAFF", "ALL NINTENDO PERSONNEL", "SUPER MARIO CLUB STAFF" };
+const char *credits18[] = { "3SPECIAL THANKS TO", "EAD STAFF", "ALL NINTENDO PERSONNEL",
+                            "SUPER MARIO CLUB STAFF" };
 #endif
 
 #ifdef VERSION_CN
@@ -257,7 +272,7 @@ void load_level_init_text(u32 arg) {
             gotAchievement = save_file_get_flags() & SAVE_FLAG_HAVE_WING_CAP;
             break;
 
-        case (u8)DIALOG_NONE: // 255, cast value to u8 to match (-1)
+        case (u8) DIALOG_NONE: // 255, cast value to u8 to match (-1)
             gotAchievement = TRUE;
             break;
 
@@ -706,7 +721,8 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
 
         switch (warpOp) {
             case WARP_OP_DEMO_NEXT:
-            case WARP_OP_DEMO_END: sDelayedWarpTimer = 20; // Must be one line to match on -O2
+            case WARP_OP_DEMO_END:
+                sDelayedWarpTimer = 20; // Must be one line to match on -O2
                 sSourceWarpNodeId = WARP_NODE_SUCCESS;
                 gSavedCourseNum = COURSE_NONE;
                 val04 = FALSE;
@@ -1065,7 +1081,7 @@ void level_set_transition(s16 length, void (*updateFunction)(s16 *)) {
 s32 play_mode_change_area(void) {
     //! This maybe was supposed to be sTransitionTimer == -1? sTransitionUpdate
     // is never set to -1.
-    if (sTransitionUpdate == (void (*)(s16 *)) -1) {
+    if (sTransitionUpdate == (void (*)(s16 *)) - 1) {
         update_camera(gCurrentArea->camera);
     } else if (sTransitionUpdate != NULL) {
         sTransitionUpdate(&sTransitionTimer);
@@ -1109,7 +1125,7 @@ s32 play_mode_change_level(void) {
 /**
  * Unused play mode. Doesn't call transition update and doesn't reset transition at the end.
  */
-UNUSED static s32 play_mode_unused(void) {
+UNUSED s32 play_mode_unused(void) {
     if (--sTransitionTimer == -1) {
         gHudDisplay.flags = HUD_DISPLAY_NONE;
 

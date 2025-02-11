@@ -9,16 +9,16 @@ struct SLWalkingPenguinStep {
 
 // The penguin follows a preset list of movements while walking forward.
 struct SLWalkingPenguinStep sSLWalkingPenguinErraticSteps[] = {
-    { 60, PENGUIN_ANIM_WALK, 6.0f,  1.0f }, // Walk forwards for 2 seconds
-    { 30, PENGUIN_ANIM_IDLE, 0.0f,  1.0f }, // Stop for 1 second
+    { 60, PENGUIN_ANIM_WALK, 6.0f, 1.0f },  // Walk forwards for 2 seconds
+    { 30, PENGUIN_ANIM_IDLE, 0.0f, 1.0f },  // Stop for 1 second
     { 30, PENGUIN_ANIM_WALK, 12.0f, 2.0f }, // Walk forwards quickly for 1 second
-    { 30, PENGUIN_ANIM_IDLE, 0.0f,  1.0f }, // Stop for 1 second
+    { 30, PENGUIN_ANIM_IDLE, 0.0f, 1.0f },  // Stop for 1 second
     { 30, PENGUIN_ANIM_WALK, -6.0f, 1.0f }, // Walk backwards for 1 second
-    { 30, PENGUIN_ANIM_IDLE, 0.0f,  1.0f }, // Stop for 1 second
-    { -1, 0, 0.0f,  0.0f }, // Repeat
+    { 30, PENGUIN_ANIM_IDLE, 0.0f, 1.0f },  // Stop for 1 second
+    { -1, 0, 0.0f, 0.0f },                  // Repeat
 };
 
-static s32 sl_walking_penguin_turn(void) {
+s32 sl_walking_penguin_turn(void) {
     // Stay still and use walking animation for the turn.
     o->oForwardVel = 0.0f;
     cur_obj_init_animation_with_accel_and_sound(PENGUIN_ANIM_WALK, 1.0f);
@@ -50,8 +50,8 @@ void bhv_sl_walking_penguin_loop(void) {
                 o->oSLWalkingPenguinCurStepTimer = 0;
             }
 
-            if (o->oSLWalkingPenguinCurStepTimer <
-                sSLWalkingPenguinErraticSteps[o->oSLWalkingPenguinCurStep].stepLength) {
+            if (o->oSLWalkingPenguinCurStepTimer
+                < sSLWalkingPenguinErraticSteps[o->oSLWalkingPenguinCurStep].stepLength) {
                 o->oSLWalkingPenguinCurStepTimer++;
             } else {
                 // Move to next step
@@ -71,8 +71,7 @@ void bhv_sl_walking_penguin_loop(void) {
 
                 cur_obj_init_animation_with_accel_and_sound(
                     sSLWalkingPenguinErraticSteps[o->oSLWalkingPenguinCurStep].anim,
-                    sSLWalkingPenguinErraticSteps[o->oSLWalkingPenguinCurStep].animSpeed
-                );
+                    sSLWalkingPenguinErraticSteps[o->oSLWalkingPenguinCurStep].animSpeed);
             }
             break;
 
@@ -110,9 +109,11 @@ void bhv_sl_walking_penguin_loop(void) {
     // Adjust the position to get a point better lined up with the visual model, for stopping the wind.
     // The new point is 60 units behind the penguin and 100 units perpedicularly, away from the snowman.
 
-    adjustedXPos = o->oPosX + sins(0xDBB0) * 60.0f; // 0xDBB0 = -51 degrees, the angle the penguin is facing
+    adjustedXPos =
+        o->oPosX + sins(0xDBB0) * 60.0f; // 0xDBB0 = -51 degrees, the angle the penguin is facing
     adjustedZPos = o->oPosZ + coss(0xDBB0) * 60.0f;
-    adjustedXPos += perpendicularOffset * sins(0x1BB0); // 0x1BB0 = 39 degrees, perpendicular to the penguin
+    adjustedXPos +=
+        perpendicularOffset * sins(0x1BB0); // 0x1BB0 = 39 degrees, perpendicular to the penguin
     adjustedZPos += perpendicularOffset * coss(0x1BB0);
     o->oSLWalkingPenguinWindCollisionXPos = adjustedXPos;
     o->oSLWalkingPenguinWindCollisionZPos = adjustedZPos;

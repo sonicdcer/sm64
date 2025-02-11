@@ -23,7 +23,7 @@ struct ObjectHitbox sSwoopHitbox = {
  * If necessary, grow to full size. Wait for mario to enter range, then turn
  * toward him and enter the move action.
  */
-static void swoop_act_idle(void) {
+void swoop_act_idle(void) {
     cur_obj_init_animation_with_sound(1);
 
     if (approach_f32_ptr(&o->header.gfx.scale[0], 1.0f, 0.05f) && o->oDistanceToMario < 1500.0f) {
@@ -41,7 +41,7 @@ static void swoop_act_idle(void) {
  * Swoop downward toward mario. Stop moving downward and speed up after reaching
  * him. Return to home once mario is far away.
  */
-static void swoop_act_move(void) {
+void swoop_act_move(void) {
     cur_obj_init_animation_with_accel_and_sound(0, 2.0f);
     if (cur_obj_check_if_near_animation_end()) {
         cur_obj_play_sound_2(SOUND_OBJ_UNKNOWN6);
@@ -86,11 +86,11 @@ static void swoop_act_move(void) {
         obj_move_pitch_approach(o->oSwoopTargetPitch, 140);
 
         // Jitter yaw a bit
-        cur_obj_rotate_yaw_toward(o->oSwoopTargetYaw + (s32)(3000 * coss(4000 * gGlobalTimer)), 1200);
+        cur_obj_rotate_yaw_toward(o->oSwoopTargetYaw + (s32) (3000 * coss(4000 * gGlobalTimer)), 1200);
         obj_roll_to_match_yaw_turn(o->oSwoopTargetYaw, 0x3000, 500);
 
         // Jitter roll a bit
-        o->oFaceAngleRoll += (s32)(1000 * coss(20000 * gGlobalTimer));
+        o->oFaceAngleRoll += (s32) (1000 * coss(20000 * gGlobalTimer));
     }
 }
 

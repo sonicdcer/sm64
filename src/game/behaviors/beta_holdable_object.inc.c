@@ -20,7 +20,7 @@ void bhv_beta_holdable_object_init(void) {
 /**
  * Drop the object.
  */
-static void beta_holdable_object_drop(void) {
+void beta_holdable_object_drop(void) {
     // Re-enable rendering
     cur_obj_enable_rendering();
 
@@ -35,7 +35,7 @@ static void beta_holdable_object_drop(void) {
 /**
  * Throw the object.
  */
-static void beta_holdable_object_throw(void) {
+void beta_holdable_object_throw(void) {
     // cur_obj_enable_rendering_2 just calls cur_obj_enable_rendering and does
     // nothing else; it's useless here. Maybe it originally did more?
     cur_obj_enable_rendering_2();

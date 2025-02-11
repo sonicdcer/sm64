@@ -38,7 +38,7 @@ u8 unused8038EEA8[0x30];
 /**
  * Allocate the part of the surface node pool to contain a surface node.
  */
-static struct SurfaceNode *alloc_surface_node(void) {
+ struct SurfaceNode *alloc_surface_node(void) {
     struct SurfaceNode *node = &sSurfaceNodePool[gSurfaceNodesAllocated];
     gSurfaceNodesAllocated++;
 
@@ -55,7 +55,7 @@ static struct SurfaceNode *alloc_surface_node(void) {
  * Allocate the part of the surface pool to contain a surface and
  * initialize the surface.
  */
-static struct Surface *alloc_surface(void) {
+ struct Surface *alloc_surface(void) {
 
     struct Surface *surface = &sSurfacePool[gSurfacesAllocated];
     gSurfacesAllocated++;
@@ -76,7 +76,7 @@ static struct Surface *alloc_surface(void) {
 /**
  * Iterates through the entire partition, clearing the surfaces.
  */
-static void clear_spatial_partition(SpatialPartitionCell *cells) {
+ void clear_spatial_partition(SpatialPartitionCell *cells) {
     register s32 i = NUM_CELLS * NUM_CELLS;
 
     while (i--) {
@@ -89,20 +89,20 @@ static void clear_spatial_partition(SpatialPartitionCell *cells) {
 }
 
 /**
- * Clears the static (level) surface partitions for new use.
+ * Clears the  (level) surface partitions for new use.
  */
-static void clear_static_surfaces(void) {
+ void clear_static_surfaces(void) {
     clear_spatial_partition(&gStaticSurfacePartition[0][0]);
 }
 
 /**
  * Add a surface to the correct cell list of surfaces.
- * @param dynamic Determines whether the surface is static or dynamic
+ * @param dynamic Determines whether the surface is  or dynamic
  * @param cellX The X position of the cell in which the surface resides
  * @param cellZ The Z position of the cell in which the surface resides
  * @param surface The surface to add
  */
-static void add_surface_to_cell(s16 dynamic, s16 cellX, s16 cellZ, struct Surface *surface) {
+ void add_surface_to_cell(s16 dynamic, s16 cellX, s16 cellZ, struct Surface *surface) {
     struct SurfaceNode *newNode = alloc_surface_node();
     struct SurfaceNode *list;
     s16 surfacePriority;
@@ -159,7 +159,7 @@ static void add_surface_to_cell(s16 dynamic, s16 cellX, s16 cellZ, struct Surfac
 /**
  * Returns the lowest of three values.
  */
-static s16 min_3(TerrainData a0, TerrainData a1, TerrainData a2) {
+ s16 min_3(TerrainData a0, TerrainData a1, TerrainData a2) {
     if (a1 < a0) {
         a0 = a1;
     }
@@ -174,7 +174,7 @@ static s16 min_3(TerrainData a0, TerrainData a1, TerrainData a2) {
 /**
  * Returns the highest of three values.
  */
-static s16 max_3(TerrainData a0, TerrainData a1, TerrainData a2) {
+ s16 max_3(TerrainData a0, TerrainData a1, TerrainData a2) {
     if (a1 > a0) {
         a0 = a1;
     }
@@ -191,7 +191,7 @@ static s16 max_3(TerrainData a0, TerrainData a1, TerrainData a2) {
  * time). This function determines the lower cell for a given x/z position.
  * @param coord The coordinate to test
  */
-static s16 lower_cell_index(TerrainData coord) {
+ s16 lower_cell_index(TerrainData coord) {
     s16 index;
 
     // Move from range [-0x2000, 0x2000) to [0, 0x4000)
@@ -223,7 +223,7 @@ static s16 lower_cell_index(TerrainData coord) {
  * time). This function determines the upper cell for a given x/z position.
  * @param coord The coordinate to test
  */
-static s16 upper_cell_index(TerrainData coord) {
+ s16 upper_cell_index(TerrainData coord) {
     s16 index;
 
     // Move from range [-0x2000, 0x2000) to [0, 0x4000)
@@ -255,9 +255,9 @@ static s16 upper_cell_index(TerrainData coord) {
  * the appropriate cells (with a buffer), and adds the surface to those
  * cells.
  * @param surface The surface to check
- * @param dynamic Boolean determining whether the surface is static or dynamic
+ * @param dynamic Boolean determining whether the surface is  or dynamic
  */
-static void add_surface(struct Surface *surface, s32 dynamic) {
+ void add_surface(struct Surface *surface, s32 dynamic) {
     // minY/maxY maybe? s32 instead of s16, though.
     UNUSED s32 unused1, unused2;
     s16 minX, minZ, maxX, maxZ;
@@ -285,7 +285,7 @@ static void add_surface(struct Surface *surface, s32 dynamic) {
     }
 }
 
-UNUSED static void stub_surface_load_1(void) {
+UNUSED  void stub_surface_load_1(void) {
 }
 
 /**
@@ -293,7 +293,7 @@ UNUSED static void stub_surface_load_1(void) {
  * @param vertexData The raw data containing vertex positions
  * @param vertexIndices Helper which tells positions in vertexData to start reading vertices
  */
-static struct Surface *read_surface_data(TerrainData *vertexData, TerrainData **vertexIndices) {
+ struct Surface *read_surface_data(TerrainData *vertexData, TerrainData **vertexIndices) {
     struct Surface *surface;
     register s32 x1, y1, z1;
     register s32 x2, y2, z2;
@@ -381,7 +381,7 @@ static struct Surface *read_surface_data(TerrainData *vertexData, TerrainData **
  * Returns whether a surface has exertion/moves Mario
  * based on the surface type.
  */
-static s32 surface_has_force(TerrainData surfaceType) {
+ s32 surface_has_force(TerrainData surfaceType) {
     s32 hasForce = FALSE;
 
     switch (surfaceType) {
@@ -406,7 +406,7 @@ static s32 surface_has_force(TerrainData surfaceType) {
  * Returns whether a surface should have the
  * SURFACE_FLAG_NO_CAM_COLLISION flag.
  */
-static s32 surf_has_no_cam_collision(TerrainData surfaceType) {
+ s32 surf_has_no_cam_collision(TerrainData surfaceType) {
     s32 flags = 0;
 
     switch (surfaceType) {
@@ -428,7 +428,7 @@ static s32 surf_has_no_cam_collision(TerrainData surfaceType) {
  * Load in the surfaces for a given surface type. This includes setting the flags,
  * exertion, and room.
  */
-static void load_static_surfaces(TerrainData **data, TerrainData *vertexData, TerrainData surfaceType, RoomData **surfaceRooms) {
+ void load_static_surfaces(TerrainData **data, TerrainData *vertexData, TerrainData surfaceType, RoomData **surfaceRooms) {
     s32 i;
     s32 numSurfaces;
     struct Surface *surface;
@@ -470,7 +470,7 @@ static void load_static_surfaces(TerrainData **data, TerrainData *vertexData, Te
 /**
  * Read the data for vertices for reference by triangles.
  */
-static TerrainData *read_vertex_data(TerrainData **data) {
+ TerrainData *read_vertex_data(TerrainData **data) {
     s32 numVertices;
     UNUSED u8 filler[16];
     TerrainData *vertexData;
@@ -487,7 +487,7 @@ static TerrainData *read_vertex_data(TerrainData **data) {
 /**
  * Loads in special environmental regions, such as water, poison gas, and JRB fog.
  */
-static void load_environmental_regions(TerrainData **data) {
+ void load_environmental_regions(TerrainData **data) {
     s32 numRegions;
     s32 i;
 
@@ -649,7 +649,7 @@ void clear_dynamic_surfaces(void) {
     }
 }
 
-UNUSED static void unused_80383604(void) {
+UNUSED  void unused_80383604(void) {
 }
 
 /**

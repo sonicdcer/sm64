@@ -53,17 +53,17 @@ s32 D_801B9E44;
 Mat4f *D_801B9E48;
 struct ObjCamera *gGdCameraList; // @ 801B9E4C
 void *D_801B9E50;
-struct ObjGroup *gGdGroupList;  // @ 801B9E54
-s32 gGdObjCount;                // @ 801B9E58
-s32 gGdGroupCount;              // @ 801B9E5C
-s32 gGdPlaneCount;              // @ 801B9E60
-s32 gGdCameraCount;             // @ 801B9E64
-struct Unk801B9E68 sGdViewInfo; // @ 801B9E68
+struct ObjGroup *gGdGroupList;   // @ 801B9E54
+s32 gGdObjCount;                 // @ 801B9E58
+s32 gGdGroupCount;               // @ 801B9E5C
+s32 gGdPlaneCount;               // @ 801B9E60
+s32 gGdCameraCount;              // @ 801B9E64
+struct Unk801B9E68 sGdViewInfo;  // @ 801B9E68
 void *D_801B9E80;
-struct ObjJoint *gGdJointList;  // @ 801B9E84
-struct ObjBone *gGdBoneList;    // @ 801B9E88
-struct GdObj *gGdObjectList;    // head of linked list containing every single GdObj that was created
-struct ObjGroup *gGdViewsGroup; // @ 801B9E90
+struct ObjJoint *gGdJointList;   // @ 801B9E84
+struct ObjBone *gGdBoneList;     // @ 801B9E88
+struct GdObj *gGdObjectList;     // head of linked list containing every single GdObj that was created
+struct ObjGroup *gGdViewsGroup;  // @ 801B9E90
 
 /* @ 22A480 for 0x70 */
 void reset_bounding_box(void) { /* Initialize Plane? */
@@ -128,7 +128,7 @@ void stub_objects_1(UNUSED struct ObjGroup *a0, UNUSED struct GdObj *a1) {
 /**
  * Returns a string containing the name of the the object type
  */
-static const char *get_obj_name_str(enum ObjTypeFlag objFlag) {
+const char *get_obj_name_str(enum ObjTypeFlag objFlag) {
     const char *objName;
     switch (objFlag) {
         case OBJ_TYPE_JOINTS:
@@ -410,7 +410,7 @@ struct VtxLink *make_vtx_link(struct VtxLink *prevNode, Vtx *data) {
     newNode->data = data;
 
     // WTF? Not sure what this is supposed to check
-    if (((uintptr_t)(newNode)) == 0x3F800000) {
+    if (((uintptr_t) (newNode)) == 0x3F800000) {
         fatal_printf("bad3\n");
     }
 
@@ -612,8 +612,8 @@ struct ObjLight *make_light(s32 flags, char *name, s32 id) {
 }
 
 /* @ 22BA78 for 0x294; orig name: func_8017D2A8*/
-struct ObjView *make_view(const char *name, s32 flags, s32 projectionType, s32 ulx, s32 uly, s32 lrx, s32 lry,
-                          struct ObjGroup *parts) {
+struct ObjView *make_view(const char *name, s32 flags, s32 projectionType, s32 ulx, s32 uly, s32 lrx,
+                          s32 lry, struct ObjGroup *parts) {
     struct ObjView *newView = (struct ObjView *) make_object(OBJ_TYPE_VIEWS);
 
     if (gGdViewsGroup == NULL) {
@@ -675,12 +675,13 @@ struct ObjAnimator *make_animator(void) {
 }
 
 /* @ 22BD84 for 0x78; orig name: func_8017D5B4 */
-struct ObjWeight *make_weight(UNUSED s32 a0, s32 vtxId, struct ObjVertex *vtx /* always NULL */, f32 weight) {
+struct ObjWeight *make_weight(UNUSED s32 a0, s32 vtxId, struct ObjVertex *vtx /* always NULL */,
+                              f32 weight) {
     struct ObjWeight *newWeight = (struct ObjWeight *) make_object(OBJ_TYPE_WEIGHTS);
 
     newWeight->vtxId = vtxId;
     newWeight->weightVal = weight;
-    newWeight->vtx = vtx;  // is always NULL here. This vtx field actually gets set in reset_weight_vtx.
+    newWeight->vtx = vtx; // is always NULL here. This vtx field actually gets set in reset_weight_vtx.
 
     return newWeight;
 }
@@ -1002,7 +1003,7 @@ s32 make_scene(void) {
 }
 
 /* @ 22CA00 for 0x88 */
-static void reset_joint_or_net(struct GdObj *obj) {
+void reset_joint_or_net(struct GdObj *obj) {
     struct GdObj *localObjPtr = obj;
 
     switch (obj->type) {
@@ -1523,14 +1524,14 @@ void move_animator(struct ObjAnimator *animObj) {
     Mat4f *mtxArr;
     Mat4f localMtx;
     struct GdAnimTransform *triPtr;
-    struct GdAnimTransform currTransform;  // transformation for the current keyframe
-    struct GdAnimTransform nextTransform;  // transformation for the next keyframe
-    s16(*animData9s16)[9];              // GdTriangleH[]?
-    s16(*animData3s16)[3];             // MyVec3h[]?
-    s16(*animData6s16)[6];            // GdPlaneH[]?
-    s16(*animDataCam)[6];         // camera GdPlaneH[]?
-    struct GdObj *stubObj1 = NULL; // used only for call to stubbed function
-    struct GdObj *stubObj2 = NULL; // used only for call to stubbed function
+    struct GdAnimTransform currTransform; // transformation for the current keyframe
+    struct GdAnimTransform nextTransform; // transformation for the next keyframe
+    s16(*animData9s16)[9];                // GdTriangleH[]?
+    s16(*animData3s16)[3];                // MyVec3h[]?
+    s16(*animData6s16)[6];                // GdPlaneH[]?
+    s16(*animDataCam)[6];                 // camera GdPlaneH[]?
+    struct GdObj *stubObj1 = NULL;        // used only for call to stubbed function
+    struct GdObj *stubObj2 = NULL;        // used only for call to stubbed function
     UNUSED u8 filler[12];
     UNUSED struct GdVec3f unusedVec;
     s32 currKeyFrame;
@@ -1546,7 +1547,7 @@ void move_animator(struct ObjAnimator *animObj) {
     }
 
     if (animObj->animatedPartsGrp == NULL) {
-        return;  // nothing to animate
+        return; // nothing to animate
     }
 
     animData = (struct AnimDataInfo *) animObj->animdataGrp->firstMember->obj;
@@ -1650,9 +1651,9 @@ void move_animator(struct ObjAnimator *animObj) {
 
                 // keep current object scale
                 d_get_scale(&currTransform.scale);
-                nextTransform.scale.x  = currTransform.scale.x;
-                nextTransform.scale.y  = currTransform.scale.y;
-                nextTransform.scale.z  = currTransform.scale.z;
+                nextTransform.scale.x = currTransform.scale.x;
+                nextTransform.scale.y = currTransform.scale.y;
+                nextTransform.scale.z = currTransform.scale.z;
 
                 // use animation rotation
                 currTransform.rotate.x = (f32) animData6s16[currKeyFrame][0] * scale;
@@ -1664,42 +1665,42 @@ void move_animator(struct ObjAnimator *animObj) {
                 nextTransform.rotate.z = (f32) animData6s16[nextKeyFrame][2] * scale;
 
                 // use animation position
-                currTransform.pos.x  = (f32) animData6s16[currKeyFrame][3];
-                currTransform.pos.y  = (f32) animData6s16[currKeyFrame][4];
-                currTransform.pos.z  = (f32) animData6s16[currKeyFrame][5];
+                currTransform.pos.x = (f32) animData6s16[currKeyFrame][3];
+                currTransform.pos.y = (f32) animData6s16[currKeyFrame][4];
+                currTransform.pos.z = (f32) animData6s16[currKeyFrame][5];
 
-                nextTransform.pos.x  = (f32) animData6s16[nextKeyFrame][3];
-                nextTransform.pos.y  = (f32) animData6s16[nextKeyFrame][4];
-                nextTransform.pos.z  = (f32) animData6s16[nextKeyFrame][5];
+                nextTransform.pos.x = (f32) animData6s16[nextKeyFrame][3];
+                nextTransform.pos.y = (f32) animData6s16[nextKeyFrame][4];
+                nextTransform.pos.z = (f32) animData6s16[nextKeyFrame][5];
 
                 interpolate_animation_transform(&currTransform, &nextTransform, dt);
                 break;
             case GD_ANIM_SCALE3S_POS3S_ROT3S: // data = s16(*)[9] - scale, position, and rotation
                 animData9s16 = (s16(*)[9]) animData->data;
 
-                currTransform.scale.x  = (f32) animData9s16[currKeyFrame][0] * scale;
-                currTransform.scale.y  = (f32) animData9s16[currKeyFrame][1] * scale;
-                currTransform.scale.z  = (f32) animData9s16[currKeyFrame][2] * scale;
+                currTransform.scale.x = (f32) animData9s16[currKeyFrame][0] * scale;
+                currTransform.scale.y = (f32) animData9s16[currKeyFrame][1] * scale;
+                currTransform.scale.z = (f32) animData9s16[currKeyFrame][2] * scale;
 
                 currTransform.rotate.x = (f32) animData9s16[currKeyFrame][3] * scale;
                 currTransform.rotate.y = (f32) animData9s16[currKeyFrame][4] * scale;
                 currTransform.rotate.z = (f32) animData9s16[currKeyFrame][5] * scale;
 
-                currTransform.pos.x  = (f32) animData9s16[currKeyFrame][6];
-                currTransform.pos.y  = (f32) animData9s16[currKeyFrame][7];
-                currTransform.pos.z  = (f32) animData9s16[currKeyFrame][8];
+                currTransform.pos.x = (f32) animData9s16[currKeyFrame][6];
+                currTransform.pos.y = (f32) animData9s16[currKeyFrame][7];
+                currTransform.pos.z = (f32) animData9s16[currKeyFrame][8];
 
-                nextTransform.scale.x  = (f32) animData9s16[nextKeyFrame][0] * scale;
-                nextTransform.scale.y  = (f32) animData9s16[nextKeyFrame][1] * scale;
-                nextTransform.scale.z  = (f32) animData9s16[nextKeyFrame][2] * scale;
+                nextTransform.scale.x = (f32) animData9s16[nextKeyFrame][0] * scale;
+                nextTransform.scale.y = (f32) animData9s16[nextKeyFrame][1] * scale;
+                nextTransform.scale.z = (f32) animData9s16[nextKeyFrame][2] * scale;
 
                 nextTransform.rotate.x = (f32) animData9s16[nextKeyFrame][3] * scale;
                 nextTransform.rotate.y = (f32) animData9s16[nextKeyFrame][4] * scale;
                 nextTransform.rotate.z = (f32) animData9s16[nextKeyFrame][5] * scale;
 
-                nextTransform.pos.x  = (f32) animData9s16[nextKeyFrame][6];
-                nextTransform.pos.y  = (f32) animData9s16[nextKeyFrame][7];
-                nextTransform.pos.z  = (f32) animData9s16[nextKeyFrame][8];
+                nextTransform.pos.x = (f32) animData9s16[nextKeyFrame][6];
+                nextTransform.pos.y = (f32) animData9s16[nextKeyFrame][7];
+                nextTransform.pos.z = (f32) animData9s16[nextKeyFrame][8];
 
                 interpolate_animation_transform(&currTransform, &nextTransform, dt);
                 break;
@@ -1735,7 +1736,8 @@ void move_animator(struct ObjAnimator *animObj) {
                 d_set_i_matrix(&sp28->matrix);
                 d_set_scale(sp28->vec.x, sp28->vec.y, sp28->vec.z);
                 break;
-            case GD_ANIM_SCALE3F_ROT3F_POS3F_2:  // similar to GD_ANIM_SCALE3F_ROT3F_POS3F, but no interpolation? what matrix does d_set_i_matrix set?
+            case GD_ANIM_SCALE3F_ROT3F_POS3F_2: // similar to GD_ANIM_SCALE3F_ROT3F_POS3F, but no
+                                                // interpolation? what matrix does d_set_i_matrix set?
                 triPtr = (struct GdAnimTransform *) animData->data;
                 gd_set_identity_mat4(&localMtx);
                 gd_scale_mat4f_by_vec3f(&localMtx, &triPtr->scale);
@@ -1784,7 +1786,7 @@ void drag_picked_object(struct GdObj *inputObj) {
     dispMag = gd_vec3f_magnitude(&gViewUpdateCamera->unk40);
     dispMag /= 1000.0f;
 
-    displacement.x = ((f32)(ctrl->csrX - ctrl->dragStartX)) * dispMag;
+    displacement.x = ((f32) (ctrl->csrX - ctrl->dragStartX)) * dispMag;
     displacement.y = ((f32) - (ctrl->csrY - ctrl->dragStartY)) * dispMag;
     displacement.z = 0.0f;
 
@@ -1881,7 +1883,8 @@ void move_camera(struct ObjCamera *cam) {
         cam->unkA8[1][1] = 1.0f;
         cam->unkA8[1][2] = 0.0f;
 
-        // setting the unkA8 matrix above is pointless, if we're just going to overwrite it with the identity matrix.
+        // setting the unkA8 matrix above is pointless, if we're just going to overwrite it with the
+        // identity matrix.
         gd_set_identity_mat4(&cam->unkA8);
     } else {
         gd_set_identity_mat4(&cam->unkA8);
@@ -1889,7 +1892,7 @@ void move_camera(struct ObjCamera *cam) {
 
     sp2C = &cam->unk64;
     if ((cam->flags & CAMERA_FLAG_CONTROLLABLE) != 0) {
-        if (ctrl->btnB != FALSE && ctrl->prevFrame->btnB == FALSE) {  // new B press
+        if (ctrl->btnB != FALSE && ctrl->prevFrame->btnB == FALSE) { // new B press
             cam->zoomLevel++;
             if (cam->zoomLevel > cam->maxZoomLevel) {
                 cam->zoomLevel = 0;

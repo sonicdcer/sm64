@@ -77,7 +77,7 @@ f32 sObjSavedPosZ;
 void wiggler_jumped_on_attack_handler(void);
 void huge_goomba_weakly_attacked(void);
 
-static s32 obj_is_rendering_enabled(void) {
+s32 obj_is_rendering_enabled(void) {
     if (o->header.gfx.node.flags & GRAPH_RENDER_ACTIVE) {
         return TRUE;
     } else {
@@ -85,7 +85,7 @@ static s32 obj_is_rendering_enabled(void) {
     }
 }
 
-static s16 obj_get_pitch_from_vel(void) {
+s16 obj_get_pitch_from_vel(void) {
     return -atan2s(o->oForwardVel, o->oVelY);
 }
 
@@ -96,10 +96,10 @@ static s16 obj_get_pitch_from_vel(void) {
  * If the player declines the race, then disable time stop and allow Mario to
  * move again.
  */
-static s32 obj_update_race_proposition_dialog(s16 dialogID) {
-    s32 dialogResponse =
-        cur_obj_update_dialog_with_cutscene(MARIO_DIALOG_LOOK_UP,
-        (DIALOG_FLAG_TURN_TO_MARIO | DIALOG_FLAG_TIME_STOP_ENABLED), CUTSCENE_RACE_DIALOG, dialogID);
+s32 obj_update_race_proposition_dialog(s16 dialogID) {
+    s32 dialogResponse = cur_obj_update_dialog_with_cutscene(
+        MARIO_DIALOG_LOOK_UP, (DIALOG_FLAG_TURN_TO_MARIO | DIALOG_FLAG_TIME_STOP_ENABLED),
+        CUTSCENE_RACE_DIALOG, dialogID);
 
     if (dialogResponse == DIALOG_RESPONSE_NO) {
         set_mario_npc_dialog(MARIO_DIALOG_STOP);
@@ -109,12 +109,12 @@ static s32 obj_update_race_proposition_dialog(s16 dialogID) {
     return dialogResponse;
 }
 
-static void obj_set_dist_from_home(f32 distFromHome) {
+void obj_set_dist_from_home(f32 distFromHome) {
     o->oPosX = o->oHomeX + distFromHome * coss(o->oMoveAngleYaw);
     o->oPosZ = o->oHomeZ + distFromHome * sins(o->oMoveAngleYaw);
 }
 
-static s32 obj_is_near_to_and_facing_mario(f32 maxDist, s16 maxAngleDiff) {
+s32 obj_is_near_to_and_facing_mario(f32 maxDist, s16 maxAngleDiff) {
     if (o->oDistanceToMario < maxDist
         && abs_angle_diff(o->oMoveAngleYaw, o->oAngleToMario) < maxAngleDiff) {
         return TRUE;
@@ -124,7 +124,7 @@ static s32 obj_is_near_to_and_facing_mario(f32 maxDist, s16 maxAngleDiff) {
 
 //! Although having no return value, this function
 //! must be u32 to match other functions on -O2.
-static BAD_RETURN(u32) obj_perform_position_op(s32 op) {
+BAD_RETURN(u32) obj_perform_position_op(s32 op) {
     switch (op) {
         case POS_OP_SAVE_POSITION:
             sObjSavedPosX = o->oPosX;
@@ -146,7 +146,7 @@ static BAD_RETURN(u32) obj_perform_position_op(s32 op) {
     }
 }
 
-static void platform_on_track_update_pos_or_spawn_ball(s32 ballIndex, f32 x, f32 y, f32 z) {
+void platform_on_track_update_pos_or_spawn_ball(s32 ballIndex, f32 x, f32 y, f32 z) {
     struct Object *trackBall;
     struct Waypoint *initialPrevWaypoint;
     struct Waypoint *nextWaypoint;
@@ -158,7 +158,7 @@ static void platform_on_track_update_pos_or_spawn_ball(s32 ballIndex, f32 x, f32
     f32 dz;
     f32 distToNextWaypoint;
 
-    if (ballIndex == 0 || ((u16)(o->oBhvParams >> 16) & 0x0080)) {
+    if (ballIndex == 0 || ((u16) (o->oBhvParams >> 16) & 0x0080)) {
         initialPrevWaypoint = o->oPlatformOnTrackPrevWaypoint;
         nextWaypoint = initialPrevWaypoint;
 
@@ -179,7 +179,7 @@ static void platform_on_track_update_pos_or_spawn_ball(s32 ballIndex, f32 x, f32
                     o->oPlatformOnTrackPrevWaypointFlags = WAYPOINT_FLAGS_END;
                 }
 
-                if (((u16)(o->oBhvParams >> 16) & PLATFORM_ON_TRACK_BP_RETURN_TO_START)) {
+                if (((u16) (o->oBhvParams >> 16) & PLATFORM_ON_TRACK_BP_RETURN_TO_START)) {
                     nextWaypoint = o->oPlatformOnTrackStartWaypoint;
                 } else {
                     return;
@@ -242,7 +242,7 @@ static void platform_on_track_update_pos_or_spawn_ball(s32 ballIndex, f32 x, f32
     }
 }
 
-static void cur_obj_spin_all_dimensions(f32 arg0, f32 arg1) {
+void cur_obj_spin_all_dimensions(f32 arg0, f32 arg1) {
     f32 val24;
     f32 val20;
     f32 val1C;
@@ -297,23 +297,23 @@ static void cur_obj_spin_all_dimensions(f32 arg0, f32 arg1) {
     }
 }
 
-static void obj_rotate_yaw_and_bounce_off_walls(s16 targetYaw, s16 turnAmount) {
+void obj_rotate_yaw_and_bounce_off_walls(s16 targetYaw, s16 turnAmount) {
     if (o->oMoveFlags & OBJ_MOVE_HIT_WALL) {
         targetYaw = cur_obj_reflect_move_angle_off_wall();
     }
     cur_obj_rotate_yaw_toward(targetYaw, turnAmount);
 }
 
-static s16 obj_get_pitch_to_home(f32 latDistToHome) {
+s16 obj_get_pitch_to_home(f32 latDistToHome) {
     return atan2s(latDistToHome, o->oPosY - o->oHomeY);
 }
 
-static void obj_compute_vel_from_move_pitch(f32 speed) {
+void obj_compute_vel_from_move_pitch(f32 speed) {
     o->oForwardVel = speed * coss(o->oMoveAnglePitch);
     o->oVelY = speed * -sins(o->oMoveAnglePitch);
 }
 
-static s32 clamp_s16(s16 *value, s16 minimum, s16 maximum) {
+s32 clamp_s16(s16 *value, s16 minimum, s16 maximum) {
     if (*value <= minimum) {
         *value = minimum;
     } else if (*value >= maximum) {
@@ -325,7 +325,7 @@ static s32 clamp_s16(s16 *value, s16 minimum, s16 maximum) {
     return TRUE;
 }
 
-static s32 clamp_f32(f32 *value, f32 minimum, f32 maximum) {
+s32 clamp_f32(f32 *value, f32 minimum, f32 maximum) {
     if (*value <= minimum) {
         *value = minimum;
     } else if (*value >= maximum) {
@@ -337,22 +337,22 @@ static s32 clamp_f32(f32 *value, f32 minimum, f32 maximum) {
     return TRUE;
 }
 
-static void cur_obj_init_anim_extend(s32 arg0) {
+void cur_obj_init_anim_extend(s32 arg0) {
     cur_obj_init_animation_with_sound(arg0);
     cur_obj_extend_animation_if_at_end();
 }
 
-static s32 cur_obj_init_anim_and_check_if_end(s32 arg0) {
+s32 cur_obj_init_anim_and_check_if_end(s32 arg0) {
     cur_obj_init_animation_with_sound(arg0);
     return cur_obj_check_if_near_animation_end();
 }
 
-static s32 cur_obj_init_anim_check_frame(s32 arg0, s32 arg1) {
+s32 cur_obj_init_anim_check_frame(s32 arg0, s32 arg1) {
     cur_obj_init_animation_with_sound(arg0);
     return cur_obj_check_anim_frame(arg1);
 }
 
-static s32 cur_obj_set_anim_if_at_end(s32 arg0) {
+s32 cur_obj_set_anim_if_at_end(s32 arg0) {
     if (cur_obj_check_if_at_animation_end()) {
         cur_obj_init_animation_with_sound(arg0);
         return TRUE;
@@ -360,14 +360,15 @@ static s32 cur_obj_set_anim_if_at_end(s32 arg0) {
     return FALSE;
 }
 
-static s32 cur_obj_play_sound_at_anim_range(s8 arg0, s8 arg1, u32 sound) {
+s32 cur_obj_play_sound_at_anim_range(s8 arg0, s8 arg1, u32 sound) {
     s32 val04;
 
     if ((val04 = o->header.gfx.animInfo.animAccel / 0x10000) <= 0) {
         val04 = 1;
     }
 
-    if (cur_obj_check_anim_frame_in_range(arg0, val04) || cur_obj_check_anim_frame_in_range(arg1, val04)) {
+    if (cur_obj_check_anim_frame_in_range(arg0, val04)
+        || cur_obj_check_anim_frame_in_range(arg1, val04)) {
         cur_obj_play_sound_2(sound);
         return TRUE;
     }
@@ -375,7 +376,7 @@ static s32 cur_obj_play_sound_at_anim_range(s8 arg0, s8 arg1, u32 sound) {
     return FALSE;
 }
 
-static s16 obj_turn_pitch_toward_mario(f32 targetOffsetY, s16 turnAmount) {
+s16 obj_turn_pitch_toward_mario(f32 targetOffsetY, s16 turnAmount) {
     s16 targetPitch;
 
     o->oPosY -= targetOffsetY;
@@ -385,7 +386,7 @@ static s16 obj_turn_pitch_toward_mario(f32 targetOffsetY, s16 turnAmount) {
     return targetPitch;
 }
 
-static s32 approach_f32_ptr(f32 *px, f32 target, f32 delta) {
+s32 approach_f32_ptr(f32 *px, f32 target, f32 delta) {
     if (*px > target) {
         delta = -delta;
     }
@@ -399,15 +400,15 @@ static s32 approach_f32_ptr(f32 *px, f32 target, f32 delta) {
     return FALSE;
 }
 
-static s32 obj_forward_vel_approach(f32 target, f32 delta) {
+s32 obj_forward_vel_approach(f32 target, f32 delta) {
     return approach_f32_ptr(&o->oForwardVel, target, delta);
 }
 
-static s32 obj_y_vel_approach(f32 target, f32 delta) {
+s32 obj_y_vel_approach(f32 target, f32 delta) {
     return approach_f32_ptr(&o->oVelY, target, delta);
 }
 
-static s32 obj_move_pitch_approach(s16 target, s16 delta) {
+s32 obj_move_pitch_approach(s16 target, s16 delta) {
     o->oMoveAnglePitch = approach_s16_symmetric(o->oMoveAnglePitch, target, delta);
 
     if ((s16) o->oMoveAnglePitch == target) {
@@ -417,7 +418,7 @@ static s32 obj_move_pitch_approach(s16 target, s16 delta) {
     return FALSE;
 }
 
-static s32 obj_face_pitch_approach(s16 targetPitch, s16 deltaPitch) {
+s32 obj_face_pitch_approach(s16 targetPitch, s16 deltaPitch) {
     o->oFaceAnglePitch = approach_s16_symmetric(o->oFaceAnglePitch, targetPitch, deltaPitch);
 
     if ((s16) o->oFaceAnglePitch == targetPitch) {
@@ -427,7 +428,7 @@ static s32 obj_face_pitch_approach(s16 targetPitch, s16 deltaPitch) {
     return FALSE;
 }
 
-static s32 obj_face_yaw_approach(s16 targetYaw, s16 deltaYaw) {
+s32 obj_face_yaw_approach(s16 targetYaw, s16 deltaYaw) {
     o->oFaceAngleYaw = approach_s16_symmetric(o->oFaceAngleYaw, targetYaw, deltaYaw);
 
     if ((s16) o->oFaceAngleYaw == targetYaw) {
@@ -437,7 +438,7 @@ static s32 obj_face_yaw_approach(s16 targetYaw, s16 deltaYaw) {
     return FALSE;
 }
 
-static s32 obj_face_roll_approach(s16 targetRoll, s16 deltaRoll) {
+s32 obj_face_roll_approach(s16 targetRoll, s16 deltaRoll) {
     o->oFaceAngleRoll = approach_s16_symmetric(o->oFaceAngleRoll, targetRoll, deltaRoll);
 
     if ((s16) o->oFaceAngleRoll == targetRoll) {
@@ -447,10 +448,10 @@ static s32 obj_face_roll_approach(s16 targetRoll, s16 deltaRoll) {
     return FALSE;
 }
 
-static s32 obj_smooth_turn(s16 *angleVel, s32 *angle, s16 targetAngle, f32 targetSpeedProportion,
-                           s16 accel, s16 minSpeed, s16 maxSpeed) {
+s32 obj_smooth_turn(s16 *angleVel, s32 *angle, s16 targetAngle, f32 targetSpeedProportion, s16 accel,
+                    s16 minSpeed, s16 maxSpeed) {
     s16 currentSpeed;
-    s16 currentAngle = (s16)(*angle);
+    s16 currentAngle = (s16) (*angle);
 
     *angleVel =
         approach_s16_symmetric(*angleVel, (targetAngle - currentAngle) * targetSpeedProportion, accel);
@@ -459,24 +460,24 @@ static s32 obj_smooth_turn(s16 *angleVel, s32 *angle, s16 targetAngle, f32 targe
     clamp_s16(&currentSpeed, minSpeed, maxSpeed);
 
     *angle = approach_s16_symmetric(*angle, targetAngle, currentSpeed);
-    return (s16)(*angle) == targetAngle;
+    return (s16) (*angle) == targetAngle;
 }
 
-static void obj_roll_to_match_yaw_turn(s16 targetYaw, s16 maxRoll, s16 rollSpeed) {
+void obj_roll_to_match_yaw_turn(s16 targetYaw, s16 maxRoll, s16 rollSpeed) {
     s16 targetRoll = o->oMoveAngleYaw - targetYaw;
     clamp_s16(&targetRoll, -maxRoll, maxRoll);
     obj_face_roll_approach(targetRoll, rollSpeed);
 }
 
-static s16 random_linear_offset(s16 base, s16 range) {
-    return base + (s16)(range * random_float());
+s16 random_linear_offset(s16 base, s16 range) {
+    return base + (s16) (range * random_float());
 }
 
-static s16 random_mod_offset(s16 base, s16 step, s16 mod) {
+s16 random_mod_offset(s16 base, s16 step, s16 mod) {
     return base + step * (random_u16() % mod);
 }
 
-static s16 obj_random_fixed_turn(s16 delta) {
+s16 obj_random_fixed_turn(s16 delta) {
     return o->oMoveAngleYaw + (s16) random_sign() * delta;
 }
 
@@ -487,7 +488,7 @@ static s16 obj_random_fixed_turn(s16 delta) {
  * shootFireScale during this time, return 1.
  * Return -1 once it's reached endScale.
  */
-static s32 obj_grow_then_shrink(f32 *scaleVel, f32 shootFireScale, f32 endScale) {
+s32 obj_grow_then_shrink(f32 *scaleVel, f32 shootFireScale, f32 endScale) {
     if (o->oTimer < 2) {
         o->header.gfx.scale[0] += *scaleVel;
 
@@ -506,8 +507,7 @@ static s32 obj_grow_then_shrink(f32 *scaleVel, f32 shootFireScale, f32 endScale)
     return 0;
 }
 
-static s32 oscillate_toward(s32 *value, f32 *vel, s32 target, f32 velCloseToZero, f32 accel,
-                            f32 slowdown) {
+s32 oscillate_toward(s32 *value, f32 *vel, s32 target, f32 velCloseToZero, f32 accel, f32 slowdown) {
     s32 startValue = *value;
     *value += (s32) *vel;
 
@@ -531,8 +531,7 @@ static s32 oscillate_toward(s32 *value, f32 *vel, s32 target, f32 velCloseToZero
     return FALSE;
 }
 
-static void obj_update_blinking(s32 *blinkTimer, s16 baseCycleLength, s16 cycleLengthRange,
-                                s16 blinkLength) {
+void obj_update_blinking(s32 *blinkTimer, s16 baseCycleLength, s16 cycleLengthRange, s16 blinkLength) {
     if (*blinkTimer != 0) {
         (*blinkTimer)--;
     } else {
@@ -546,7 +545,7 @@ static void obj_update_blinking(s32 *blinkTimer, s16 baseCycleLength, s16 cycleL
     }
 }
 
-static s32 obj_resolve_object_collisions(s32 *targetYaw) {
+s32 obj_resolve_object_collisions(s32 *targetYaw) {
     struct Object *otherObject;
     f32 dx;
     f32 dz;
@@ -583,7 +582,7 @@ static s32 obj_resolve_object_collisions(s32 *targetYaw) {
             if (targetYaw != NULL && abs_angle_diff(o->oMoveAngleYaw, angle) < 0x4000) {
                 // Bounce off object (or it would, if the above atan2s bug
                 // were fixed)
-                *targetYaw = (s16)(angle - o->oMoveAngleYaw + angle + 0x8000);
+                *targetYaw = (s16) (angle - o->oMoveAngleYaw + angle + 0x8000);
                 return TRUE;
             }
         }
@@ -592,11 +591,11 @@ static s32 obj_resolve_object_collisions(s32 *targetYaw) {
     return FALSE;
 }
 
-static s32 obj_bounce_off_walls_edges_objects(s32 *targetYaw) {
+s32 obj_bounce_off_walls_edges_objects(s32 *targetYaw) {
     if (o->oMoveFlags & OBJ_MOVE_HIT_WALL) {
         *targetYaw = cur_obj_reflect_move_angle_off_wall();
     } else if (o->oMoveFlags & OBJ_MOVE_HIT_EDGE) {
-        *targetYaw = (s16)(o->oMoveAngleYaw + 0x8000);
+        *targetYaw = (s16) (o->oMoveAngleYaw + 0x8000);
     } else if (!obj_resolve_object_collisions(targetYaw)) {
         return FALSE;
     }
@@ -604,7 +603,7 @@ static s32 obj_bounce_off_walls_edges_objects(s32 *targetYaw) {
     return TRUE;
 }
 
-static s32 obj_resolve_collisions_and_turn(s16 targetYaw, s16 turnSpeed) {
+s32 obj_resolve_collisions_and_turn(s16 targetYaw, s16 turnSpeed) {
     obj_resolve_object_collisions(NULL);
 
     if (cur_obj_rotate_yaw_toward(targetYaw, turnSpeed)) {
@@ -614,7 +613,7 @@ static s32 obj_resolve_collisions_and_turn(s16 targetYaw, s16 turnSpeed) {
     }
 }
 
-static void obj_die_if_health_non_positive(void) {
+void obj_die_if_health_non_positive(void) {
     if (o->oHealth <= 0) {
         if (o->oDeathSound == 0) {
             spawn_mist_particles_with_sound(SOUND_OBJ_DEFAULT_DEATH);
@@ -641,12 +640,12 @@ static void obj_die_if_health_non_positive(void) {
     }
 }
 
-UNUSED static void obj_unused_die(void) {
+UNUSED void obj_unused_die(void) {
     o->oHealth = 0;
     obj_die_if_health_non_positive();
 }
 
-static void obj_set_knockback_action(s32 attackType) {
+void obj_set_knockback_action(s32 attackType) {
     switch (attackType) {
         case ATTACK_KICK_OR_TRIP:
         case ATTACK_FAST_ATTACK:
@@ -666,12 +665,12 @@ static void obj_set_knockback_action(s32 attackType) {
     o->oMoveAngleYaw = obj_angle_to_object(gMarioObject, o);
 }
 
-static void obj_set_squished_action(void) {
+void obj_set_squished_action(void) {
     cur_obj_play_sound_2(SOUND_OBJ_STOMPED);
     o->oAction = OBJ_ACT_SQUISHED;
 }
 
-static s32 obj_die_if_above_lava_and_health_non_positive(void) {
+s32 obj_die_if_above_lava_and_health_non_positive(void) {
     if (o->oMoveFlags & OBJ_MOVE_UNDERWATER_ON_GROUND) {
         if (o->oGravity + o->oBuoyancy > 0.0f
             || find_water_level(o->oPosX, o->oPosZ) - o->oPosY < 150.0f) {
@@ -692,8 +691,7 @@ static s32 obj_die_if_above_lava_and_health_non_positive(void) {
     return TRUE;
 }
 
-static s32 obj_handle_attacks(struct ObjectHitbox *hitbox, s32 attackedMarioAction,
-                              u8 *attackHandlers) {
+s32 obj_handle_attacks(struct ObjectHitbox *hitbox, s32 attackedMarioAction, u8 *attackHandlers) {
     s32 attackType;
 
     obj_set_hitbox(o, hitbox);
@@ -757,7 +755,7 @@ static s32 obj_handle_attacks(struct ObjectHitbox *hitbox, s32 attackedMarioActi
     return 0;
 }
 
-static void obj_act_knockback(UNUSED f32 baseScale) {
+void obj_act_knockback(UNUSED f32 baseScale) {
     cur_obj_update_floor_and_walls();
 
     if (o->header.gfx.animInfo.curAnim != NULL) {
@@ -774,7 +772,7 @@ static void obj_act_knockback(UNUSED f32 baseScale) {
     cur_obj_move_standard(-78);
 }
 
-static void obj_act_squished(f32 baseScale) {
+void obj_act_squished(f32 baseScale) {
     f32 targetScaleY = baseScale * 0.3f;
 
     cur_obj_update_floor_and_walls();
@@ -795,7 +793,7 @@ static void obj_act_squished(f32 baseScale) {
     cur_obj_move_standard(-78);
 }
 
-static s32 obj_update_standard_actions(f32 scale) {
+s32 obj_update_standard_actions(f32 scale) {
     if (o->oAction < 100) {
         return TRUE;
     } else {
@@ -816,7 +814,7 @@ static s32 obj_update_standard_actions(f32 scale) {
     }
 }
 
-static s32 obj_check_attacks(struct ObjectHitbox *hitbox, s32 attackedMarioAction) {
+s32 obj_check_attacks(struct ObjectHitbox *hitbox, s32 attackedMarioAction) {
     s32 attackType;
 
     obj_set_hitbox(o, hitbox);
@@ -842,7 +840,7 @@ static s32 obj_check_attacks(struct ObjectHitbox *hitbox, s32 attackedMarioActio
     return 0;
 }
 
-static s32 obj_move_for_one_second(s32 endAction) {
+s32 obj_move_for_one_second(s32 endAction) {
     cur_obj_update_floor_and_walls();
     cur_obj_extend_animation_if_at_end();
 
@@ -873,7 +871,7 @@ static s32 obj_move_for_one_second(s32 endAction) {
  * attack Mario (e.g. fly guy shooting fire or lunging), especially when combined
  * with partial updates.
  */
-static void treat_far_home_as_mario(f32 threshold) {
+void treat_far_home_as_mario(f32 threshold) {
     f32 dx = o->oHomeX - o->oPosX;
     f32 dy = o->oHomeY - o->oPosY;
     f32 dz = o->oHomeZ - o->oPosZ;
@@ -899,10 +897,10 @@ static void treat_far_home_as_mario(f32 threshold) {
 #include "behaviors/swoop.inc.c"
 #include "behaviors/fly_guy.inc.c"
 #include "behaviors/goomba.inc.c"
-#include "behaviors/chain_chomp.inc.c" // TODO: chain_chomp_sub_act_lunge documentation
-#include "behaviors/wiggler.inc.c"     // TODO
+#include "behaviors/chain_chomp.inc.c"   // TODO: chain_chomp_sub_act_lunge documentation
+#include "behaviors/wiggler.inc.c"       // TODO
 #include "behaviors/spiny.inc.c"
-#include "behaviors/enemy_lakitu.inc.c" // TODO
+#include "behaviors/enemy_lakitu.inc.c"  // TODO
 #include "behaviors/cloud.inc.c"
 #include "behaviors/camera_lakitu.inc.c" // TODO: 104 label, follow cam documentation
 #include "behaviors/monty_mole.inc.c"    // TODO
@@ -938,7 +936,7 @@ static void treat_far_home_as_mario(f32 threshold) {
 void obj_spit_fire(s16 relativePosX, s16 relativePosY, s16 relativePosZ, f32 scale, s32 model,
                    f32 startSpeed, f32 endSpeed, s16 movePitch) {
     struct Object *obj = spawn_object_relative_with_scale(1, relativePosX, relativePosY, relativePosZ,
-                                                           scale, o, model, bhvSmallPiranhaFlame);
+                                                          scale, o, model, bhvSmallPiranhaFlame);
 
     if (obj != NULL) {
         obj->oSmallPiranhaFlameStartSpeed = startSpeed;

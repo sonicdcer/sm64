@@ -1,6 +1,6 @@
 // fire_spitter.inc.c
 
-static void fire_spitter_act_idle(void) {
+void fire_spitter_act_idle(void) {
     approach_f32_ptr(&o->header.gfx.scale[0], 0.2f, 0.002f);
 
     if (o->oTimer > 150 && o->oDistanceToMario < 800.0f && !(o->oMoveFlags & OBJ_MOVE_MASK_IN_WATER)) {
@@ -9,7 +9,7 @@ static void fire_spitter_act_idle(void) {
     }
 }
 
-static void fire_spitter_act_spit_fire(void) {
+void fire_spitter_act_spit_fire(void) {
     s32 scaleStatus;
 
     o->oMoveAngleYaw = o->oAngleToMario;

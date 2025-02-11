@@ -36,7 +36,7 @@ u8 gSpecialTripleJump = FALSE;
 #define DEFINE_LEVEL(_0, _1, courseenum, _3, _4, _5, _6, _7, _8, _9, _10) courseenum,
 
 s8 gLevelToCourseNumTable[] = {
-    #include "levels/level_defines.h"
+#include "levels/level_defines.h"
 };
 #undef STUB_LEVEL
 #undef DEFINE_LEVEL
@@ -46,7 +46,7 @@ STATIC_ASSERT(ARRAY_COUNT(gLevelToCourseNumTable) == LEVEL_COUNT - 1,
 
 // This was probably used to set progress to 100% for debugging, but
 // it was removed from the release ROM.
-static void stub_save_file_1(void) {
+void stub_save_file_1(void) {
     UNUSED u8 filler[4];
 }
 
@@ -56,12 +56,12 @@ static void stub_save_file_1(void) {
  * Try at most 4 times, and return 0 on success. On failure, return the status returned from
  * osEepromLongRead. It also returns 0 if EEPROM isn't loaded correctly in the system.
  */
-static s32 read_eeprom_data(void *buffer, s32 size) {
+s32 read_eeprom_data(void *buffer, s32 size) {
     s32 status = 0;
 
     if (gEepromProbe != 0) {
         s32 triesLeft = 4;
-        u32 offset = (u32)((u8 *) buffer - (u8 *) &gSaveBuffer) / 8;
+        u32 offset = (u32) ((u8 *) buffer - (u8 *) &gSaveBuffer) / 8;
 
         do {
 #if ENABLE_RUMBLE
@@ -84,12 +84,12 @@ static s32 read_eeprom_data(void *buffer, s32 size) {
  * Try at most 4 times, and return 0 on success. On failure, return the status returned from
  * osEepromLongWrite. Unlike read_eeprom_data, return 1 if EEPROM isn't loaded.
  */
-static s32 write_eeprom_data(void *buffer, s32 size) {
+s32 write_eeprom_data(void *buffer, s32 size) {
     s32 status = 1;
 
     if (gEepromProbe != 0) {
         s32 triesLeft = 4;
-        u32 offset = (u32)((u8 *) buffer - (u8 *) &gSaveBuffer) >> 3;
+        u32 offset = (u32) ((u8 *) buffer - (u8 *) &gSaveBuffer) >> 3;
 
         do {
 #if ENABLE_RUMBLE
@@ -110,7 +110,7 @@ static s32 write_eeprom_data(void *buffer, s32 size) {
  * Sum the bytes in data to data + size - 2. The last two bytes are ignored
  * because that is where the checksum is stored.
  */
-static u16 calc_checksum(u8 *data, s32 size) {
+u16 calc_checksum(u8 *data, s32 size) {
     u16 chksum = 0;
 
     while (size-- > 2) {
@@ -122,7 +122,7 @@ static u16 calc_checksum(u8 *data, s32 size) {
 /**
  * Verify the signature at the end of the block to check if the data is valid.
  */
-static s32 verify_save_block_signature(void *buffer, s32 size, u16 magic) {
+s32 verify_save_block_signature(void *buffer, s32 size, u16 magic) {
     struct SaveBlockSignature *sig = (struct SaveBlockSignature *) ((size - 4) + (u8 *) buffer);
 
     if (sig->magic != magic) {
@@ -137,7 +137,7 @@ static s32 verify_save_block_signature(void *buffer, s32 size, u16 magic) {
 /**
  * Write a signature at the end of the block to make sure the data is valid
  */
-static void add_save_block_signature(void *buffer, s32 size, u16 magic) {
+void add_save_block_signature(void *buffer, s32 size, u16 magic) {
     struct SaveBlockSignature *sig = (struct SaveBlockSignature *) ((size - 4) + (u8 *) buffer);
 
     sig->magic = magic;
@@ -147,23 +147,26 @@ static void add_save_block_signature(void *buffer, s32 size, u16 magic) {
 /**
  * Copy main menu data from one backup slot to the other slot.
  */
-static void restore_main_menu_data(s32 srcSlot) {
+void restore_main_menu_data(s32 srcSlot) {
     s32 destSlot = srcSlot ^ 1;
 
     // Compute checksum on source data
-    add_save_block_signature(&gSaveBuffer.menuData[srcSlot], sizeof(gSaveBuffer.menuData[srcSlot]), MENU_DATA_MAGIC);
+    add_save_block_signature(&gSaveBuffer.menuData[srcSlot], sizeof(gSaveBuffer.menuData[srcSlot]),
+                             MENU_DATA_MAGIC);
 
     // Copy source data to destination
-    bcopy(&gSaveBuffer.menuData[srcSlot], &gSaveBuffer.menuData[destSlot], sizeof(gSaveBuffer.menuData[destSlot]));
+    bcopy(&gSaveBuffer.menuData[srcSlot], &gSaveBuffer.menuData[destSlot],
+          sizeof(gSaveBuffer.menuData[destSlot]));
 
     // Write destination data to EEPROM
     write_eeprom_data(&gSaveBuffer.menuData[destSlot], sizeof(gSaveBuffer.menuData[destSlot]));
 }
 
-static void save_main_menu_data(void) {
+void save_main_menu_data(void) {
     if (gMainMenuDataModified) {
         // Compute checksum
-        add_save_block_signature(&gSaveBuffer.menuData[0], sizeof(gSaveBuffer.menuData[0]), MENU_DATA_MAGIC);
+        add_save_block_signature(&gSaveBuffer.menuData[0], sizeof(gSaveBuffer.menuData[0]),
+                                 MENU_DATA_MAGIC);
 
         // Back up data
         bcopy(&gSaveBuffer.menuData[0], &gSaveBuffer.menuData[1], sizeof(gSaveBuffer.menuData[1]));
@@ -175,7 +178,7 @@ static void save_main_menu_data(void) {
     }
 }
 
-static void wipe_main_menu_data(void) {
+void wipe_main_menu_data(void) {
     bzero(&gSaveBuffer.menuData[0], sizeof(gSaveBuffer.menuData[0]));
 
     // Set score ages for all courses to 3, 2, 1, and 0, respectively.
@@ -187,11 +190,11 @@ static void wipe_main_menu_data(void) {
     save_main_menu_data();
 }
 
-static s32 get_coin_score_age(s32 fileIndex, s32 courseIndex) {
+s32 get_coin_score_age(s32 fileIndex, s32 courseIndex) {
     return (gSaveBuffer.menuData[0].coinScoreAges[fileIndex] >> (2 * courseIndex)) & 0x3;
 }
 
-static void set_coin_score_age(s32 fileIndex, s32 courseIndex, s32 age) {
+void set_coin_score_age(s32 fileIndex, s32 courseIndex, s32 age) {
     s32 mask = 0x3 << (2 * courseIndex);
 
     gSaveBuffer.menuData[0].coinScoreAges[fileIndex] &= ~mask;
@@ -201,7 +204,7 @@ static void set_coin_score_age(s32 fileIndex, s32 courseIndex, s32 age) {
 /**
  * Mark a coin score for a save file as the newest out of all save files.
  */
-static void touch_coin_score_age(s32 fileIndex, s32 courseIndex) {
+void touch_coin_score_age(s32 fileIndex, s32 courseIndex) {
     s32 i;
     u32 age;
     u32 currentAge = get_coin_score_age(fileIndex, courseIndex);
@@ -222,7 +225,7 @@ static void touch_coin_score_age(s32 fileIndex, s32 courseIndex) {
 /**
  * Mark all coin scores for a save file as new.
  */
-static void touch_high_score_ages(s32 fileIndex) {
+void touch_high_score_ages(s32 fileIndex) {
     s32 i;
 
     for (i = COURSE_NUM_TO_INDEX(COURSE_MIN); i <= COURSE_NUM_TO_INDEX(COURSE_STAGES_MAX); i++) {
@@ -233,7 +236,7 @@ static void touch_high_score_ages(s32 fileIndex) {
 /**
  * Copy save file data from one backup slot to the other slot.
  */
-static void restore_save_file_data(s32 fileIndex, s32 srcSlot) {
+void restore_save_file_data(s32 fileIndex, s32 srcSlot) {
     s32 destSlot = srcSlot ^ 1;
 
     // Compute checksum on source data
@@ -299,8 +302,11 @@ void save_file_load_all(void) {
     read_eeprom_data(&gSaveBuffer, sizeof(gSaveBuffer));
 
     // Verify the main menu data and create a backup copy if only one of the slots is valid.
-    validSlots = verify_save_block_signature(&gSaveBuffer.menuData[0], sizeof(gSaveBuffer.menuData[0]), MENU_DATA_MAGIC);
-    validSlots |= verify_save_block_signature(&gSaveBuffer.menuData[1], sizeof(gSaveBuffer.menuData[1]),MENU_DATA_MAGIC) << 1;
+    validSlots = verify_save_block_signature(&gSaveBuffer.menuData[0], sizeof(gSaveBuffer.menuData[0]),
+                                             MENU_DATA_MAGIC);
+    validSlots |= verify_save_block_signature(&gSaveBuffer.menuData[1], sizeof(gSaveBuffer.menuData[1]),
+                                              MENU_DATA_MAGIC)
+                  << 1;
     switch (validSlots) {
         case 0: // Neither copy is correct
             wipe_main_menu_data();
@@ -315,8 +321,11 @@ void save_file_load_all(void) {
 
     for (file = 0; file < NUM_SAVE_FILES; file++) {
         // Verify the save file and create a backup copy if only one of the slots is valid.
-        validSlots = verify_save_block_signature(&gSaveBuffer.files[file][0], sizeof(gSaveBuffer.files[file][0]), SAVE_FILE_MAGIC);
-        validSlots |= verify_save_block_signature(&gSaveBuffer.files[file][1], sizeof(gSaveBuffer.files[file][1]), SAVE_FILE_MAGIC) << 1;
+        validSlots = verify_save_block_signature(&gSaveBuffer.files[file][0],
+                                                 sizeof(gSaveBuffer.files[file][0]), SAVE_FILE_MAGIC);
+        validSlots |= verify_save_block_signature(&gSaveBuffer.files[file][1],
+                                                  sizeof(gSaveBuffer.files[file][1]), SAVE_FILE_MAGIC)
+                      << 1;
         switch (validSlots) {
             case 0: // Neither copy is correct
                 save_file_erase(file);

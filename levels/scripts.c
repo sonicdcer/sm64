@@ -44,11 +44,11 @@ static const LevelScript script_exec_level_table[2
 #undef DEFINE_LEVEL
 #undef STUB_LEVEL
 
-static const LevelScript script_L1[4];
-static const LevelScript script_L2[4];
-static const LevelScript goto_mario_head_regular[4];
-static const LevelScript goto_mario_head_dizzy[4];
-static const LevelScript script_L5[4];
+LevelScript script_L1[4];
+LevelScript script_L2[4];
+LevelScript goto_mario_head_regular[4];
+LevelScript goto_mario_head_dizzy[4];
+LevelScript script_L5[4];
 
 #define STUB_LEVEL(_0, _1, _2, _3, _4, _5, _6, _7, _8)
 #define DEFINE_LEVEL(_0, _1, _2, folder, _4, _5, _6, _7, _8, _9, _10) static const LevelScript script_exec_ ## folder [4 + 1];
@@ -126,23 +126,23 @@ const LevelScript level_main_scripts_entry[] = {
     JUMP_IF(/*op*/ OP_EQ, /*arg*/ -9, script_L5),
 };
 
-static const LevelScript script_L1[] = {
+LevelScript script_L1[] = {
     EXIT_AND_EXECUTE(/*seg*/ 0x14, _introSegmentRomStart, _introSegmentRomEnd, level_intro_splash_screen),
 };
 
-static const LevelScript script_L2[] = {
+LevelScript script_L2[] = {
     EXIT_AND_EXECUTE(/*seg*/ 0x0E, _endingSegmentRomStart, _endingSegmentRomEnd, level_ending_entry),
 };
 
-static const LevelScript goto_mario_head_regular[] = {
+LevelScript goto_mario_head_regular[] = {
     EXIT_AND_EXECUTE(/*seg*/ 0x14, _introSegmentRomStart, _introSegmentRomEnd, level_intro_mario_head_regular),
 };
 
-static const LevelScript goto_mario_head_dizzy[] = {
+LevelScript goto_mario_head_dizzy[] = {
     EXIT_AND_EXECUTE(/*seg*/ 0x14, _introSegmentRomStart, _introSegmentRomEnd, level_intro_mario_head_dizzy),
 };
 
-static const LevelScript script_L5[] = {
+LevelScript script_L5[] = {
     EXIT_AND_EXECUTE(/*seg*/ 0x14, _introSegmentRomStart, _introSegmentRomEnd, level_intro_entry_4),
 };
 

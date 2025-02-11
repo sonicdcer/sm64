@@ -71,8 +71,9 @@ void transfer_bully_speed(struct BullyCollisionData *obj1, struct BullyCollision
     //! Bully battery
 }
 
-BAD_RETURN(s32) init_bully_collision_data(struct BullyCollisionData *data, f32 posX, f32 posZ,
-                               f32 forwardVel, s16 yaw, f32 conversionRatio, f32 radius) {
+BAD_RETURN(s32)
+init_bully_collision_data(struct BullyCollisionData *data, f32 posX, f32 posZ, f32 forwardVel, s16 yaw,
+                          f32 conversionRatio, f32 radius) {
     if (forwardVel < 0.0f) {
         forwardVel *= -1.0f;
         yaw += 0x8000;
@@ -89,7 +90,7 @@ BAD_RETURN(s32) init_bully_collision_data(struct BullyCollisionData *data, f32 p
 void mario_bonk_reflection(struct MarioState *m, u32 negateSpeed) {
     if (m->wall != NULL) {
         s16 wallAngle = atan2s(m->wall->normal.z, m->wall->normal.x);
-        m->faceAngle[1] = wallAngle - (s16)(m->faceAngle[1] - wallAngle);
+        m->faceAngle[1] = wallAngle - (s16) (m->faceAngle[1] - wallAngle);
 
         play_sound((m->flags & MARIO_METAL_CAP) ? SOUND_ACTION_METAL_BONK : SOUND_ACTION_BONK,
                    m->marioObj->header.gfx.cameraToObject);
@@ -255,7 +256,7 @@ s32 stationary_ground_step(struct MarioState *m) {
     return stepResult;
 }
 
-static s32 perform_ground_quarter_step(struct MarioState *m, Vec3f nextPos) {
+s32 perform_ground_quarter_step(struct MarioState *m, Vec3f nextPos) {
     UNUSED struct Surface *lowerWall;
     struct Surface *upperWall;
     struct Surface *ceil;

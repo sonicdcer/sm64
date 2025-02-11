@@ -8,29 +8,41 @@
  * Spawns fish with settings chosen by oBhvParams2ndByte.
  * These settings are animations, color, and spawn quantity.
  */
-static void fish_spawner_act_spawn(void) {
+void fish_spawner_act_spawn(void) {
     s32 i;
     s32 schoolQuantity;
     s16 model;
     f32 minDistToMario;
-    const struct Animation * const *fishAnimation;
+    const struct Animation *const *fishAnimation;
 
     switch (o->oBhvParams2ndByte) {
         // Cases need to be on one line to match with and without optimizations.
         case FISH_SPAWNER_BP_MANY_BLUE:
-            model = MODEL_FISH;      schoolQuantity = 20; minDistToMario = 1500.0f; fishAnimation = blue_fish_seg3_anims_0301C2B0;
+            model = MODEL_FISH;
+            schoolQuantity = 20;
+            minDistToMario = 1500.0f;
+            fishAnimation = blue_fish_seg3_anims_0301C2B0;
             break;
 
         case FISH_SPAWNER_BP_FEW_BLUE:
-            model = MODEL_FISH;      schoolQuantity = 5;  minDistToMario = 1500.0f; fishAnimation = blue_fish_seg3_anims_0301C2B0;
+            model = MODEL_FISH;
+            schoolQuantity = 5;
+            minDistToMario = 1500.0f;
+            fishAnimation = blue_fish_seg3_anims_0301C2B0;
             break;
 
         case FISH_SPAWNER_BP_MANY_CYAN:
-            model = MODEL_CYAN_FISH; schoolQuantity = 20; minDistToMario = 1500.0f; fishAnimation = cyan_fish_seg6_anims_0600E264;
+            model = MODEL_CYAN_FISH;
+            schoolQuantity = 20;
+            minDistToMario = 1500.0f;
+            fishAnimation = cyan_fish_seg6_anims_0600E264;
             break;
 
         case FISH_SPAWNER_BP_FEW_CYAN:
-            model = MODEL_CYAN_FISH; schoolQuantity = 5;  minDistToMario = 1500.0f; fishAnimation = cyan_fish_seg6_anims_0600E264;
+            model = MODEL_CYAN_FISH;
+            schoolQuantity = 5;
+            minDistToMario = 1500.0f;
+            fishAnimation = cyan_fish_seg6_anims_0600E264;
             break;
     }
 
@@ -52,7 +64,7 @@ static void fish_spawner_act_spawn(void) {
  * Sets the spawner to respawn fish if the stage is not Secret Aquarium and
  * Mario is more than 2000 units higher.
  */
-static void fish_spawner_act_idle(void) {
+void fish_spawner_act_idle(void) {
     if ((gCurrLevelNum != LEVEL_SA) && (gMarioObject->oPosY - o->oPosY > 2000.0f)) {
         o->oAction = FISH_SPAWNER_ACT_RESPAWN;
     }
@@ -61,11 +73,11 @@ static void fish_spawner_act_idle(void) {
 /**
  * Temp action that sets the action to spawn fish. This triggers the old fish to despawn.
  */
-static void fish_spawner_act_respawn(void) {
+void fish_spawner_act_respawn(void) {
     o->oAction = FISH_SPAWNER_ACT_SPAWN;
 }
 
-static void (*sFishSpawnerActions[])(void) = {
+void (*sFishSpawnerActions[])(void) = {
     fish_spawner_act_spawn,
     fish_spawner_act_idle,
     fish_spawner_act_respawn,
@@ -78,7 +90,7 @@ void bhv_fish_spawner_loop(void) {
 /**
  * Allows the fish to swim vertically.
  */
-static void fish_vertical_roam(s32 speed) {
+void fish_vertical_roam(s32 speed) {
     f32 parentY = o->parentObj->oPosY;
 
     // If the stage is Secret Aquarium, the fish can
@@ -89,9 +101,9 @@ static void fish_vertical_roam(s32 speed) {
         }
         o->oPosY = approach_f32_symmetric(o->oPosY, o->oFishGoalY, speed);
 
-     // Allow the fish to roam vertically if within
-     // range of the fish spawner.
-     } else if (parentY - 100.0f - o->oFishDepthDistance < o->oPosY
+        // Allow the fish to roam vertically if within
+        // range of the fish spawner.
+    } else if (parentY - 100.0f - o->oFishDepthDistance < o->oPosY
                && o->oPosY < parentY + 1000.0f + o->oFishDepthDistance) {
         o->oPosY = approach_f32_symmetric(o->oPosY, o->oFishGoalY, speed);
     }
@@ -100,7 +112,7 @@ static void fish_vertical_roam(s32 speed) {
 /**
  * Fish action that randomly roams within a set range.
  */
-static void fish_act_roam(void) {
+void fish_act_roam(void) {
     f32 fishY = o->oPosY - gMarioObject->oPosY;
 
     // Alters speed of animation for natural movement.
@@ -136,7 +148,7 @@ static void fish_act_roam(void) {
             fish_vertical_roam(4);
         }
 
-    // Don't let the fish leave the water vertically.
+        // Don't let the fish leave the water vertically.
     } else {
         o->oPosY = o->oFishWaterLevel - 50.0f;
         if (fishY > 300.0f) {
@@ -153,7 +165,7 @@ static void fish_act_roam(void) {
 /**
  * Interactively maneuver fish in relation to its distance from other fish and Mario.
  */
-static void fish_act_flee(void) {
+void fish_act_flee(void) {
     f32 fishY = o->oPosY - gMarioObject->oPosY;
     UNUSED s32 distance;
 
@@ -168,7 +180,7 @@ static void fish_act_flee(void) {
         if (o->oDistanceToMario < 600.0f) {
             distance = 1;
         } else {
-            distance = (s32)(1.0 / (o->oDistanceToMario / 600.0));
+            distance = (s32) (1.0 / (o->oDistanceToMario / 600.0));
         }
 
         distance *= 127;
@@ -204,7 +216,7 @@ static void fish_act_flee(void) {
             fish_vertical_roam(4);
         }
 
-    // Don't let the fish leave the water vertically.
+        // Don't let the fish leave the water vertically.
     } else {
         o->oPosY = o->oFishWaterLevel - 50.0f;
         if (fishY > 300.0f) {
@@ -221,9 +233,9 @@ static void fish_act_flee(void) {
 /**
  * Animate fish and alter scaling at random for a magnifying effect from the water.
  */
-static void fish_act_init(void) {
+void fish_act_init(void) {
     cur_obj_init_animation_with_accel_and_sound(0, 1.0f);
-    o->header.gfx.animInfo.animFrame = (s16)(random_float() * 28.0f);
+    o->header.gfx.animInfo.animFrame = (s16) (random_float() * 28.0f);
     o->oFishDepthDistance = random_float() * 300.0f;
     cur_obj_scale(random_float() * 0.4 + 0.8);
     o->oAction = FISH_ACT_ROAM;
@@ -260,7 +272,7 @@ void bhv_fish_loop(void) {
             return;
         }
 
-    // Unreachable code, perhaps for debugging or testing.
+        // Unreachable code, perhaps for debugging or testing.
     } else {
         o->oFishWaterLevel = 1000.0f;
     }

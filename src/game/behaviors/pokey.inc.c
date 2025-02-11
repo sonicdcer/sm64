@@ -146,7 +146,7 @@ void bhv_pokey_body_part_update(void) {
  * When mario gets within range, spawn the 5 body parts and enter the wander
  * action.
  */
-static void pokey_act_uninitialized(void) {
+void pokey_act_uninitialized(void) {
     struct Object *bodyPart;
     s32 i;
     s16 partModel;
@@ -179,7 +179,7 @@ static void pokey_act_uninitialized(void) {
  * While wandering, if mario is within 2000 units, try to move toward him. But
  * if mario gets too close, then shy away from him.
  */
-static void pokey_act_wander(void) {
+void pokey_act_wander(void) {
     s32 targetAngleOffset;
 
     if (o->oPokeyNumAliveBodyParts == 0) {
@@ -203,9 +203,9 @@ static void pokey_act_wander(void) {
                     // is killed, the new part's index is equal to the number
                     // of living body parts
 
-                    struct Object *bodyPart
-                        = spawn_object_relative(o->oPokeyNumAliveBodyParts, 0, 0, 0, o,
-                                                MODEL_POKEY_BODY_PART, bhvPokeyBodyPart);
+                    struct Object *bodyPart =
+                        spawn_object_relative(o->oPokeyNumAliveBodyParts, 0, 0, 0, o,
+                                              MODEL_POKEY_BODY_PART, bhvPokeyBodyPart);
 
                     if (bodyPart != NULL) {
                         o->oPokeyAliveBodyPartFlags =
@@ -245,7 +245,7 @@ static void pokey_act_wander(void) {
 
                         // targetAngleOffset is 0 when distance to mario is >= 1838.4
                         // and 0x4000 when distance to mario is <= 200
-                        targetAngleOffset = (s32)(0x4000 - (o->oDistanceToMario - 200.0f) * 10.0f);
+                        targetAngleOffset = (s32) (0x4000 - (o->oDistanceToMario - 200.0f) * 10.0f);
                         if (targetAngleOffset < 0) {
                             targetAngleOffset = 0;
                         } else if (targetAngleOffset > 0x4000) {
@@ -254,7 +254,7 @@ static void pokey_act_wander(void) {
 
                         // If we need to rotate CCW to get to mario, then negate
                         // the target angle offset
-                        if ((s16)(o->oAngleToMario - o->oMoveAngleYaw) > 0) {
+                        if ((s16) (o->oAngleToMario - o->oMoveAngleYaw) > 0) {
                             targetAngleOffset = -targetAngleOffset;
                         }
 
@@ -279,7 +279,7 @@ static void pokey_act_wander(void) {
  * The pokey body parts check to see if pokey is in this action, and if so,
  * unload themselves.
  */
-static void pokey_act_unload_parts(void) {
+void pokey_act_unload_parts(void) {
     o->oAction = POKEY_ACT_UNINITIALIZED;
     cur_obj_set_pos_to_home();
 }

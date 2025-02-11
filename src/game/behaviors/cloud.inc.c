@@ -17,7 +17,7 @@ s8 sCloudPartHeights[] = { 11, 8, 12, 8, 9, 9 };
 /**
  * Spawn the visual parts of the cloud, including fwoosh's face.
  */
-static void cloud_act_spawn_parts(void) {
+void cloud_act_spawn_parts(void) {
     struct Object *cloudPart;
     s32 i;
 
@@ -46,7 +46,7 @@ static void cloud_act_spawn_parts(void) {
 /**
  * Wait for mario to approach, then unhide and enter the spawn parts action.
  */
-static void cloud_act_fwoosh_hidden(void) {
+void cloud_act_fwoosh_hidden(void) {
     if (o->oDistanceToMario < 2000.0f) {
         cur_obj_unhide();
         o->oAction = CLOUD_ACT_SPAWN_PARTS;
@@ -57,7 +57,7 @@ static void cloud_act_fwoosh_hidden(void) {
  * Move in a circle. Unload if mario moves far away. If mario stays close for
  * long enough, blow wind at him.
  */
-static void cloud_fwoosh_update(void) {
+void cloud_fwoosh_update(void) {
     if (o->oDistanceToMario > 2500.0f) {
         o->oAction = CLOUD_ACT_UNLOAD;
     } else {
@@ -102,7 +102,7 @@ static void cloud_fwoosh_update(void) {
  * Main update function for bhvCloud. This controls the cloud's movement, when it
  * unloads, and when fwoosh blows wind.
  */
-static void cloud_act_main(void) {
+void cloud_act_main(void) {
     s16 localOffsetPhase = 0x800 * gGlobalTimer;
     f32 localOffset;
 
@@ -137,7 +137,7 @@ static void cloud_act_main(void) {
  * If fwoosh, return to home and hide. If lakitu cloud, despawn.
  * This action informs the cloud parts to despawn.
  */
-static void cloud_act_unload(void) {
+void cloud_act_unload(void) {
     if (o->oBhvParams2ndByte != CLOUD_BP_FWOOSH) {
         obj_mark_for_deletion(o);
     } else {

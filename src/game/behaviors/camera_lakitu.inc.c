@@ -25,12 +25,12 @@ void bhv_camera_lakitu_init(void) {
  * Wait for mario to stand on the bridge, then interrupt his action and enter
  * the spawn cloud action.
  */
-static void camera_lakitu_intro_act_trigger_cutscene(void) {
+void camera_lakitu_intro_act_trigger_cutscene(void) {
     //! These bounds are slightly smaller than the actual bridge bounds, allowing
     //  the RTA speedrunning method of lakitu skip
-    if (gMarioObject->oPosX > -544.0f && gMarioObject->oPosX < 545.0f
-        && gMarioObject->oPosY > 800.0f && gMarioObject->oPosZ > -2000.0f
-        && gMarioObject->oPosZ < -177.0f && gMarioObject->oPosZ < -177.0f // always double check your conditions
+    if (gMarioObject->oPosX > -544.0f && gMarioObject->oPosX < 545.0f && gMarioObject->oPosY > 800.0f
+        && gMarioObject->oPosZ > -2000.0f && gMarioObject->oPosZ < -177.0f
+        && gMarioObject->oPosZ < -177.0f // always double check your conditions
         && set_mario_npc_dialog(MARIO_DIALOG_LOOK_UP) == MARIO_DIALOG_STATUS_START) {
         o->oAction = CAMERA_LAKITU_INTRO_ACT_SPAWN_CLOUD;
     }
@@ -39,7 +39,7 @@ static void camera_lakitu_intro_act_trigger_cutscene(void) {
 /**
  * Warp up into the air and spawn cloud, then enter the TODO action.
  */
-static void camera_lakitu_intro_act_spawn_cloud(void) {
+void camera_lakitu_intro_act_spawn_cloud(void) {
     if (set_mario_npc_dialog(MARIO_DIALOG_LOOK_UP) == MARIO_DIALOG_STATUS_SPEAK) {
         o->oAction = CAMERA_LAKITU_INTRO_ACT_UNK2;
 
@@ -58,7 +58,7 @@ static void camera_lakitu_intro_act_spawn_cloud(void) {
 /**
  * Circle down to mario, show the dialog, then fly away.
  */
-static void camera_lakitu_intro_act_show_dialog(void) {
+void camera_lakitu_intro_act_show_dialog(void) {
     s16 targetMovePitch;
     s16 targetMoveYaw;
 #ifdef AVOID_UB
@@ -91,7 +91,7 @@ static void camera_lakitu_intro_act_show_dialog(void) {
                 s16 turnAmount = 0x4000
                                  - atan2s(o->oCameraLakituCircleRadius,
                                           o->oDistanceToMario - o->oCameraLakituCircleRadius);
-                if ((s16)(o->oMoveAngleYaw - o->oAngleToMario) < 0) {
+                if ((s16) (o->oMoveAngleYaw - o->oAngleToMario) < 0) {
                     turnAmount = -turnAmount;
                 }
 
@@ -116,8 +116,8 @@ static void camera_lakitu_intro_act_show_dialog(void) {
                     }
                 }
             }
-        } else if (cur_obj_update_dialog_with_cutscene(MARIO_DIALOG_LOOK_UP,
-            DIALOG_FLAG_TURN_TO_MARIO, CUTSCENE_DIALOG, DIALOG_034)) {
+        } else if (cur_obj_update_dialog_with_cutscene(MARIO_DIALOG_LOOK_UP, DIALOG_FLAG_TURN_TO_MARIO,
+                                                       CUTSCENE_DIALOG, DIALOG_034)) {
             o->oCameraLakituFinishedDialog = TRUE;
         }
     }
@@ -168,8 +168,8 @@ void bhv_camera_lakitu_update(void) {
                 o->oHomeZ = gLakituState.curFocus[2];
 
                 o->oFaceAngleYaw = -cur_obj_angle_to_home();
-                o->oFaceAnglePitch = atan2s(cur_obj_lateral_dist_to_home(),
-                                            o->oPosY - gLakituState.curFocus[1]);
+                o->oFaceAnglePitch =
+                    atan2s(cur_obj_lateral_dist_to_home(), o->oPosY - gLakituState.curFocus[1]);
 
                 o->oPosX = 4331.53f + val0C;
             }

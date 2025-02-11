@@ -6,7 +6,7 @@
  * of 200, 300, 400, or 0 (stationary).
  */
 
-static struct ObjectHitbox sAmpHitbox = {
+struct ObjectHitbox sAmpHitbox = {
     /* interactType:      */ INTERACT_SHOCK,
     /* downOffset:        */ 40,
     /* damageOrCoinValue: */ 1,
@@ -41,7 +41,7 @@ void bhv_homing_amp_init(void) {
 /**
  * Amps' attack handler, shared by both types of amp.
  */
-static void check_amp_attack(void) {
+void check_amp_attack(void) {
     // Strange placement for this call. The hitbox is never cleared.
     // For perspective, this code is run every frame of bhv_circling_amp_loop
     // and every frame of a homing amp's HOMING_AMP_ACT_CHASE action.
@@ -67,7 +67,7 @@ static void check_amp_attack(void) {
 /**
  * Unhide the amp and grow until normal size, then begin chasing Mario.
  */
-static void homing_amp_appear_loop(void) {
+void homing_amp_appear_loop(void) {
     // gLakituState.goalPos is the position lakitu is moving towards.
     // In Lakitu and Mario cam, it is usually very close to the current camera position.
     // In Fixed cam, it is the point behind Mario the camera will go to when transitioning
@@ -83,7 +83,7 @@ static void homing_amp_appear_loop(void) {
     // evaluates to 0.1, which is the same as it was before. After 30 frames, it ends at
     // a scale factor of 0.97. The amp remains at 97% of its real height for 60 more frames.
     if (o->oTimer < 30) {
-        cur_obj_scale(0.1 + 0.9 * (f32)(o->oTimer / 30.0f));
+        cur_obj_scale(0.1 + 0.9 * (f32) (o->oTimer / 30.0f));
     } else {
         o->oAnimState = 1;
     }
@@ -100,7 +100,7 @@ static void homing_amp_appear_loop(void) {
 /**
  * Chase Mario.
  */
-static void homing_amp_chase_loop(void) {
+void homing_amp_chase_loop(void) {
     // Lock on to Mario if he ever goes within 11.25 degrees of the amp's line of sight
     if ((o->oAngleToMario - 0x400 < o->oMoveAngleYaw)
         && (o->oMoveAngleYaw < o->oAngleToMario + 0x400)) {
@@ -156,7 +156,7 @@ static void homing_amp_chase_loop(void) {
 /**
  * Give up on chasing Mario.
  */
-static void homing_amp_give_up_loop(void) {
+void homing_amp_give_up_loop(void) {
     UNUSED u8 filler[8];
 
     // Move forward for 152 frames
@@ -178,7 +178,7 @@ static void homing_amp_give_up_loop(void) {
 /**
  * Cool down after a successful attack, shared by both types of amp.
  */
-static void amp_attack_cooldown_loop(void) {
+void amp_attack_cooldown_loop(void) {
     // Turn intangible and wait for 90 frames before chasing Mario again after hitting him.
     o->header.gfx.animInfo.animFrame += 2;
     o->oForwardVel = 0.0f;
@@ -271,7 +271,7 @@ void bhv_circling_amp_init(void) {
  * Main update function for fixed amps.
  * Fixed amps are a sub-species of circling amps, with circle radius 0.
  */
-static void fixed_circling_amp_idle_loop(void) {
+void fixed_circling_amp_idle_loop(void) {
     // Turn towards Mario, in both yaw and pitch.
     f32 xToMario = gMarioObject->header.gfx.pos[0] - o->oPosX;
     f32 yToMario = gMarioObject->header.gfx.pos[1] + 120.0f - o->oPosY;
@@ -302,7 +302,7 @@ static void fixed_circling_amp_idle_loop(void) {
 /**
  * Main update function for regular circling amps.
  */
-static void circling_amp_idle_loop(void) {
+void circling_amp_idle_loop(void) {
     // Move in a circle.
     // The Y oscillation uses the magic number 0x8B0 (2224), which is
     // twice that of the fixed amp. In other words, circling amps will
